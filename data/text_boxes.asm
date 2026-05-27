@@ -35,7 +35,13 @@ TextBoxTextAndCoordTable:
 	text_box_text MONEY_BOX_TEMPLATE,                11,  0, 19,  2, MoneyText,               13,  0
 	text_box_text JP_AH_MENU_TEMPLATE,                7,  6, 11, 10, JapaneseAhText,           8,  8
 	text_box_text JP_POKEDEX_MENU_TEMPLATE,          11,  8, 19, 17, JapanesePokedexMenu,     12, 10
-
+	;NEW;
+	text_box_text START_SORT_TEMPLATE,                4,  0, 19,  2, StartSortText,            6,  1
+	text_box_text TMHM_NAME_TEMPLATE,				  4, 11, 19, 13, TMHMNameText,             6, 12
+	text_box_text MENU_POKEMON_ATTACKS_EXIT,         10,  6, 19, 12, MenuPokemonAttacksExit,  12,  7 ; new
+	text_box_text VERSION_BOX,        				  0, 13, 19, 17, VersionBox,  			   1, 14 ; new
+	;END NEW;
+	
 BuySellQuitText:
 	db   "BUY"
 	next "SELL"
@@ -86,3 +92,24 @@ JapanesePokedexMenu:
 	next "なきごえ"
 	next "ぶんぷをみる"
 	next "キャンセル@"
+
+StartSortText:
+	db   "SORT <ST><ART>@"
+	
+TMHMNameText:
+	db   "@"
+
+MenuPokemonAttacksExit: ; new
+	db   "#DEX"
+	next "MOVEDEX"
+	next "EXIT@"
+
+IF DEF(_MODERN)
+	VersionBox:
+		db   "RBY NOVA - MODERN"
+		next "VER. 1.0.2@"
+ELSE
+	VersionBox:
+		db   "RBY NOVA - CLASSIC"
+		next "VER. 1.0.2@"
+ENDC

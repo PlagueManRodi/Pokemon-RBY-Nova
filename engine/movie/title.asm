@@ -58,9 +58,14 @@ DisplayTitleScreen:
 	ld a, BANK(PokemonLogoGraphics)
 	call FarCopyData2          ; second chunk
 	ld hl, Version_GFX
-	ld de, vChars2 tile $60 + (10 tiles - (Version_GFXEnd - Version_GFX) * 2) / 2
+	ld de, vChars2 tile $62 + (10 tiles - (Version_GFXEnd - Version_GFX) * 2) / 2
 	ld bc, Version_GFXEnd - Version_GFX
 	ld a, BANK(Version_GFX)
+	call FarCopyData2
+	ld hl, Zetaphonix_GFX
+	ld de, vChars2 tile $51
+	ld bc, Zetaphonix_GFXEnd - Zetaphonix_GFX
+	ld a, BANK(Zetaphonix_GFX)
 	call FarCopyDataDouble
 	call ClearBothBGMaps
 
@@ -100,7 +105,7 @@ DisplayTitleScreen:
 	ld [hl], a
 
 ; place tiles for title screen copyright
-	hlcoord 2, 17
+	hlcoord 5, 17
 	ld de, .tileScreenCopyrightTiles
 	ld b, $10
 .tileScreenCopyrightTilesLoop
@@ -113,7 +118,7 @@ DisplayTitleScreen:
 	jr .next
 
 .tileScreenCopyrightTiles
-	db $41,$42,$43,$42,$44,$42,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©'95.'96.'98 GAME FREAK inc.
+	db $51,$52,$53,$54,$55,$56,$57,$58,$59,$5A,$5B,$5B,$5B,$5B,$5B,$5B ; by ZETAPHOENIX
 
 .next
 	call SaveScreenTilesToBuffer2
@@ -121,7 +126,7 @@ DisplayTitleScreen:
 	call EnableLCD
 
 IF DEF(_RED)
-	ld a, STARTER1 ; which Pokemon to show first on the title screen
+	ld a, TAUROS ; which Pokemon to show first on the title screen
 ENDC
 IF DEF(_BLUE)
 	ld a, STARTER2 ; which Pokemon to show first on the title screen
@@ -401,7 +406,7 @@ PrintGameVersionOnTitleScreen:
 ; these point to special tiles specifically loaded for that purpose and are not usual text
 VersionOnTitleScreenText:
 IF DEF(_RED)
-	db $60,$61,$7F,$65,$66,$67,$68,$69,"@" ; "Red Version"
+	db $61,$62,$63,$64,$65,$66,"@" ; "RBY Nova"
 ENDC
 IF DEF(_BLUE)
 	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"

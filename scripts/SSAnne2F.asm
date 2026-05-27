@@ -24,6 +24,7 @@ SSAnne2Script0:
 	ld hl, CoordsData_61411
 	call ArePlayerCoordsInArray
 	ret nc
+	predef HealParty
 	ld a, SFX_STOP_ALL_MUSIC
 	ld [wNewSoundID], a
 	call PlaySound
@@ -148,6 +149,21 @@ SSAnne2Script2:
 	ld [wNewSoundID], a
 	call PlaySound
 	farcall Music_RivalAlternateStart
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 28
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
+	
 	ld a, $3
 	ld [wSSAnne2FCurScript], a
 	ret

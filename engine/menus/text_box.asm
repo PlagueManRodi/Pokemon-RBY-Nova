@@ -310,7 +310,7 @@ DisplayTwoOptionMenu:
 	call HandleMenuInput
 	pop hl
 	bit BIT_B_BUTTON, a
-	jr nz, .choseSecondMenuItem ; automatically choose the second option if B is pressed
+	jr nz, .choseSecondMenuItem; automatically choose the second option if B is pressed
 .pressedAButton
 	ld a, [wCurrentMenuItem]
 	ld [wChosenMenuItem], a
@@ -330,6 +330,9 @@ DisplayTwoOptionMenu:
 	ld [wChosenMenuItem], a
 	ld a, CHOSE_SECOND_ITEM
 	ld [wMenuExitMethod], a
+	push hl
+	call PlaceMenuCursor
+	pop hl
 	ld c, 15
 	call DelayFrames
 	call TwoOptionMenu_RestoreScreenTiles
@@ -374,6 +377,10 @@ TwoOptionMenu_RestoreScreenTiles:
 	ld c, 6
 	dec b
 	jr nz, .loop
+	;
+	xor a
+	ld [wTwoOptionMenuID], a
+	;
 	call UpdateSprites
 	ret
 

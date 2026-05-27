@@ -77,6 +77,8 @@ LavenderHouse1Text5:
 	jr nc, .bag_full
 	ld hl, ReceivedFluteText
 	call PrintText
+	ld hl, ReceivedPERFORMText
+	call PrintText
 	SetEvent EVENT_GOT_POKE_FLUTE
 	jr .done
 .bag_full
@@ -97,6 +99,11 @@ ReceivedFluteText:
 	text_far _ReceivedFluteText
 	sound_get_key_item
 	text_far _FluteExplanationText
+	text_end
+
+ReceivedPERFORMText:
+	text_far _ReceivedPERFORMText
+	sound_get_key_item
 	text_end
 
 FluteNoRoomText:

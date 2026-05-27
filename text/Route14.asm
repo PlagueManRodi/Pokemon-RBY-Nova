@@ -33,22 +33,19 @@ _Route14AfterBattleText2::
 	done
 
 _Route14BattleText3::
-	text "TMs are on sale"
-	line "in CELADON!"
-	cont "But, only a few"
-	cont "people have HMs!"
+	text "Go, my super bug"
+	line "#MON!"
 	done
 
 _Route14EndBattleText3::
-	text "Aww,"
-	line "bummer!"
+	text "My"
+	line "bugs..."
 	prompt
 
 _Route14AfterBattleText3::
-	text "Teach #MON"
-	line "moves of the same"
-	cont "element type for"
-	cont "more power."
+	text "If you don't like"
+	line "bug #MON, you"
+	cont "bug me!"
 	done
 
 _Route14BattleText4::

@@ -6,4 +6,13 @@ UsableItems_CloseMenu:
 	db OLD_ROD
 	db GOOD_ROD
 	db SUPER_ROD
+	db MOVEDEX
+	db ESCAPE
+	db DOWSE
+	db PERFORM
+	db FISH_O_ROD
+	db FISH_G_ROD
+	db FISH_S_ROD
+	db WARP
+	db BIKE
 	db -1 ; end

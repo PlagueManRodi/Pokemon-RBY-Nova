@@ -22,6 +22,11 @@ _Route12HouseText_564c5::
 	text "!@"
 	text_end
 
+_ReceivedFISHSRODText::
+	text "FISH (S.ROD) added"
+	line "to SELECT menu!"
+	done
+
 _Route12HouseText_564ca::
 	text_start
 
@@ -32,7 +37,7 @@ _Route12HouseText_564ca::
 	line "rivers, go out"
 	cont "and land the big"
 	cont "one!"
-	done
+	prompt
 
 _Route12HouseText_564cf::
 	text "Oh... That's so"

@@ -18,3 +18,11 @@ _RockTunnel2AfterBattleText9::
 	text "I'm an artist,"
 	line "not a fighter."
 	done
+
+_RockTunnel2BattleText10::
+	text "..."
+	done
+
+_RockTunnel2EndBattleText10::
+	text "..."
+	prompt

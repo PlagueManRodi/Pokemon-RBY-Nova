@@ -1,4 +1,12 @@
 MtMoonB2F_Script:
+	ld hl, wCurrentMapScriptFlags
+	bit 6, [hl]
+	res 6, [hl]
+	call nz, ResetMtMoonLowerFloorsEvents
+	ld hl, wCurrentMapScriptFlags
+	bit 5, [hl]
+	res 5, [hl]
+	call nz, ChangeMtMoonLowerFloorsEntranceTile
 	call EnableAutoTextBoxDrawing
 	ld hl, MtMoon3TrainerHeaders
 	ld de, MtMoonB2F_ScriptPointers
@@ -10,6 +18,16 @@ MtMoonB2F_Script:
 	ld hl, CoordsData_49d37
 	call ArePlayerCoordsInArray
 	jr nc, .asm_49d31
+	
+	; no-encounter fixes from shin-pokered
+	
+	ld hl, wd732
+	bit 3, [hl]
+	jr nz, .asm_49d31
+	
+	CheckEitherEventSet EVENT_GOT_DOME_FOSSIL, EVENT_GOT_HELIX_FOSSIL
+	jr nz, .asm_49d31	;let's keep encounters on once the big moment is over
+	
 	ld hl, wd72e
 	set 4, [hl]
 	ret
@@ -153,6 +171,27 @@ MtMoon3Script5:
 	ld [wMtMoonB2FCurScript], a
 	ld [wCurMapScript], a
 	ret
+
+ResetMtMoonLowerFloorsEvents::
+	CheckEvent EVENT_BECAME_CHAMPION
+	ret z
+	CheckEvent EVENT_BEAT_SCREAMTAIL
+	ret nz
+	ResetEventRange EVENT_MT_MOON_B3F_BOULDER_DOWN_HOLE_1, EVENT_MT_MOON_B5F_BOULDER_ON_SWITCH_4
+	lb de, HS_MT_MOON_B3F_BOULDER_1, HS_MT_MOON_B3F_BOULDER_6
+	callfar SetNewMissableObjectRangeBackToDefaultStatus
+	lb de, HS_MT_MOON_B4F_BOULDER_1, HS_MT_MOON_B4F_BOULDER_10
+	callfar SetNewMissableObjectRangeBackToDefaultStatus
+	lb de, HS_MT_MOON_B5F_BOULDER_1, HS_MT_MOON_B5F_BOULDER_11
+	jpfar SetNewMissableObjectRangeBackToDefaultStatus
+
+ChangeMtMoonLowerFloorsEntranceTile:
+	CheckEvent EVENT_BECAME_CHAMPION
+	ret nz
+	ld a, 13
+	lb bc, 13, 14
+	ld [wNewTileBlockID], a
+	predef_jump ReplaceTileBlock
 
 MtMoonB2F_TextPointers:
 	dw MtMoon3Text1

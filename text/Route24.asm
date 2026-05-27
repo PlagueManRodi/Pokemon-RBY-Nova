@@ -65,3 +65,13 @@ _Route24BattleText1::
 	text "I saw your feat"
 	line "from the grass!"
 	done
+
+_Route24Text_Gatekeeper::
+	text "We had reports of"
+	line "ROCKET activity"
+	cont "in this area."
+
+	para "You can't go to"
+	line "CERULEAN CAPE"
+	cont "for now."
+	done

@@ -41,6 +41,37 @@ DayCareMText1:
 	xor a
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ld a, [wWhichPokemon]
+	;;
+	ld hl, wPartyMons
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld bc, wPartyMon1Level - wPartyMon1
+	add hl, bc ; hl now points to level
+	ld a, [hl] ; a = level
+	cp MAX_LEVEL
+	jr z, .exactlyCap
+	jr nc, .moreThanCap
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps3
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .notPlayingWithLevelCaps3
+	ld hl, wLevelCap
+	pop af
+	cp [hl]
+	pop hl
+	jr z, .exactlyCap
+	jr nc, .moreThanCap
+	push hl
+	push af
+.notPlayingWithLevelCaps3
+	pop af
+	pop hl
+.exactlyCap
+	ld a, [wWhichPokemon]
+	;;
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
 	ld hl, DayCareWillLookAfterMonText
@@ -57,6 +88,11 @@ DayCareMText1:
 	call PlayCry
 	ld hl, DayCareComeSeeMeInAWhileText
 	jp .done
+	;;
+.moreThanCap
+	ld hl, DayCareCantAcceptOverleveledMonText
+	jp .done
+	;;
 
 .daycareInUse
 	xor a
@@ -67,10 +103,45 @@ DayCareMText1:
 	call LoadMonData
 	callfar CalcLevelFromExperience
 	ld a, d
+	;;
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	pop af
+	cp [hl]
+	pop hl
+	jr c, .skipCalcExp
+	jr nc, .noCarry
+	push hl
+	push af
+.notPlayingWithLevelCaps
+	pop af
+	pop hl
+	;;
 	cp MAX_LEVEL
 	jr c, .skipCalcExp
-
+	;;
+.noCarry
+	;;
 	ld d, MAX_LEVEL
+	;;
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .NotPlayingWithLevelCaps
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .NotPlayingWithLevelCaps
+	ld d, a
+.NotPlayingWithLevelCaps
+	pop af
+	pop hl
+	;;
 	callfar CalcExperience
 	ld hl, wDayCareMonExp
 	ldh a, [hExperience]
@@ -80,6 +151,19 @@ DayCareMText1:
 	ldh a, [hExperience + 2]
 	ld [hl], a
 	ld d, MAX_LEVEL
+	;;
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps2
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .notPlayingWithLevelCaps2
+	ld d, a
+.notPlayingWithLevelCaps2
+	pop af
+	pop hl
+	;;
 
 .skipCalcExp
 	xor a
@@ -266,4 +350,8 @@ DayCareHeresYourMonText:
 
 DayCareNotEnoughMoneyText:
 	text_far _DayCareNotEnoughMoneyText
+	text_end
+
+DayCareCantAcceptOverleveledMonText:
+	text_far _DayCareCantAcceptOverleveledMonText
 	text_end

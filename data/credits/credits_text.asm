@@ -65,6 +65,75 @@ CreditsTextPointers:
 	dw CredFukui
 	dw CredClub
 	dw CredPAAD
+	;;
+	dw CredNova
+	dw CredProgrammer
+	dw CredZetaphoenix
+	dw CredProgrammingHelp
+	dw CredAriahiro
+	dw CredBluezangoose
+	dw CredDannye
+	dw CredDevolov
+	dw CredEngezerstorung
+	dw CredJojobear
+	dw CredLuna
+	dw CredMateo
+	dw CredMauve
+	dw CredMord
+	dw CredRMP
+	dw CredRangi
+	dw CredSTM
+	dw CredSuloku
+	dw CredVortiene
+	dw CredXillicis
+	dw CredLeadArt
+	dw CredSuunz
+	dw CredAdditionalArt
+	dw CredAxelcomics
+	dw CredDreammaker
+	dw CredEssentures
+	dw CredNinboy
+	dw CredPat
+	dw CredRainbowDevs
+	dw CredUtytft
+	dw CredWittycrow
+	dw CredYoellistrator
+	dw CredPartyMenuIcons
+	dw CredBlueEmerald
+	dw CredChamber
+	dw CredLake
+	dw CredNeslug
+	dw CredPikachu25
+	dw CredRyta
+	dw CredSoloo
+	dw CredGSCGraphics
+	dw CredGSCGraphicsDesign
+	dw CredYoshida
+	dw CredOkutani
+	dw CredIwashita
+	dw CredMonsters1
+	dw CredMonsters2
+	dw CredMonsters3
+	dw CredMonsters4
+	dw CredPokeredContributors
+	dw CredKanzure
+	dw CredIimarckus
+	dw CredYenatch
+	dw CredManyMore
+	dw CredBigYellow
+	dw CredLyraWebsite
+	dw CredPretDiscord
+	dw CredRetroGame1
+	dw CredRetroGame2
+	dw CredSageDeoxys
+	dw CredTesting
+	dw CredChris05
+	dw CredHyd
+	dw CredOblivionWing
+	dw CredPatoMareado
+	dw CredPk87
+	dw CredTheWiseBro
+	;;
 	assert_table_length NUM_CRED_STRINGS
 
 CredVersion:
@@ -200,3 +269,139 @@ CredClub:
 	db -9, "NCL SUPER MARIO CLUB@"
 CredPAAD:
 	db -5, "PAAD TESTING@"
+;;
+CredNova:
+	db -7, "RBY NOVA CREDITS@"
+CredProgrammer:
+	db -4, "PROGRAMMER@"
+CredZetaphoenix:
+	db -5, "ZETAPHOENIX@"
+CredProgrammingHelp:
+	db -7, "PROGRAMMING HELP@"
+CredAriahiro:
+	db -4, "ARIAHIRO64@"
+CredBluezangoose:
+	db -5, "BLUEZANGOOSE@"
+CredDannye:
+	db -2, "DANNYE@"
+CredDevolov:
+	db -3, "DEVOLOV@"
+CredEngezerstorung:
+	db -6, "ENGEZERSTORUNG@"
+CredJojobear:
+	db -4, "JOJOBEAR13@"
+CredLuna:
+	db -7, "JUSTREGULARLUNA@"
+CredMateo:
+	db -2, "MATEO@"
+CredMauve:
+	db -2, "MAUVE@"
+CredMord:
+	db -1, "MORD@"
+CredRMP:
+	db -8, "RAINBOWMETALPIGEON@"
+CredRangi:
+	db -3, "RANGI42@"
+CredSTM:
+	db -6, "SHIRATHEMOGUL@"
+CredSuloku:
+	db -2, "SULOKU@"
+CredVortiene:
+	db -3, "VORTIENE@"
+CredXillicis:
+	db -3, "XILLICIS@"
+CredLeadArt:
+	db -3, "LEAD ART@"
+CredSuunz:
+	db -2, "SUUNZ@"
+CredAdditionalArt:
+	db -6, "ADDITIONAL ART@"
+CredAxelcomics:
+	db -5, "AXEL-COMICS@"
+CredDreammaker:
+	db -5, "DREAMMAKER23@"
+CredEssentures:
+	db -4, "ESSENTURES@"
+CredNinboy:
+	db -3, "NINBOY01@"
+CredPat:
+	db -6, "PATATTACKERMAN@"
+CredRainbowDevs:
+	db -5, "RAINBOWDEVS@"
+CredUtytft:
+	db -2, "UTYTFT@"
+CredWittycrow:
+	db -4, "WITTYCROW@"
+CredYoellistrator:
+	db -6, "YOELLISTRATOR@"
+CredPartyMenuIcons:
+	db -7, "PARTY MENU ICONS@"
+CredBlueEmerald:
+	db -5, "BLUE EMERALD@"
+CredChamber:
+	db -3, "CHAMBER@"
+CredLake:
+	db -1, "LAKE@"
+CredNeslug:
+	db -2, "NESLUG@"
+CredPikachu25:
+	db -4, "PIKACHU25@"
+CredRyta:
+	db -1, "RYTA@"
+CredSoloo:
+	db -3, "SOLOO993@"
+CredGSCGraphics:
+	db -5, "GSC GRAPHICS@"
+CredGSCGraphicsDesign:
+	db -9, "GSC GRAPHICS DESIGN@"
+CredYoshida:
+	db -7, "HIRONOBU YOSHIDA@"
+CredOkutani:
+	db -5, "JUN OKUTANI@"
+CredIwashita:
+	db -6, "ASUKA IWASHITA@"
+CredMonsters1:
+	db -9, "ALL MONSTER DESIGNS@"
+CredMonsters2:
+	db -9, "BELONG TO NINTENDO,@"
+CredMonsters3:
+	db -9, "GAME FREAK AND THEIR@"
+CredMonsters4:
+	db -9, "RESPECTIVE CREATORS.@"
+CredPokeredContributors:
+	db -9, "#RED CONTRIBUTORS@"
+CredKanzure:
+	db -3, "KANZURE@"
+CredIimarckus:
+	db -4, "IIMARCKUS@"
+CredYenatch:
+	db -3, "YENATCH@"
+CredManyMore:
+	db -6, "AND MANY MORE...@"
+CredBigYellow:
+	db -4, "BIG YELLOW@"
+CredLyraWebsite:
+	db -9, "LYRA MADE A WEBSITE@"
+CredPretDiscord:
+	db -9, "PRET DISCORD SERVER@"
+CredRetroGame1:
+	db -9, "RETRO GAME MECHANICS@"
+CredRetroGame2:
+	db -4, "EXPLAINED@"
+CredSageDeoxys:
+	db -4, "SAGEDEOXYS@"
+CredTesting:
+	db -3, "TESTING@"
+CredChris05:
+	db -3, "CHRIS05@"
+CredHyd:
+	db -1, "HYD@"
+CredOblivionWing:
+	db -6, "OBLIVION WING@"
+CredPatoMareado:
+	db -5, "PATOMAREADO@"
+CredPk87:
+	db -1, "PK87@"
+CredTheWiseBro:
+	db -7, "THE WISE BROTHA@"
+;;

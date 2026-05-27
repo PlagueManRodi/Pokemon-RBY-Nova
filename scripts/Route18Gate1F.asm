@@ -39,9 +39,11 @@ Route18GateScript0:
 	ld [wRoute18Gate1FCurScript], a
 	ret
 .asm_498c6
-	ld a, $2
-	ld [wRoute18Gate1FCurScript], a
-	ret
+; from ShinPokered - credits to jojobear13
+;	ld a, $2
+;	ld [wRoute18Gate1FCurScript], a
+;	ret
+	jr Route18GateScript2
 
 CoordsData_498cc:
 	dbmapcoord  4,  3

@@ -57,12 +57,9 @@ HiddenObjectMaps:
 	db POKEMON_MANSION_3F
 	db ROUTE_23
 	db VICTORY_ROAD_2F
-	db UNUSED_MAP_6F
+	db UNUSED_MAP_70
 	db BILLS_HOUSE
 	db VIRIDIAN_CITY
-	db SAFARI_ZONE_WEST_REST_HOUSE
-	db SAFARI_ZONE_EAST_REST_HOUSE
-	db SAFARI_ZONE_NORTH_REST_HOUSE
 	db ROUTE_15_GATE_2F
 	db MR_FUJIS_HOUSE
 	db CELADON_MANSION_ROOF_HOUSE
@@ -84,6 +81,7 @@ HiddenObjectMaps:
 	db VERMILION_CITY
 	db CERULEAN_CITY
 	db ROUTE_4
+	db VERMILION_BEACH
 	db -1 ; end
 
 HiddenObjectPointers:
@@ -146,12 +144,9 @@ HiddenObjectPointers:
 	dw Mansion3HiddenObjects
 	dw Route23HiddenObjects
 	dw VictoryRoad2HiddenObjects
-	dw Unused6FHiddenObjects
+	dw Unused70HiddenObjects
 	dw BillsHouseHiddenObjects
 	dw ViridianCityHiddenObjects
-	dw SafariZoneRestHouse2HiddenObjects
-	dw SafariZoneRestHouse3HiddenObjects
-	dw SafariZoneRestHouse4HiddenObjects
 	dw Route15GateUpstairsHiddenObjects
 	dw LavenderHouse1HiddenObjects
 	dw CeladonMansion5HiddenObjects
@@ -173,6 +168,7 @@ HiddenObjectPointers:
 	dw VermilionCityHiddenObjects
 	dw CeruleanCityHiddenObjects
 	dw Route4HiddenObjects
+	dw VermilionBeachHiddenObjects
 
 MACRO hidden_object
 	db \2 ; y coord
@@ -368,7 +364,6 @@ GameCornerHiddenObjects:
 	db -1 ; end
 
 CeladonHotelHiddenObjects:
-	hidden_object 13,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
 	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
 	db -1 ; end
 
@@ -385,12 +380,12 @@ FuchsiaGymHiddenObjects:
 CinnabarGymHiddenObjects:
 	hidden_object 17, 13, SPRITE_FACING_UP, GymStatues
 	; third param: ([hGymGateAnswer] << 4) | [hGymGateIndex]
-	hidden_object 15,  7, (FALSE << 4) | 1, PrintCinnabarQuiz
-	hidden_object 10,  1, (TRUE  << 4) | 2, PrintCinnabarQuiz
-	hidden_object  9,  7, (TRUE  << 4) | 3, PrintCinnabarQuiz
-	hidden_object  9, 13, (TRUE  << 4) | 4, PrintCinnabarQuiz
-	hidden_object  1, 13, (FALSE << 4) | 5, PrintCinnabarQuiz
-	hidden_object  1,  7, (TRUE  << 4) | 6, PrintCinnabarQuiz
+	hidden_object 15,  7, (TRUE  << 4) | 1, PrintCinnabarQuiz ; NO
+	hidden_object 10,  1, (TRUE  << 4) | 2, PrintCinnabarQuiz ; NO
+	hidden_object  9,  7, (FALSE << 4) | 3, PrintCinnabarQuiz ; YES
+	hidden_object  9, 13, (TRUE  << 4) | 4, PrintCinnabarQuiz ; NO
+	hidden_object  1, 13, (FALSE << 4) | 5, PrintCinnabarQuiz ; YES
+	hidden_object  1,  7, (TRUE  << 4) | 6, PrintCinnabarQuiz ; NO
 	db -1 ; end
 
 CinnabarPokecenterHiddenObjects:
@@ -413,12 +408,22 @@ RockTunnelPokecenterHiddenObjects:
 	db -1 ; end
 
 ViridianForestHiddenObjects:
+	;
+	hidden_object 25, 43, TINY_MUSHROOM, HiddenItems
+	hidden_object  6, 36, TINY_MUSHROOM, HiddenItems
+	hidden_object 17, 35, BIG_MUSHROOM, HiddenItems
+	hidden_object 28, 32, TINY_MUSHROOM, HiddenItems
+	hidden_object 11, 25, TINY_MUSHROOM, HiddenItems
+	hidden_object 14, 16, TINY_MUSHROOM, HiddenItems
+	hidden_object 30,  8, BIG_MUSHROOM, HiddenItems
+	hidden_object  9,  3, TINY_MUSHROOM, HiddenItems
+	;
 	hidden_object  1, 18, POTION, HiddenItems
 	hidden_object 16, 42, ANTIDOTE, HiddenItems
 	db -1 ; end
 
 MtMoon3HiddenObjects:
-	hidden_object 18, 12, MOON_STONE, HiddenItems
+	hidden_object 18, 12, STARDUST, HiddenItems
 	hidden_object 33,  9, ETHER, HiddenItems
 	db -1 ; end
 
@@ -519,7 +524,7 @@ SeafoamIslands5HiddenObjects:
 	db -1 ; end
 
 Mansion1HiddenObjects:
-	hidden_object  8, 16, MOON_STONE, HiddenItems
+	hidden_object  8, 16, BIG_NUGGET, HiddenItems
 	hidden_object  2,  5, SPRITE_FACING_UP, Mansion1Script_Switches
 	db -1 ; end
 
@@ -549,7 +554,7 @@ VictoryRoad2HiddenObjects:
 	hidden_object 26,  7, FULL_RESTORE, HiddenItems
 	db -1 ; end
 
-Unused6FHiddenObjects:
+Unused70HiddenObjects:
 	hidden_object 14, 11, MAX_ELIXER, HiddenItems
 	db -1 ; end
 
@@ -559,21 +564,6 @@ BillsHouseHiddenObjects:
 
 ViridianCityHiddenObjects:
 	hidden_object 14,  4, POTION, HiddenItems
-	db -1 ; end
-
-SafariZoneRestHouse2HiddenObjects:
-	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
-	hidden_object 13,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
-	db -1 ; end
-
-SafariZoneRestHouse3HiddenObjects:
-	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
-	hidden_object 13,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
-	db -1 ; end
-
-SafariZoneRestHouse4HiddenObjects:
-	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
-	hidden_object 13,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
 	db -1 ; end
 
 Route15GateUpstairsHiddenObjects:
@@ -665,4 +655,11 @@ CeruleanCityHiddenObjects:
 
 Route4HiddenObjects:
 	hidden_object 40,  3, GREAT_BALL, HiddenItems
+	db -1 ; end
+
+VermilionBeachHiddenObjects:
+	hidden_object 27, 13, MAX_POTION, HiddenItems
+	hidden_object 31, 22, SODA_POP, HiddenItems
+	hidden_object  7, 17, FULL_HEAL, HiddenItems
+	hidden_object 21, 26, REVIVE, HiddenItems
 	db -1 ; end

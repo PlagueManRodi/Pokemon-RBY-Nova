@@ -16,6 +16,8 @@ SSAnneCaptainsRoom_TextPointers:
 
 SSAnne7Text1:
 	text_asm
+	CheckEvent EVENT_GOT_GOLD_TICKET
+	jr nz, .postGame
 	CheckEvent EVENT_GOT_HM01
 	jr nz, .got_item
 	ld hl, SSAnne7RubText
@@ -27,6 +29,8 @@ SSAnne7Text1:
 	jr nc, .bag_full
 	ld hl, ReceivedHM01Text
 	call PrintText
+	ld hl, ReceivedHACKText
+	call PrintText
 	SetEvent EVENT_GOT_HM01
 	jr .done
 .bag_full
@@ -37,6 +41,26 @@ SSAnne7Text1:
 	jr .done
 .got_item
 	ld hl, SSAnne7Text_61932
+	call PrintText
+	jr .done
+.postGame
+	CheckEvent EVENT_GOT_CAPTAINS_GIFT
+	jr nz, .got_item_2
+	ld hl, SSAnne7Text_PostGame
+	call PrintText
+	lb bc, BIG_NUGGET, 1
+	call GiveItem
+	jr nc, .bag_full_2
+	ld hl, CaptainItemGiveText
+	call PrintText
+	SetEvent EVENT_GOT_CAPTAINS_GIFT
+	jr .got_item_2
+.bag_full_2
+	ld hl, HM01NoRoomText
+	call PrintText
+	jr .done
+.got_item_2
+	ld hl, SSAnne7Text_PostGame_2
 	call PrintText
 .done
 	jp TextScriptEnd
@@ -74,6 +98,12 @@ ReceivingHM01Text:
 ReceivedHM01Text:
 	text_far _ReceivedHM01Text
 	sound_get_key_item
+	sound_get_key_item
+	text_end
+
+ReceivedHACKText:
+	text_far _ReceivedHACKText
+	sound_get_key_item
 	text_end
 
 SSAnne7Text_61932:
@@ -91,3 +121,18 @@ SSAnne7Text2:
 SSAnne7Text3:
 	text_far _SSAnne7Text3
 	text_end
+
+SSAnne7Text_PostGame:
+	text_far _SSAnne7Text_PostGame
+	text_end
+
+SSAnne7Text_PostGame_2:
+	text_far _SSAnne7Text_PostGame_2
+	text_end
+
+CaptainItemGiveText:
+	text_far _ReceivedHM01Text
+	sound_get_item_1
+	text_promptbutton
+	text_end
+

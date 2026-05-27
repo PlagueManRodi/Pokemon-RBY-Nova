@@ -40,3 +40,37 @@ _LoreleiDontRunAwayText::
 	text "Someone's voice:"
 	line "Don't run away!"
 	done
+
+_LoreleiRematchBeforeBattleText::
+	text "Welcome to the"
+	line "#MON LEAGUE!"
+
+	para "Hey, fantastic"
+	line "timing!"
+
+	para "I was just"
+	line "thinking how I'd"
+	cont "like to battle"
+	cont "you."
+
+	para "I hope you're"
+	line "ready."
+	done
+
+_LoreleiRematchEndBattleText::
+	text "Argh!"
+	line "How?!"
+	prompt
+
+_LoreleiRematchAfterBattleText::
+	text "I may have lost to"
+	line "you, but I'll"
+	cont "never give up on"
+	cont "my ICE-TYPE"
+	cont "#MON!"
+
+	para "You should aim to"
+	line "win using #MON"
+	cont "you like best,"
+	cont "too!"
+	done

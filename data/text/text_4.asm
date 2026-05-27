@@ -90,8 +90,13 @@ _LearnedMove1Text::
 	text_end
 
 _WhichMoveToForgetText::
-	text "Which move should"
-	next "be forgotten?"
+;	text "Which move should"
+;	next "be forgotten?"
+;	done
+	text "Delete which move"
+	line "for @"
+	text_ram wStringBuffer
+	text "?"
 	done
 
 _AbandonLearningText::
@@ -229,3 +234,20 @@ ENDC
 	line "your friend and"
 	cont "come again!"
 	done
+
+;;
+_SortItemsText::
+	text "Would you like to"
+	next "sort items?"
+	done
+
+_SortComplete::
+	text "Sorting is"
+	next "complete!"
+	prompt
+
+_NothingToSort::
+	text "There are no items"
+	next "to sort."
+	prompt
+;;

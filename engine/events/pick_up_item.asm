@@ -29,10 +29,29 @@ PickUpItem:
 	ld c, 1 ; quantity
 	call GiveItem
 	jr nc, .BagFull
+	
+	ld a, b
+	cp CAPTURE_CHARM
+	jr nz, .notCC
+	SetEvent EVENT_GOT_CAPTURECHARM
+.notCC
+	cp TM_TELEPORT
+	jr nz, .notTP
+	SetEvent EVENT_GOT_TM30
+.notTP
 
 	ldh a, [hMissableObjectIndex]
 	ld [wMissableObjectIndex], a
+;;;;;;;;;; PureRGBnote: CHANGED: in certain maps hidable items use a different set of flags than everywhere else, needed more space for flags.
+	CheckEvent EVENT_IN_NEW_MISSABLE_OBJECTS_MAP
+	jr nz, .hideNew
 	predef HideObject
+	jr .cont
+.hideNew
+	predef HideNewObject
+.cont
+;;;;;;;;;;
+;	predef HideObject
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, FoundItemText

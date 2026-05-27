@@ -76,3 +76,11 @@ _PokemonTower7AfterBattleText3::
 	text "You're not getting"
 	line "away with this!"
 	done
+
+_PokemonTower7BattleText4::
+	text "..."
+	done
+
+_PokemonTower7EndBattleText4::
+	text "..."
+	prompt

@@ -43,6 +43,8 @@ FuchsiaHouse2Text1:
 	jr nc, .bag_full
 	ld hl, ReceivedHM04Text
 	call PrintText
+	ld hl, ReceivedSHOVEText
+	call PrintText
 	SetEvent EVENT_GOT_HM04
 	jr .done
 .got_item
@@ -81,6 +83,11 @@ WardenThankYouText:
 
 ReceivedHM04Text:
 	text_far _ReceivedHM04Text
+	sound_get_item_1
+	text_end
+
+ReceivedSHOVEText:
+	text_far _ReceivedSHOVEText
 	sound_get_item_1
 	text_end
 

@@ -19,8 +19,28 @@ CeladonMansion1Text1:
 	jp CeladonMansion1_PlayCryScript
 
 CeladonMansion1Text2:
-	text_far _CeladonMansion1Text2
-	text_end
+	text_asm
+	CheckEvent EVENT_GOT_TEA
+	jr nz, .got_item
+	ld hl, CeladonMansion1Text2bis
+	call PrintText
+	lb bc, TEA, 1
+	call GiveItem
+	jr nc, .bag_full
+	SetEvent EVENT_GOT_TEA
+	ld hl, CeladonMansion1Text2bis2
+	call PrintText
+	ld hl, CeladonMansion1Text2bis3
+	call PrintText
+	jp TextScriptEnd
+.bag_full
+	ld hl, CeladonMansion1Text2bis4
+	call PrintText
+	jp TextScriptEnd
+.got_item
+	ld hl, CeladonMansion1Text2bis5
+	call PrintText
+	jp TextScriptEnd
 
 CeladonMansion1Text3:
 	text_far _CeladonMansion1Text3
@@ -36,4 +56,25 @@ CeladonMansion1Text4:
 
 CeladonMansion1Text5:
 	text_far _CeladonMansion1Text5
+	text_end
+
+CeladonMansion1Text2bis:
+	text_far _CeladonMansion1Text2bis
+	text_end
+
+CeladonMansion1Text2bis2:
+	text_far _CeladonMansion1Text2bis2
+	sound_get_item_1
+	text_end
+
+CeladonMansion1Text2bis3:
+	text_far _CeladonMansion1Text2bis3
+	text_end
+
+CeladonMansion1Text2bis4:
+	text_far _CeladonMansion1Text2bis4
+	text_end
+
+CeladonMansion1Text2bis5:
+	text_far _CeladonMansion1Text2bis5
 	text_end

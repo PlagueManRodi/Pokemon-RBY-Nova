@@ -7,6 +7,8 @@ ViridianPokecenter_TextPointers:
 	dw ViridianPokeCenterText2
 	dw ViridianPokeCenterText3
 	dw ViridianTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 ViridianHealNurseText:
 	script_pokecenter_nurse

@@ -136,8 +136,8 @@ _OaksLabGivePokeballsText2::
 	cont "it's fair game."
 
 	para "Just throw a #"
-	line "BALL at it and try"
-	line "to catch it!"
+	line "BALL at it and"
+	cont "try to catch it!"
 
 	para "This won't always"
 	line "work, though."
@@ -304,6 +304,9 @@ _OaksLabText24::
 	cont "#MON you've"
 	cont "seen or caught!"
 
+	para "It also has info"
+	line "on every move!"
+	
 	para "It's a hi-tech"
 	line "encyclopedia!"
 	done
@@ -331,7 +334,16 @@ _OaksLabText26::
 	para "So, I want you two"
 	line "to fulfill my"
 	cont "dream for me!"
-
+	
+	para "I also gave you a"
+	line "PORTABLE PC."
+	
+	para "With it you'll be"
+	line "able to access"
+	cont "the #MON"
+	cont "Storage System"
+	cont "from anywhere!"
+	
 	para "Get moving, you"
 	line "two!"
 
@@ -356,8 +368,38 @@ _OaksLabText27::
 	para "I'll tell her not"
 	line "to lend you one,"
 	cont "<PLAYER>! Hahaha!"
+	
+	para "I'll be catching"
+	line "#MON in ROUTE"
+	cont "22."
+	
+	para "Smell ya later!"
 	done
 
+_OaksLabText28::
+	text "My grandson is"
+	line "always so"
+	cont "hasty..."
+
+	para "I also wanted to"
+	line "give you this!"
+
+	para "<PLAYER> got"
+	line "EXP.ALL from OAK!@"
+	text_end
+
+_OaksLabText29::
+	text "EXP.ALL gives"
+	line "EXP points to all"
+	cont "the #MON with"
+	cont "you, even if they"
+	cont "don't fight."
+
+	para "If you don't need"
+	line "it, you should "
+	cont "store it via PC."
+	done
+	
 _OaksLabText_1d405::
 	text "I study #MON as"
 	line "PROF.OAK's AIDE."

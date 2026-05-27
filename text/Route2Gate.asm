@@ -10,3 +10,8 @@ _Route2GateText2::
 	cont "can get through"
 	cont "ROCK TUNNEL."
 	done
+
+_ReceivedLIGHTText::
+	text "LIGHT can be used"
+	line "on SELECT menu!"
+	done

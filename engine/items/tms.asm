@@ -33,4 +33,57 @@ TMToMove:
 	ld [wd11e], a
 	ret
 
+; Displays TM Item Name in decoord from the Move ID in wd11e
+;
+; INPUT
+;
+; decoord = where the name will be displayed if applycable
+; wd11e   = should contain move id
+;
+; RAM addresses it replaces
+; 
+; wd11e         = TMHM id
+; wcd6d         = TMHM item id
+; wStringBuffer = TMHM item name
+DisplayTMItemNameFromMoveName:
+	push de
+    ld a, [wd11e]
+	ld b, a
+	ld c, 1
+	ld hl, TechnicalMachines
+.findTMloop2
+	ld a, [hli]
+	cp b
+	jr z, .TMfound
+	inc c
+	ld a, NUM_TM_HM ; 50 TMs + 5 HMs
+	cp c
+	jr c, .TMnotFound
+	jr .findTMloop2
+.TMfound
+	ld a, c
+	ld b, NUM_TMS + 1 ; 50 TMs + 1
+	sub b
+	jr c, .isTM
+	; isHM
+	ld b, HM01 ; HM Item IDs start at 196
+	add b
+	jr .getItemName
+.isTM
+	ld b, TM01 + NUM_TMS ; TM Item IDs start at 201 (also adding the subtracted 50)
+	add b
+.getItemName
+	ld [wd11e], a
+	call GetItemName
+	call CopyToStringBuffer
+    pop de
+	ld h, d
+	ld l, e
+    ld de, wStringBuffer
+    call PlaceString
+	push de
+.TMnotFound
+	pop de
+	ret
+
 INCLUDE "data/moves/tmhm_moves.asm"

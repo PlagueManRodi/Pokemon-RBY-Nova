@@ -38,6 +38,11 @@ _ReceivedHM01Text::
 	text "!@"
 	text_end
 
+_ReceivedHACKText::
+	text "HACK can be used"
+	line "on SELECT menu!"
+	done
+
 _SSAnne7Text_61932::
 	text "CAPTAIN: Whew!"
 
@@ -61,4 +66,17 @@ _SSAnne7Text3::
 	line "Seasickness..."
 	cont "The CAPTAIN's"
 	cont "reading this!"
+	done
+
+_SSAnne7Text_PostGame::
+	text "You're back!"
+	
+	para "I want to give"
+	line "you another token"
+	cont "of appreciation."
+	prompt
+
+_SSAnne7Text_PostGame_2::
+	text "Thank you for"
+	line "helping me."
 	done

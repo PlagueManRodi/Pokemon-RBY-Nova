@@ -142,19 +142,23 @@ _Route13AfterBattleText10::
 	done
 
 _Route13BattleText11::
-	text "I always go with"
-	line "bird #MON!"
+	text "I got up early"
+	line "every day to"
+	cont "raise my #MON"
+	cont "from cocoons!"
 	done
 
 _Route13EndBattleText11::
-	text "Out"
-	line "of power!"
+	text "WHAT?"
+
+	para "What a total"
+	line "waste of time!"
 	prompt
 
 _Route13AfterBattleText11::
-	text "I wish I could"
-	line "fly like PIDGEY"
-	cont "and PIDGEOTTO..."
+	text "I have to collect"
+	line "more than bugs to"
+	cont "get stronger..."
 	done
 
 _Route13Text11::

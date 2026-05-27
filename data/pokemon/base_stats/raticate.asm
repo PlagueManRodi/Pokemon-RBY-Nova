@@ -1,11 +1,11 @@
 	db DEX_RATICATE ; pokedex id
 
-	db  55,  81,  60,  97,  50
+	db  75,  71,  70,  77,  40
 	;   hp  atk  def  spd  spc
 
-	db NORMAL, NORMAL ; type
-	db 90 ; catch rate
-	db 116 ; base exp
+	db DARK, NORMAL ; type
+	db 127 ; catch rate
+	db 145 ; base exp
 
 	INCBIN "gfx/pokemon/front/raticate.pic", 0, 1 ; sprite dimensions
 	dw RaticatePicFront, RaticatePicBack
@@ -14,10 +14,16 @@
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         \
-	     THUNDERBOLT,  THUNDER,      DIG,          MIMIC,        DOUBLE_TEAM,  \
-	     BIDE,         SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE
+IF DEF(_MODERN)
+	tmhm SWORDS_DANCE, TOXIC,        DOUBLE_EDGE,  ICE_BEAM,    BLIZZARD,     \
+	     HYPER_BEAM,   COUNTER,      DOUBLE_TEAM,  REST,        SUBSTITUTE,   \
+		 SLUDGE_BOMB,  SHADOW_BALL,  ACID_STREAM,  CUT,          STRENGTH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        DOUBLE_EDGE,  ICE_BEAM,    BLIZZARD,     \
+	     HYPER_BEAM,   COUNTER,      DOUBLE_TEAM,  REST,        SUBSTITUTE,   \
+		 CUT,          STRENGTH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(RaticatePicFront)
+	assert BANK(RaticatePicFront) == BANK(RaticatePicBack)

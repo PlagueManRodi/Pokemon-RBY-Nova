@@ -11,7 +11,7 @@ SpecialWarpIn::
 .next
 	bit 1, [hl]
 	jr z, .next3
-	call DebugStart
+	callfar DebugStart
 .next3
 	ld a, 0
 .next2
@@ -114,6 +114,16 @@ LoadSpecialWarpData:
 	ld a, [wDestinationMap]
 .usedFlyWarp
 	ld b, a
+	;
+	ld a, [wCurMap]
+	cp VERMILION_BEACH
+	jr nz, .notVermilionBeach
+	push bc
+	callfar RemoveVermilionBeachItems
+	pop bc
+.notVermilionBeach
+	ld a, b
+	;
 	ld [wCurMap], a
 	ld hl, FlyWarpDataPtr
 .flyWarpDataPtrLoop

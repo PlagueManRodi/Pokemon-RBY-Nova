@@ -205,10 +205,39 @@ BillsHouseText_1e8cb:
 
 BillsHouseText3:
 	text_asm
+	CheckEvent EVENT_GOT_GOLD_TICKET
+	jr nz, .gotGoldTicket
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .offerGoldTicket
+.gotGoldTicket
 	ld hl, BillsHouseText_1e8da
 	call PrintText
+	jr .doneText3
+.offerGoldTicket
+	ld hl, BillsHouseText_OfferGoldTicket
+	call PrintText
+	lb bc, GOLD_TICKET, 1
+	call GiveItem
+	jr nc, .bag_full_text3
+	ld hl, BillsHouseItemGiveText
+	call PrintText
+	SetEvent EVENT_GOT_GOLD_TICKET
+	jr .doneText3
+.bag_full_text3
+	ld hl, SSTicketNoRoomText
+	call PrintText
+.doneText3
 	jp TextScriptEnd
 
 BillsHouseText_1e8da:
 	text_far _BillsHouseText_1e8da
+	text_end
+
+BillsHouseText_OfferGoldTicket:
+	text_far _BillsHouseText_OfferGoldTicket
+	text_end
+
+BillsHouseItemGiveText:
+	text_far _BillsHouseItemGiveText
+	sound_get_item_1
 	text_end

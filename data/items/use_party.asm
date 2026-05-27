@@ -36,4 +36,13 @@ UsableItems_PartyMenu:
 	db MAX_ETHER
 	db ELIXER
 	db MAX_ELIXER
+	db SUN_STONE
+	db DAWN_STONE
+	db DUSK_STONE
+	db SHINY_STONE
+	db ICE_STONE
+	db ROCK_STONE
+	db STEEL_STONE
+	db TRAINING_KIT
+	db TRAIN
 	db -1 ; end

@@ -28,7 +28,7 @@ ENDM
 	map_const INDIGO_PLATEAU,                10,  9 ; $09
 	map_const SAFFRON_CITY,                  20, 18 ; $0A
 DEF NUM_CITY_MAPS EQU const_value
-	map_const UNUSED_MAP_0B,                  0,  0 ; $0B
+	map_const VERMILION_BEACH,               25, 18 ; $0B
 DEF FIRST_ROUTE_MAP EQU const_value
 	map_const ROUTE_1,                       10, 18 ; $0C
 	map_const ROUTE_2,                       10, 36 ; $0D
@@ -124,13 +124,13 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	map_const SS_ANNE_1F_ROOMS,              12,  8 ; $66
 	map_const SS_ANNE_2F_ROOMS,              12,  8 ; $67
 	map_const SS_ANNE_B1F_ROOMS,             12,  8 ; $68
-	map_const UNUSED_MAP_69,                  0,  0 ; $69
+	map_const CELADON_NOVA_HOUSE,             4,  4 ; $69
 	map_const UNUSED_MAP_6A,                  0,  0 ; $6A
 	map_const UNUSED_MAP_6B,                  0,  0 ; $6B
 	map_const VICTORY_ROAD_1F,               10,  9 ; $6C
-	map_const UNUSED_MAP_6D,                  0,  0 ; $6D
-	map_const UNUSED_MAP_6E,                  0,  0 ; $6E
-	map_const UNUSED_MAP_6F,                  0,  0 ; $6F
+	map_const MT_MOON_B3F,                    8,  8 ; $6D
+	map_const MT_MOON_B4F,                    8,  8 ; $6E
+	map_const MT_MOON_B5F,                    8,  8 ; $6F
 	map_const UNUSED_MAP_70,                  0,  0 ; $70
 	map_const LANCES_ROOM,                   13, 13 ; $71
 	map_const UNUSED_MAP_72,                  0,  0 ; $72

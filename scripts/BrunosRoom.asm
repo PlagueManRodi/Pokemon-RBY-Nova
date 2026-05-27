@@ -36,8 +36,26 @@ BrunosRoom_ScriptPointers:
 	dw BrunoScript2
 	dw BrunoScript3
 	dw BrunoScript4
+	dw BrunoScript5
 
 BrunoScript4:
+	ret
+
+BrunoScript5:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, .done
+	ld hl, wCurrentMapScriptFlags
+	set 5, [hl]
+	SetEvent EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
+	ld a, $1
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.done
+	xor a
+	ld [wJoyIgnore], a
+	ld [wBrunosRoomCurScript], a
+	ld [wCurMapScript], a
 	ret
 
 BrunoScriptWalkIntoRoom:
@@ -125,8 +143,44 @@ BrunosRoomTrainerHeader0:
 
 BrunoText1:
 	text_asm
+	ld hl, wVermilionBeachFlags
+	lb bc, FLAG_TEST, 2
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr nz, .BrunoRematch
+	CheckEvent EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
+	jr nz, .noHealing
+	predef HealParty
+.noHealing
 	ld hl, BrunosRoomTrainerHeader0
 	call TalkToTrainer
+	jp TextScriptEnd
+.BrunoRematch
+	CheckEvent EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
+	jr z, .beforeRematch
+	ld hl, BrunoRematchAfterBattleText
+	call PrintText
+	jr .done
+.beforeRematch
+	predef HealParty
+	ld hl, BrunoRematchBeforeBattleText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, BrunoRematchEndBattleText
+	ld de, BrunoRematchEndBattleText
+	call SaveEndBattleTextPointers
+	ld a, OPP_BRUNO
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, 5
+	ld [wBrunosRoomCurScript], a
+	ld [wCurMapScript], a
+.done
 	jp TextScriptEnd
 
 BrunoBeforeBattleText:
@@ -143,4 +197,16 @@ BrunoAfterBattleText:
 
 BrunoDontRunAwayText:
 	text_far _BrunoDontRunAwayText
+	text_end
+
+BrunoRematchBeforeBattleText:
+	text_far _BrunoRematchBeforeBattleText
+	text_end
+
+BrunoRematchEndBattleText:
+	text_far _BrunoRematchEndBattleText
+	text_end
+
+BrunoRematchAfterBattleText:
+	text_far _BrunoRematchAfterBattleText
 	text_end

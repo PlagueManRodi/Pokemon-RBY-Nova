@@ -73,10 +73,30 @@ _AddPartyMon::
 	inc de
 	pop hl
 	push hl
+	;
+	push hl
+	push bc
+	;
+	ld hl, TrainerDVs
+	ld a, [wTrainerClass]
+	ld b, 0
+	ld c, a
+	sla c
+	rl b
+	add hl, bc
+	inc hl
+	;
 	ld a, [wMonDataLocation]
 	and $f
-	ld a, ATKDEFDV_TRAINER  ; set enemy trainer mon IVs to fixed average values
-	ld b, SPDSPCDV_TRAINER
+	;
+	pop bc
+	;
+	ld a, [hld]
+	ld b, a
+	ld a, [hl]
+	;
+	pop hl
+	;
 	jr nz, .next4
 
 ; If the mon is being added to the player's party, update the pokedex.
@@ -245,6 +265,24 @@ _AddPartyMon::
 	scf
 	ret
 
+;;
+ReadTrainerDVs:
+	ld hl, TrainerDVs
+	ld a, [wTrainerClass]
+	ld b, 0
+	ld c, a
+	sla c
+	rl b
+	add hl, bc
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	ret
+
+INCLUDE "data/trainers/trainer_dvs.asm"
+;;
+
 LoadMovePPs:
 	call GetPredefRegisters
 	; fallthrough
@@ -264,6 +302,8 @@ AddPartyMon_WriteMovePP:
 	ld de, wcd6d
 	ld a, BANK(Moves)
 	call FarCopyData
+	ld de, wcd6d
+	callfar AcidTypeMoveCheck
 	pop bc
 	pop de
 	pop hl
@@ -407,6 +447,7 @@ _MoveMon::
 	ld a, [wWhichPokemon]
 	call AddNTimes
 .copyMonData
+	call UpdateType
 	push hl
 	push de
 	ld bc, wBoxMon2 - wBoxMon1
@@ -511,6 +552,44 @@ _MoveMon::
 	add hl, bc
 	ld b, $1
 	call CalcStats
+	;;
+	push af
+	push hl
+	ld a, 0
+	ld [wMonDataLocation], a
+	call LoadMonData
+	pop hl
+	ld bc, -15
+	add hl, bc
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	push de
+	ld bc, 32
+	add hl, bc
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	ld b, h
+	ld c, l
+	pop hl
+	call CompareDEHL ; c = de greater, nc = hl greater, z = equal
+	jr c, .leaveHP
+	jr z, .leaveHP
+	; hl greater than de
+	ld h, b
+	ld l, c
+	ld bc, -34
+	add hl, bc
+	ld a, d
+	ld [hli], a
+	ld a, e
+	ld [hl], a
+.leaveHP
+	pop af
+	;;
 .done
 	and a
 	ret

@@ -230,6 +230,21 @@ SilphCo11Script5:
 	call Delay3
 	call GBFadeInFromBlack
 	SetEvent EVENT_BEAT_SILPH_CO_GIOVANNI
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 48
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
+	
 	xor a
 	ld [wJoyIgnore], a
 	jp SilphCo11Script_621c8
@@ -257,6 +272,7 @@ SilphCo11Script3:
 	jp SilphCo11Script_621c8
 
 SilphCo11Script4:
+	predef HealParty
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]

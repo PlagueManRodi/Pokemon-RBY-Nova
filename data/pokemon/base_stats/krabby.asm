@@ -14,10 +14,18 @@
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
 	     BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         \
-	     MIMIC,        DOUBLE_TEAM,  BIDE,         REST,         SUBSTITUTE,   \
-	     CUT,          SURF,         STRENGTH
+	     MIMIC,        DOUBLE_TEAM,  BIDE,         REST,         ROCK_SLIDE,   \
+	     SUBSTITUTE,   X_SCISSOR,    CUT,          SURF,         STRENGTH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         \
+	     MIMIC,        DOUBLE_TEAM,  BIDE,         REST,         ROCK_SLIDE,   \
+	     SUBSTITUTE,   CUT,          SURF,         STRENGTH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(KrabbyPicFront)
+	assert BANK(KrabbyPicFront) == BANK(KrabbyPicBack)

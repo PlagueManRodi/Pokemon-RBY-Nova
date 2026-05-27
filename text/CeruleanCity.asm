@@ -73,6 +73,13 @@ _ReceivedTM28Text::
 	line "TM28!@"
 	text_end
 
+_ReceivedESCAPEText::
+	text_start
+	
+	para "ESCAPE added"
+	line "to SELECT menu!@"
+	text_end
+
 _ReceivedTM28Text2::
 	text_start
 
@@ -232,4 +239,13 @@ _CeruleanCityText17::
 
 	para "The Tomboyish"
 	line "Mermaid!"
+	done
+
+_CeruleanCityText_GymGuard::
+	text "We had reports of"
+	line "ROCKET activity"
+	cont "in this city."
+
+	para "You can't enter"
+	line "the GYM for now."
 	done

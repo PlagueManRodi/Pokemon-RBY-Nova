@@ -6,6 +6,8 @@ SilphCo11F_Object:
 	warp_event 13,  0, SILPH_CO_ELEVATOR, 1
 	warp_event  5,  5, LAST_MAP, 10
 	warp_event  3,  2, SILPH_CO_7F, 4
+	warp_event 11, 10, SILPH_CO_1F, 6
+	warp_event 15, 14, SILPH_CO_1F, 6
 
 	def_bg_events
 

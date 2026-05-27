@@ -46,15 +46,20 @@ _ReceivedTM41Text::
 	text "!@"
 	text_end
 
+_ReceivedHEALText::
+	text "HEAL added"
+	line "to SELECT menu!"
+	done
+
 _TM41ExplanationText::
 	text "TM41 teaches"
 	line "SOFTBOILED!"
 
-	para "Only one #MON"
+	para "Only two #MON"
 	line "can use it!"
 
-	para "That #MON is"
-	line "CHANSEY!"
+	para "CHANSEY and"
+	line "BLISSEY!"
 	done
 
 _TM41NoRoomText::
@@ -128,17 +133,10 @@ _CeladonCityText15::
 	done
 
 _CeladonCityText16::
-	text "TRAINER TIPS"
+	text "NOVA HOUSE"
 
-	para "GUARD SPEC."
-	line "protects #MON"
-	cont "against SPECIAL"
-	cont "attacks such as"
-	cont "fire and water!"
-
-	para "Get your items at"
-	line "CELADON DEPT."
-	cont "STORE!"
+	para "Come back when"
+	line "you're CHAMPION!"
 	done
 
 _CeladonCityText17::
@@ -151,4 +149,9 @@ _CeladonCityText18::
 	text "ROCKET GAME CORNER"
 	line "The playground"
 	cont "for grown-ups!"
+	done
+
+_CeladonCityText19::
+	text "The door is"
+	line "locked..."
 	done

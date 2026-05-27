@@ -7,15 +7,15 @@ MapHSPointers:
 	dw ViridianCityHS
 	dw PewterCityHS
 	dw CeruleanCityHS
-	dw NoHS
+	dw LavenderTownHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
 	dw SaffronCityHS
-	dw NoHS
-	dw NoHS
+	dw VermilionBeachHS
+	dw Route1HS
 	dw Route2HS
 	dw NoHS
 	dw Route4HS
@@ -97,7 +97,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw VermilionDockHS
 	dw NoHS
 	dw SSAnne2FHS
 	dw NoHS
@@ -112,9 +112,9 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw VictoryRoad1FHS
-	dw NoHS
-	dw NoHS
-	dw NoHS
+	dw MtMoonB3FHS
+	dw MtMoonB4FHS
+	dw MtMoonB5FHS
 	dw NoHS
 	dw NoHS
 	dw NoHS
@@ -235,7 +235,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw RockTunnelB1FHS
 	dw SilphCo9FHS
 	dw SilphCo10FHS
 	dw SilphCo11FHS
@@ -247,10 +247,10 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw UnusedMapF4HS
 	dw NoHS
 	dw NoHS
 	dw NoHS
+	dw AgathasRoomHS
 	assert_table_length NUM_MAPS
 	dw -1 ; end
 
@@ -264,6 +264,7 @@ MissableObjects:
 
 PalletTownHS:
 	db PALLET_TOWN, $01, HIDE
+	db PALLET_TOWN, $04, HIDE
 ViridianCityHS:
 	db VIRIDIAN_CITY, $05, SHOW
 	db VIRIDIAN_CITY, $07, HIDE
@@ -276,6 +277,9 @@ CeruleanCityHS:
 	db CERULEAN_CITY, $06, HIDE
 	db CERULEAN_CITY, $0A, SHOW
 	db CERULEAN_CITY, $0B, SHOW
+	db CERULEAN_CITY, $0C, SHOW
+LavenderTownHS:
+	db LAVENDER_TOWN, $04, SHOW
 SaffronCityHS:
 	db SAFFRON_CITY, $01, SHOW
 	db SAFFRON_CITY, $02, SHOW
@@ -292,6 +296,15 @@ SaffronCityHS:
 	db SAFFRON_CITY, $0D, HIDE
 	db SAFFRON_CITY, $0E, SHOW
 	db SAFFRON_CITY, $0F, HIDE
+VermilionBeachHS:
+	db VERMILION_BEACH, $0A, HIDE
+	db VERMILION_BEACH, $0B, SHOW
+	db VERMILION_BEACH, $0C, SHOW
+	db VERMILION_BEACH, $0D, SHOW
+	db VERMILION_BEACH, $0E, SHOW
+	db VERMILION_BEACH, $0F, HIDE
+Route1HS:
+	db ROUTE_1, $01, SHOW
 Route2HS:
 	db ROUTE_2, $01, SHOW
 	db ROUTE_2, $02, SHOW
@@ -313,6 +326,7 @@ Route22HS:
 Route24HS:
 	db ROUTE_24, $01, SHOW
 	db ROUTE_24, $08, SHOW
+	db ROUTE_24, $09, SHOW
 Route25HS:
 	db ROUTE_25, $0A, SHOW
 BluesHouseHS:
@@ -331,6 +345,7 @@ OaksLabHS:
 ViridianGymHS:
 	db VIRIDIAN_GYM, $01, SHOW
 	db VIRIDIAN_GYM, $0B, SHOW
+	db VIRIDIAN_GYM, $0C, HIDE
 Museum1FHS:
 	db MUSEUM_1F, $05, SHOW
 CeruleanCaveHS:
@@ -355,6 +370,8 @@ PokemonTower7FHS:
 	db POKEMON_TOWER_7F, $02, SHOW
 	db POKEMON_TOWER_7F, $03, SHOW
 	db POKEMON_TOWER_7F, $04, SHOW
+	db POKEMON_TOWER_7F, $05, HIDE
+	db POKEMON_TOWER_7F, $06, HIDE
 MrFujisHouseHS:
 	db MR_FUJIS_HOUSE, $05, HIDE
 CeladonMansionRoofHouseHS:
@@ -368,7 +385,7 @@ PokemonMansion1FHS:
 	db POKEMON_MANSION_1F, $03, SHOW
 FightingDojoHS:
 	db FIGHTING_DOJO, $06, SHOW
-	db FIGHTING_DOJO, $07, SHOW
+	db FIGHTING_DOJO, $07, HIDE
 SilphCo1FHS:
 	db SILPH_CO_1F, $01, HIDE
 PowerPlantHS:
@@ -401,6 +418,7 @@ ViridianForestHS:
 	db VIRIDIAN_FOREST, $05, SHOW
 	db VIRIDIAN_FOREST, $06, SHOW
 	db VIRIDIAN_FOREST, $07, SHOW
+	db VIRIDIAN_FOREST, $09, HIDE
 MtMoon1FHS:
 	db MT_MOON_1F, $08, SHOW
 	db MT_MOON_1F, $09, SHOW
@@ -413,6 +431,8 @@ MtMoonB2FHS:
 	db MT_MOON_B2F, $07, SHOW
 	db MT_MOON_B2F, $08, SHOW
 	db MT_MOON_B2F, $09, SHOW
+VermilionDockHS:
+	db VERMILION_DOCK, $01, HIDE
 SSAnne2FHS:
 	db SS_ANNE_2F, $02, HIDE
 SSAnne1FRoomsHS:
@@ -447,7 +467,6 @@ RocketHideoutB4FHS:
 	db ROCKET_HIDEOUT_B4F, $08, HIDE
 	db ROCKET_HIDEOUT_B4F, $09, HIDE
 SilphCo2FHS:
-	db SILPH_CO_2F, $01, SHOW
 	db SILPH_CO_2F, $02, SHOW
 	db SILPH_CO_2F, $03, SHOW
 	db SILPH_CO_2F, $04, SHOW
@@ -485,7 +504,6 @@ SilphCo7FHS:
 	db SILPH_CO_7F, $09, SHOW
 	db SILPH_CO_7F, $0A, SHOW
 	db SILPH_CO_7F, $0B, SHOW
-	db SILPH_CO_7F, $0C, SHOW
 SilphCo8FHS:
 	db SILPH_CO_8F, $02, SHOW
 	db SILPH_CO_8F, $03, SHOW
@@ -497,7 +515,6 @@ SilphCo9FHS:
 SilphCo10FHS:
 	db SILPH_CO_10F, $01, SHOW
 	db SILPH_CO_10F, $02, SHOW
-	db SILPH_CO_10F, $03, SHOW
 	db SILPH_CO_10F, $04, SHOW
 	db SILPH_CO_10F, $05, SHOW
 	db SILPH_CO_10F, $06, SHOW
@@ -505,8 +522,6 @@ SilphCo11FHS:
 	db SILPH_CO_11F, $03, SHOW
 	db SILPH_CO_11F, $04, SHOW
 	db SILPH_CO_11F, $05, SHOW
-UnusedMapF4HS:
-	db UNUSED_MAP_F4, $02, SHOW
 PokemonMansion2FHS:
 	db POKEMON_MANSION_2F, $02, SHOW
 PokemonMansion3FHS:
@@ -518,6 +533,7 @@ PokemonMansionB1FHS:
 	db POKEMON_MANSION_B1F, $05, SHOW
 	db POKEMON_MANSION_B1F, $06, SHOW
 	db POKEMON_MANSION_B1F, $08, SHOW
+	db POKEMON_MANSION_B1F, $09, HIDE
 SafariZoneEastHS:
 	db SAFARI_ZONE_EAST, $01, SHOW
 	db SAFARI_ZONE_EAST, $02, SHOW
@@ -541,10 +557,13 @@ CeruleanCaveB1FHS:
 	db CERULEAN_CAVE_B1F, $01, SHOW
 	db CERULEAN_CAVE_B1F, $02, SHOW
 	db CERULEAN_CAVE_B1F, $03, SHOW
+RockTunnelB1FHS:
+	db ROCK_TUNNEL_B1F, $09, HIDE
 VictoryRoad1FHS:
 	db VICTORY_ROAD_1F, $03, SHOW
 	db VICTORY_ROAD_1F, $04, SHOW
 ChampionsRoomHS:
+	db CHAMPIONS_ROOM, $01, SHOW
 	db CHAMPIONS_ROOM, $02, HIDE
 SeafoamIslands1FHS:
 	db SEAFOAM_ISLANDS_1F, $01, SHOW
@@ -564,5 +583,55 @@ SeafoamIslandsB4FHS:
 	db SEAFOAM_ISLANDS_B4F, $01, HIDE
 	db SEAFOAM_ISLANDS_B4F, $02, HIDE
 	db SEAFOAM_ISLANDS_B4F, $03, SHOW
+;	db $FF, $01, SHOW ; end
+;	assert_table_length NUM_HS_OBJECTS + 1
+	assert_table_length NUM_HS_OBJECTS
+
+NewMissableObjects:
+	table_width 3, NewMissableObjects
+	
+MtMoonB3FHS:
+	db MT_MOON_B3F, $01, SHOW
+	db MT_MOON_B3F, $02, SHOW
+	db MT_MOON_B3F, $03, SHOW
+	db MT_MOON_B3F, $04, SHOW
+	db MT_MOON_B3F, $05, SHOW
+	db MT_MOON_B3F, $06, SHOW
+	db MT_MOON_B3F, $07, SHOW
+	db MT_MOON_B3F, $08, SHOW
+	db MT_MOON_B3F, $09, SHOW
+MtMoonB4FHS:
+	db MT_MOON_B4F, $01, HIDE
+	db MT_MOON_B4F, $02, HIDE
+	db MT_MOON_B4F, $03, SHOW
+	db MT_MOON_B4F, $04, HIDE
+	db MT_MOON_B4F, $05, HIDE
+	db MT_MOON_B4F, $06, HIDE
+	db MT_MOON_B4F, $07, HIDE
+	db MT_MOON_B4F, $08, SHOW
+	db MT_MOON_B4F, $09, HIDE
+	db MT_MOON_B4F, $0A, HIDE
+	db MT_MOON_B4F, $0B, SHOW
+	db MT_MOON_B4F, $0C, SHOW
+	db MT_MOON_B4F, $0D, SHOW
+MtMoonB5FHS:
+	db MT_MOON_B5F, $01, HIDE
+	db MT_MOON_B5F, $02, HIDE
+	db MT_MOON_B5F, $03, HIDE
+	db MT_MOON_B5F, $04, HIDE
+	db MT_MOON_B5F, $05, HIDE
+	db MT_MOON_B5F, $06, SHOW
+	db MT_MOON_B5F, $07, HIDE
+	db MT_MOON_B5F, $08, HIDE
+	db MT_MOON_B5F, $09, HIDE
+	db MT_MOON_B5F, $0A, HIDE
+	db MT_MOON_B5F, $0B, HIDE
+	db MT_MOON_B5F, $0C, HIDE
+	db MT_MOON_B5F, $0D, HIDE
+	db MT_MOON_B5F, $0E, SHOW
+	db MT_MOON_B5F, $0F, SHOW
+AgathasRoomHS:
+	db AGATHAS_ROOM, $01, SHOW
+	db AGATHAS_ROOM, $02, HIDE
 	db $FF, $01, SHOW ; end
-	assert_table_length NUM_HS_OBJECTS + 1
+	assert_table_length NUM_NEW_HS_OBJECTS + 1

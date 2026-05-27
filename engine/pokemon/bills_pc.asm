@@ -307,6 +307,16 @@ BillsPCRelease:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .loop
+	
+	call KnowsHMMoveBox			; ADDED
+	jr nz, .canBeReleased		;
+	ld hl, MonKnowsHMText		;
+	call PrintText				;
+	jr .loop					;
+.canBeReleased					;
+	ld a, [wCurrentMenuItem]	;
+	and a						;
+	
 	inc a
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
@@ -353,11 +363,14 @@ KnowsHMMove::
 ; returns whether mon with party index [wWhichPokemon] knows an HM move
 	ld hl, wPartyMon1Moves
 	ld bc, wPartyMon2 - wPartyMon1
-	jr .next
+	jr KnowsHMMoveNext          	; CHANGED
 ; unreachable
+KnowsHMMoveBox:						; ADDED
 	ld hl, wBoxMon1Moves
 	ld bc, wBoxMon2 - wBoxMon1
-.next
+	jr KnowsHMMoveNext				; ADDED
+
+KnowsHMMoveNext:					; ADDED
 	ld a, [wWhichPokemon]
 	call AddNTimes
 	ld b, NUM_MOVES
@@ -438,8 +451,9 @@ DisplayDepositWithdrawMenu:
 	ld a, BOX_DATA
 .next2
 	ld [wMonDataLocation], a
-	predef StatusScreen
-	predef StatusScreen2
+;	predef StatusScreen
+;	predef StatusScreen2
+	callfar DisplayStatusScreens
 	call LoadScreenTilesFromBuffer1
 	call ReloadTilesetTilePatterns
 	call RunDefaultPaletteCommand
@@ -498,6 +512,10 @@ OnceReleasedText:
 
 MonWasReleasedText:
 	text_far _MonWasReleasedText
+	text_end
+
+MonKnowsHMText:
+	text_far _MonKnowsHMText
 	text_end
 
 CableClubLeftGameboy::

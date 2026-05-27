@@ -72,6 +72,10 @@ ExitPlayerPC:
 	call WaitForSoundToFinish
 .next
 	ld hl, wFlags_0xcd60
+	;;
+	res 2,[hl]
+	res 4,[hl]
+	;;
 	res 5, [hl]
 	call LoadScreenTilesFromBuffer2
 	xor a
@@ -84,6 +88,11 @@ ExitPlayerPC:
 	ret
 
 PlayerPCDeposit:
+	;;
+	ld a, START_SORT_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	;;
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
@@ -94,6 +103,11 @@ PlayerPCDeposit:
 	call PrintText
 	jp PlayerPCMenu
 .loop
+	;;
+	ld hl, wFlags_0xcd60
+	set 2,[hl]
+	res 4,[hl]
+	;;
 	ld hl, WhatToDepositText
 	call PrintText
 	ld hl, wNumBagItems
@@ -106,6 +120,7 @@ PlayerPCDeposit:
 	ld a, ITEMLISTMENU
 	ld [wListMenuID], a
 	call DisplayListMenuID
+	jp nz, .sortItems ;; added
 	jp c, PlayerPCMenu
 	call IsKeyItem
 	ld a, 1
@@ -116,10 +131,16 @@ PlayerPCDeposit:
 ; if it's not a key item, there can be more than one of the item
 	ld hl, DepositHowManyText
 	call PrintText
+	call DisplayTMHMName ; NEW! - function is in "engine/events/pokemart.asm"
 	call DisplayChooseQuantityMenu
 	cp $ff
 	jp z, .loop
 .next
+	;;
+	ld hl, wFlags_0xcd60
+	res 2,[hl]
+	res 4,[hl]
+	;;
 	ld hl, wNumBoxItems
 	call AddItemToInventory
 	jr c, .roomAvailable
@@ -136,8 +157,18 @@ PlayerPCDeposit:
 	ld hl, ItemWasStoredText
 	call PrintText
 	jp .loop
+	;;
+.sortItems
+	callfar SortItems
+	jp .loop
+	;;
 
 PlayerPCWithdraw:
+	;;
+	ld a, START_SORT_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	;;
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
@@ -148,6 +179,11 @@ PlayerPCWithdraw:
 	call PrintText
 	jp PlayerPCMenu
 .loop
+	;;
+	ld hl, wFlags_0xcd60
+	set 2,[hl]
+	set 4,[hl]
+	;;
 	ld hl, WhatToWithdrawText
 	call PrintText
 	ld hl, wNumBoxItems
@@ -160,6 +196,7 @@ PlayerPCWithdraw:
 	ld a, ITEMLISTMENU
 	ld [wListMenuID], a
 	call DisplayListMenuID
+	jp nz, .sortItems ;; added
 	jp c, PlayerPCMenu
 	call IsKeyItem
 	ld a, 1
@@ -170,10 +207,16 @@ PlayerPCWithdraw:
 ; if it's not a key item, there can be more than one of the item
 	ld hl, WithdrawHowManyText
 	call PrintText
+	call DisplayTMHMName ; NEW! - function is in "engine/events/pokemart.asm"
 	call DisplayChooseQuantityMenu
 	cp $ff
 	jp z, .loop
 .next
+	;;
+	ld hl, wFlags_0xcd60
+	res 2,[hl]
+	res 4,[hl]
+	;;
 	ld hl, wNumBagItems
 	call AddItemToInventory
 	jr c, .roomAvailable
@@ -190,8 +233,18 @@ PlayerPCWithdraw:
 	ld hl, WithdrewItemText
 	call PrintText
 	jp .loop
+	;;
+.sortItems
+	callfar SortItems
+	jp .loop
+	;;
 
 PlayerPCToss:
+	;;
+	ld a, START_SORT_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	;;
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
@@ -202,6 +255,11 @@ PlayerPCToss:
 	call PrintText
 	jp PlayerPCMenu
 .loop
+	;;
+	ld hl, wFlags_0xcd60
+	set 2,[hl]
+	set 4,[hl]
+	;;
 	ld hl, WhatToTossText
 	call PrintText
 	ld hl, wNumBoxItems
@@ -216,6 +274,7 @@ PlayerPCToss:
 	push hl
 	call DisplayListMenuID
 	pop hl
+	jp nz, .sortItems ;; added
 	jp c, PlayerPCMenu
 	push hl
 	call IsKeyItem
@@ -232,13 +291,31 @@ PlayerPCToss:
 	push hl
 	ld hl, TossHowManyText
 	call PrintText
+	call DisplayTMHMName ; NEW! - function is in "engine/events/pokemart.asm"
 	call DisplayChooseQuantityMenu
 	pop hl
 	cp $ff
 	jp z, .loop
 .next
+	;;
+	push hl
+	ld hl, wFlags_0xcd60
+	res 2,[hl]
+	res 4,[hl]
+	pop hl
+	;;
+	ld a, [wCurrentMenuItem]
+	push af
 	call TossItem ; disallows tossing key items
+	pop bc
+	ld a, b
+	ld [wCurrentMenuItem], a
 	jp .loop
+	;;
+.sortItems
+	callfar SortItems
+	jp .loop
+	;;
 
 PlayersPCMenuEntries:
 	db   "WITHDRAW ITEM"

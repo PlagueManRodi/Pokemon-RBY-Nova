@@ -20,3 +20,11 @@ _CeladonHouseText3::
 	para "There's no secret"
 	line "switch behind it!"
 	done
+
+_ChiefBattleText::
+	text "..."
+	done
+
+_ChiefEndBattleText::
+	text "..."
+	prompt

@@ -354,7 +354,6 @@ INCLUDE "audio/sfx/cry22_3.asm"
 
 SECTION "Audio Engine 1", ROMX
 
-INCLUDE "audio/play_battle_music.asm"
 INCLUDE "audio/engine_1.asm"
 INCLUDE "audio/alternate_tempo.asm"
 

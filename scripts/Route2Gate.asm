@@ -23,6 +23,8 @@ Route2GateText1:
 	ldh a, [hOaksAideResult]
 	cp OAKS_AIDE_GOT_ITEM
 	jr nz, .no_item
+	ld hl, ReceivedLIGHTText
+	call PrintText
 	SetEvent EVENT_GOT_HM05
 .got_item
 	ld hl, Route2GateText_5d616
@@ -36,4 +38,9 @@ Route2GateText_5d616:
 
 Route2GateText2:
 	text_far _Route2GateText2
+	text_end
+
+ReceivedLIGHTText:
+	text_far _ReceivedLIGHTText
+	sound_get_item_1
 	text_end

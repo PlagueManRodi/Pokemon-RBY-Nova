@@ -13,6 +13,11 @@ _ReceivedHM02Text::
 	line "HM02!@"
 	text_end
 
+_ReceivedTRAVELText::
+	text "TRAVEL can be used"
+	line "on SELECT menu!"
+	done
+
 _HM02ExplanationText::
 	text "HM02 is FLY."
 	line "It will take you"

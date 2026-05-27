@@ -88,10 +88,7 @@ _GaryText2::
 _GaryText_76120::
 	text "OAK: So, you won!"
 	line "Congratulations!"
-	cont "You're the new"
-	cont "#MON LEAGUE"
-	cont "champion!"
-
+	
 	para "You've grown up so"
 	line "much since you"
 	cont "first left with"
@@ -125,8 +122,8 @@ _GaryText_76125::
 	cont "trust and love!"
 
 	para "Without them, you"
-	line "will never become"
-	cont "a champ again!"
+	line "will never make"
+	cont "it here again!"
 	done
 
 _GaryText_7612a::
@@ -143,4 +140,15 @@ _GaryText_7612a::
 
 	para "<PLAYER>!"
 	line "Come with me!"
+	done
+
+_GaryText6::
+	text "OAK: Don't leave!"
+		
+	para "Come with me!"
+	done
+
+_GaryText7::
+	text "<RIVAL>:"
+	line "Don't run away!"
 	done

@@ -3,4 +3,13 @@ HighCriticalMoves:
 	db RAZOR_LEAF
 	db CRABHAMMER
 	db SLASH
+IF DEF(_MODERN)
+	db STORM_THROW
+	db STONE_EDGE
+	db LEAF_BLADE
+	db NIGHT_SLASH
+	db CROSS_CHOP
+	db POISON_TAIL
+	db BANE_TOUCH
+ENDC
 	db -1 ; end

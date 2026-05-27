@@ -14,6 +14,18 @@ DungeonWarpList:
 	db POKEMON_MANSION_1F,  1
 	db POKEMON_MANSION_1F,  2
 	db POKEMON_MANSION_2F,  3
+	db MT_MOON_B4F,         1
+	db MT_MOON_B4F,         2
+	db MT_MOON_B4F,         3
+	db MT_MOON_B4F,         4
+	db MT_MOON_B4F,         5
+	db MT_MOON_B4F,         6
+	db MT_MOON_B4F,         7
+	db MT_MOON_B5F,			1
+	db MT_MOON_B5F,			2
+	db MT_MOON_B5F,			3
+	db MT_MOON_B5F,			4
+	db MT_MOON_B5F,			5
 	db -1 ; end
 
 
@@ -36,7 +48,18 @@ DungeonWarpData:
 	fly_warp POKEMON_MANSION_1F,  16, 14
 	fly_warp POKEMON_MANSION_1F,  16, 14
 	fly_warp POKEMON_MANSION_2F,  18, 14
-
+	fly_warp MT_MOON_B4F,          3,  2
+	fly_warp MT_MOON_B4F,          6,  4	
+	fly_warp MT_MOON_B4F,         10,  1
+	fly_warp MT_MOON_B4F,         10,  3
+	fly_warp MT_MOON_B4F,         12,  3
+	fly_warp MT_MOON_B4F,          4,  7
+	fly_warp MT_MOON_B4F,          7, 10
+	fly_warp MT_MOON_B5F,          1,  2
+	fly_warp MT_MOON_B5F,         14,  1
+	fly_warp MT_MOON_B5F,         12,  4
+	fly_warp MT_MOON_B5F,          4, 11
+	fly_warp MT_MOON_B5F,          5, 13
 
 MACRO special_warp_spec
 	db \1

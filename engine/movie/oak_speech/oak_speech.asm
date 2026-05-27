@@ -3,8 +3,11 @@ PrepareOakSpeech:
 	push af
 	ld a, [wOptions]
 	push af
+IF DEF(_DEBUG)
 	ld a, [wd732]
 	push af
+ENDC
+	callfar MoveTSDataToBuffer
 	ld hl, wPlayerName
 	ld bc, wBoxDataEnd - wPlayerName
 	xor a
@@ -13,8 +16,11 @@ PrepareOakSpeech:
 	ld bc, wSpriteDataEnd - wSpriteDataStart
 	xor a
 	call FillMemory
+	callfar MoveBufferToTSData
+IF DEF(_DEBUG)
 	pop af
 	ld [wd732], a
+ENDC
 	pop af
 	ld [wOptions], a
 	pop af
@@ -58,6 +64,9 @@ OakSpeech:
 	ld a, [wd732]
 	bit 1, a ; possibly a debug mode bit
 	jp nz, .skipChoosingNames
+	;;
+	callfar OptionalFeatures
+	;;
 	ld de, ProfOakPic
 	lb bc, BANK(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -159,7 +168,7 @@ OakSpeechText1:
 	text_end
 OakSpeechText2:
 	text_far _OakSpeechText2A
-	sound_cry_nidorina
+	sound_cry_nidorino
 	text_far _OakSpeechText2B
 	text_end
 IntroducePlayerText:
@@ -233,3 +242,6 @@ IntroDisplayPicCenteredOrUpperRight:
 	xor a
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
+
+LinkMenuEmptyText:
+	text_end

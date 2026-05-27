@@ -38,9 +38,28 @@ LoreleisRoom_ScriptPointers:
 	dw LoreleiScript2
 	dw LoreleiScript3
 	dw LoreleiScript4
+	dw LoreleiScript5
 
 LoreleiScript4:
 	ret
+
+LoreleiScript5:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, .done
+	ld hl, wCurrentMapScriptFlags
+	set 5, [hl]
+	SetEvent EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
+	ld a, $1
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.done
+	xor a
+	ld [wJoyIgnore], a
+	ld [wLoreleisRoomCurScript], a
+	ld [wCurMapScript], a
+	ret
+	
 
 LoreleiScriptWalkIntoRoom:
 ; Walk six steps upward.
@@ -127,8 +146,44 @@ LoreleisRoomTrainerHeader0:
 
 LoreleiText1:
 	text_asm
+	ld hl, wVermilionBeachFlags
+	lb bc, FLAG_TEST, 2
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr nz, .LoreleiRematch
+	CheckEvent EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
+	jr nz, .noHealing
+	predef HealParty
+.noHealing
 	ld hl, LoreleisRoomTrainerHeader0
 	call TalkToTrainer
+	jp TextScriptEnd
+.LoreleiRematch
+	CheckEvent EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
+	jr z, .beforeRematch
+	ld hl, LoreleiRematchAfterBattleText
+	call PrintText
+	jr .done
+.beforeRematch
+	predef HealParty
+	ld hl, LoreleiRematchBeforeBattleText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, LoreleiRematchEndBattleText
+	ld de, LoreleiRematchEndBattleText
+	call SaveEndBattleTextPointers
+	ld a, OPP_LORELEI
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, 5
+	ld [wLoreleisRoomCurScript], a
+	ld [wCurMapScript], a
+.done
 	jp TextScriptEnd
 
 LoreleiBeforeBattleText:
@@ -145,4 +200,16 @@ LoreleiAfterBattleText:
 
 LoreleiDontRunAwayText:
 	text_far _LoreleiDontRunAwayText
+	text_end
+
+LoreleiRematchBeforeBattleText:
+	text_far _LoreleiRematchBeforeBattleText
+	text_end
+
+LoreleiRematchEndBattleText:
+	text_far _LoreleiRematchEndBattleText
+	text_end
+
+LoreleiRematchAfterBattleText:
+	text_far _LoreleiRematchAfterBattleText
 	text_end

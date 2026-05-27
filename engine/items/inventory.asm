@@ -34,6 +34,7 @@ AddItemToInventory_::
 	cp b ; does the current item in the table match the item being added?
 	jp z, .increaseItemQuantity ; if so, increase the item's quantity
 	inc hl
+.checkIfEndOfInventory
 	ld a, [hl]
 	cp $ff ; is it the end of the table?
 	jr nz, .notAtEndOfInventory
@@ -73,7 +74,7 @@ AddItemToInventory_::
 ; if so, store 99 in the current slot and store the rest in a new slot
 	ld a, 99
 	ld [hli], a
-	jp .notAtEndOfInventory
+	jp .checkIfEndOfInventory
 .increaseItemQuantityFailed
 	pop hl
 	and a
@@ -130,11 +131,13 @@ RemoveItemFromInventory_::
 	cp $ff
 	jr nz, .loop
 ; update menu info
-	xor a
-	ld [wListScrollOffset], a
-	ld [wCurrentMenuItem], a
-	ld [wBagSavedMenuItem], a
-	ld [wSavedListScrollOffset], a
+;	xor a
+;	ld [wListScrollOffset], a
+;	ld [wCurrentMenuItem], a
+;	ld [wSavedMenuItem], a
+;	ld [wBagSavedMenuItem], a
+;	ld [wSavedListScrollOffset], a
+	call CheckBadOffset
 	pop hl
 	ld a, [hl] ; a = number of items in inventory
 	dec a ; decrement the number of items
@@ -147,4 +150,25 @@ RemoveItemFromInventory_::
 .skipMovingUpSlots
 	pop hl
 .done
+	ret
+
+CheckBadOffset:
+	; in some cases we can end up near the end of the list with less than 3 entries showing like after depositing an item or pokemon
+	; in this case we change the offset to avoid issues
+	ld a, [wListCount] ; number of items in list, minus CANCEL (same value as max index value possible)
+	cp 2
+	ret c ; if less than 2 entries, no need to check
+	; wListCount still loaded
+	ld b, a ; wListCount in b
+	ld a, [wListScrollOffset]
+	and a
+	ret z ; if scroll offset is 0, no need to check
+	ld c, a
+	ld a, b
+	sub c
+	dec a
+	cp 1
+	ret nz
+	ld hl, wListScrollOffset
+	dec [hl]
 	ret

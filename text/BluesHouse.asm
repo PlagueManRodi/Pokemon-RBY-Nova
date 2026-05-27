@@ -40,3 +40,8 @@ _BluesHouseTownMapText::
 	text "It's a big map!"
 	line "This is useful!"
 	done
+
+_ReceivedREADMAPText::
+	text "READ MAP added"
+	line "to SELECT menu!"
+	done

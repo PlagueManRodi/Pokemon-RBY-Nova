@@ -142,10 +142,10 @@ LoadSAVIgnoreBadCheckSum:
 
 SaveSAV:
 	farcall PrintSaveScreenText
-	ld hl, WouldYouLikeToSaveText
-	call SaveSAVConfirm
-	and a   ;|0 = Yes|1 = No|
-	ret nz
+;	ld hl, WouldYouLikeToSaveText
+;	call SaveSAVConfirm
+;	and a   ;|0 = Yes|1 = No|
+;	ret nz
 	ld a, [wSaveFileStatus]
 	dec a
 	jr z, .save
@@ -156,25 +156,26 @@ SaveSAV:
 	and a
 	ret nz
 .save
-	call SaveSAVtoSRAM
 	hlcoord 1, 13
 	lb bc, 4, 18
 	call ClearScreenArea
 	hlcoord 1, 14
-	ld de, NowSavingString
-	call PlaceString
-	ld c, 120
-	call DelayFrames
+;	ld de, NowSavingString // REMOVE ARTIFICIAL SAVE DELAY
+;	call PlaceString
+;	ld c, 120
+;	call DelayFrames
+	call SaveSAVtoSRAM
 	ld hl, GameSavedText
 	call PrintText
 	ld a, SFX_SAVE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	ld c, 30
+;	ld c, 30
+	ld c, 10 ; Shorter time than before
 	jp DelayFrames
 
-NowSavingString:
-	db "Now saving...@"
+;NowSavingString:
+;	db "Now saving...@"
 
 SaveSAVConfirm:
 	call PrintText
@@ -186,9 +187,9 @@ SaveSAVConfirm:
 	ld a, [wCurrentMenuItem]
 	ret
 
-WouldYouLikeToSaveText:
-	text_far _WouldYouLikeToSaveText
-	text_end
+;WouldYouLikeToSaveText:
+;	text_far _WouldYouLikeToSaveText
+;	text_end
 
 GameSavedText:
 	text_far _GameSavedText
@@ -215,6 +216,10 @@ SaveSAVtoSRAM0:
 	ld hl, wSpriteDataStart
 	ld de, sSpriteData
 	ld bc, wSpriteDataEnd - wSpriteDataStart
+	call CopyData
+	ld hl, wPartyDataStart
+	ld de, sPartyData
+	ld bc, wPartyDataEnd - wPartyDataStart
 	call CopyData
 	ld hl, wBoxDataStart
 	ld de, sCurBoxData
@@ -277,9 +282,7 @@ SaveSAVtoSRAM2:
 SaveSAVtoSRAM::
 	ld a, $2
 	ld [wSaveFileStatus], a
-	call SaveSAVtoSRAM0
-	call SaveSAVtoSRAM1
-	jp SaveSAVtoSRAM2
+	jp SaveSAVtoSRAM0
 
 SAVCheckSum:
 ;Check Sum (result[1 byte] is complemented)

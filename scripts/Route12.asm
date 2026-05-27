@@ -26,13 +26,16 @@ Route12Script0:
 	CheckEventReuseHL EVENT_FIGHT_ROUTE12_SNORLAX
 	ResetEventReuseHL EVENT_FIGHT_ROUTE12_SNORLAX
 	jp z, CheckFightingMapTrainers
+	CheckEvent EVENT_BEAT_ROUTE16_SNORLAX
+	jr nz, .skipFight
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, SNORLAX
 	ld [wCurOpponent], a
-	ld a, 30
+	ld a, 40
 	ld [wCurEnemyLVL], a
+.skipFight
 	ld a, HS_ROUTE_12_SNORLAX
 	ld [wMissableObjectIndex], a
 	predef HideObject

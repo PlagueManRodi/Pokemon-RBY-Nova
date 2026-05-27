@@ -238,3 +238,83 @@ _ViridianGymGuidePostBattleText::
 	line "GIOVANNI was the"
 	cont "GYM LEADER here?"
 	done
+
+_ViridianGymRematchPreBattleText::
+	text "Yo, <PLAYER>!"
+	
+	para "Since I've become"
+	line "the GYM LEADER"
+	cont "here, the"
+	cont "VIRIDIAN CITY GYM"
+	cont "has really"
+	cont "stepped it up!"
+
+	para "It's made each day"
+	line "pretty busy,"
+	cont "though!"
+	
+	para "All right!"
+	
+	para "It's been a while"
+	line "since I've gone"
+	cont "all out."
+	
+	para "So I'll show you"
+	line "the strength of a"
+	cont "top TRAINER!"
+	done
+
+_ViridianGymRematchAcceptedText::
+	text "I was told to"
+	line "choose a TYPE to"
+	cont "specialize in."
+	
+	para "I'm experimenting"
+	line "with the ironclad"
+	cont "strength of the"
+	cont "STEEL-TYPE!"
+	
+	para "Let's get started!"
+	
+	para "No way I'm losing"
+	line "this time!"
+	done
+
+_ViridianGymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_ViridianGymRematchDefeatedText::
+	text "Aw"
+	line "man, what was I"
+	cont "doing?"
+	prompt
+
+_ViridianGymRematchPostBattleText::
+	text "As long as I can"
+	line "battle strong"
+	cont "opponents, I don't"
+	cont "care what"
+	cont "happens!"
+		
+	para "You get what I"
+	line "mean, right?"
+		
+	para "You'd better come"
+	line "back again!"
+	done
+
+_ReceivedProEarthBadgeText::
+	text "<PLAYER> received"
+	line "PRO EARTHBADGE!@"
+	text_end
+
+_ViridianGymGuideChampText::
+	text "We got a new GYM"
+	line "LEADER!"
+	
+	para "We still need to"
+	line "change the signs"
+	cont "though."
+	done

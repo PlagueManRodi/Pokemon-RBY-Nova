@@ -63,6 +63,10 @@ _SurfingGotOnText::
 	text "!"
 	prompt
 
+_SailingGotOnText::
+	text "<PLAYER> set sail!"
+	prompt
+
 _SurfingNoPlaceToGetOffText::
 	text "There's no place"
 	line "to get off!"
@@ -222,6 +226,10 @@ _NoSurfingHereText::
 	line "@"
 	text_ram wcd6d
 	text " here!"
+	prompt
+
+_NoSailingHereText::
+	text "No SAILing here!"
 	prompt
 
 _BoxFullCannotThrowBallText::

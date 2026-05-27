@@ -73,7 +73,7 @@ BillsHousePokemonList::
 	ld [wMenuItemOffset], a ; not used
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, D_LEFT | D_RIGHT | A_BUTTON | B_BUTTON
 	ld [wMenuWatchedKeys], a
 	ld a, 4
 	ld [wMaxMenuItem], a
@@ -86,32 +86,99 @@ BillsHousePokemonList::
 	set 6, [hl]
 	hlcoord 0, 0
 	ld b, 10
-	ld c, 9
+	ld c, 18
 	call TextBoxBorder
 	hlcoord 2, 2
-	ld de, BillsMonListText
+	ld de, BillsMonListTextR
+	call PlaceString
+	hlcoord 11, 2
+	ld de, BillsMonListTextL
 	call PlaceString
 	ld hl, BillsHousePokemonListText2
 	call PrintText
 	call SaveScreenTilesToBuffer2
 	call HandleMenuInput
 	bit BIT_B_BUTTON, a
-	jr nz, .cancel
+	jp nz, .cancel
+	bit BIT_D_RIGHT, a
+	jr z, .didNotPressRight
+	; move cursor to right column
+	ld a, 4
+	ld [wMaxMenuItem], a
+	ld a, 2
+	ld [wTopMenuItemY], a
+	ld a, 10
+	ld [wTopMenuItemX], a
+	ld a, 5 ; in the the right column, use an offset to prevent overlap
+	ld [wMenuItemOffset], a
+	jr .billsPokemonLoop
+.didNotPressRight
+	bit BIT_D_LEFT, a
+	jr z, .didNotPressLeftOrRight
+	; move cursor to left column
+	ld a, 4
+	ld [wMaxMenuItem], a
+	ld a, 2
+	ld [wTopMenuItemY], a
+	ld a, 1
+	ld [wTopMenuItemX], a
+	xor a
+	ld [wMenuItemOffset], a
+	jr .billsPokemonLoop
+.didNotPressLeftOrRight
 	ld a, [wCurrentMenuItem]
-	add EEVEE
-	cp EEVEE
+	ld b, a
+	ld a, [wMenuItemOffset]
+	add b
+	cp 0
+	ld b, a
+	ld a, EEVEE
 	jr z, .displayPokedex
-	cp FLAREON
+	ld a, b
+	cp 1
+	ld b, a
+	ld a, ESPEON
 	jr z, .displayPokedex
-	cp JOLTEON
+	ld a, b
+	cp 2
+	ld b, a
+	ld a, FLAREON
 	jr z, .displayPokedex
-	cp VAPOREON
+	ld a, b
+	cp 3
+	ld b, a
+	ld a, GLACEON
+	jr z, .displayPokedex
+	ld a, b
+	cp 4
+	ld b, a
+	ld a, JOLTEON
+	jr z, .displayPokedex
+	ld a, b
+	cp 5
+	ld b, a
+	ld a, LEAFEON
+	jr z, .displayPokedex
+	ld a, b
+	cp 6
+	ld b, a
+	ld a, SYLVEON
+	jr z, .displayPokedex
+	ld a, b
+	cp 7
+	ld b, a
+	ld a, UMBREON
+	jr z, .displayPokedex
+	ld a, b
+	cp 8
+	ld b, a
+	ld a, VAPOREON
 	jr z, .displayPokedex
 	jr .cancel
 .displayPokedex
 	call DisplayPokedex
 	call LoadScreenTilesFromBuffer2
-	jr .billsPokemonLoop
+	jp .billsPokemonLoop
 .cancel
 	ld hl, wd730
 	res 6, [hl]
@@ -122,10 +189,17 @@ BillsHousePokemonListText1:
 	text_far _BillsHousePokemonListText1
 	text_end
 
-BillsMonListText:
+BillsMonListTextR:
 	db   "EEVEE"
+	next "ESPEON"
 	next "FLAREON"
-	next "JOLTEON"
+	next "GLACEON"
+	next "JOLTEON@"
+	
+BillsMonListTextL:
+	db	 "LEAFEON"
+	next "SYLVEON"
+	next "UMBREON"
 	next "VAPOREON"
 	next "CANCEL@"
 

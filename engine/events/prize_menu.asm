@@ -24,7 +24,7 @@ CeladonPrizeMenu::
 	call PrintPrizePrice
 	hlcoord 0, 2
 	ld b, 8
-	ld c, 16
+	ld c, 18
 	call TextBoxBorder
 	call GetPrizeMenuId
 	call UpdateSprites
@@ -89,22 +89,70 @@ GetPrizeMenuId:
 	call CopyData
 	ld a, [wWhichPrizeWindow]
 	cp 2        ;is TM_menu?
-	jr nz, .putMonName
+	jp nz, .putMonName
 	ld a, [wPrize1]
 	ld [wd11e], a
 	call GetItemName
 	hlcoord 2, 4
 	call PlaceString
+	;;
+	ld a, [wPrize1]
+	sub TM01
+	inc a
+	ld [wd11e], a
+	predef TMToMove ; get move ID from TM/HM ID
+	ld a, [wd11e]
+	ld [wMoveNum], a
+	call GetMoveName
+	call CopyToStringBuffer
+	hlcoord 7, 4
+	ld de, wStringBuffer
+	call PlaceString
+	ld a, ITEM_NAME
+    ld [wNameListType], a
+	;;
 	ld a, [wPrize2]
 	ld [wd11e], a
 	call GetItemName
 	hlcoord 2, 6
 	call PlaceString
+	;;
+	ld a, [wPrize2]
+	sub TM01
+	inc a
+	ld [wd11e], a
+	predef TMToMove ; get move ID from TM/HM ID
+	ld a, [wd11e]
+	ld [wMoveNum], a
+	call GetMoveName
+	call CopyToStringBuffer
+	hlcoord 7, 6
+	ld de, wStringBuffer
+	call PlaceString
+	ld a, ITEM_NAME
+    ld [wNameListType], a
+	;;
 	ld a, [wPrize3]
 	ld [wd11e], a
 	call GetItemName
 	hlcoord 2, 8
 	call PlaceString
+	;;
+	ld a, [wPrize3]
+	sub TM01
+	inc a
+	ld [wd11e], a
+	predef TMToMove ; get move ID from TM/HM ID
+	ld a, [wd11e]
+	ld [wMoveNum], a
+	call GetMoveName
+	call CopyToStringBuffer
+	hlcoord 7, 8
+	ld de, wStringBuffer
+	call PlaceString
+	ld a, ITEM_NAME
+    ld [wNameListType], a
+	;;
 	jr .putNoThanksText
 .putMonName
 	ld a, [wPrize1]
@@ -128,18 +176,18 @@ GetPrizeMenuId:
 	call PlaceString
 ; put prices on the right side of the textbox
 	ld de, wPrize1Price
-	hlcoord 13, 5
+	hlcoord 15, 5
 ; reg. c:
 ; [low nybble] number of bytes
 ; [bits 765 = %100] space-padding (not zero-padding)
 	ld c, (1 << 7 | 2)
 	call PrintBCDNumber
 	ld de, wPrize2Price
-	hlcoord 13, 7
+	hlcoord 15, 7
 	ld c, (1 << 7 | 2)
 	call PrintBCDNumber
 	ld de, wPrize3Price
-	hlcoord 13, 9
+	hlcoord 15, 9
 	ld c, (1 << 7 | 2)
 	jp PrintBCDNumber
 
@@ -208,7 +256,9 @@ HandlePrizeChoice:
 	and a
 	jr nz, .printOhFineThen
 	call LoadCoinsToSubtract
-	call HasEnoughCoins
+	callfar HasEnoughCoins
+	push de
+	pop af
 	jr c, .notEnoughCoins
 	ld a, [wWhichPrizeWindow]
 	cp $02

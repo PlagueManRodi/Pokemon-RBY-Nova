@@ -15,10 +15,15 @@ TilePairCollisionsLand::
 	db FOREST, $20, $2E
 	db FOREST, $5E, $2E
 	db FOREST, $5F, $2E
+	db CAVERN_2, $20, $05
+	db CAVERN_2, $41, $05
+	db CAVERN_2, $2A, $05
+	db CAVERN_2, $05, $21
 	db -1 ; end
 
 TilePairCollisionsWater::
 	db FOREST, $14, $2E
 	db FOREST, $48, $2E
 	db CAVERN, $14, $05
+	db CAVERN_2, $14, $05
 	db -1 ; end

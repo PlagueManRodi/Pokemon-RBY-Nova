@@ -35,11 +35,18 @@ Route11GateUpstairsText2:
 	dec a ; OAKS_AIDE_GOT_ITEM?
 	jr nz, .no_item
 	SetEvent EVENT_GOT_ITEMFINDER
+	ld hl, ReceivedDOWSEText
+	call PrintText
 .got_item
 	ld hl, Route11GateUpstairsText_494a3
 	call PrintText
 .no_item
 	jr Route11GateUpstairsScriptEnd
+
+ReceivedDOWSEText:
+	text_far _ReceivedDOWSEText
+	sound_get_key_item
+	text_end
 
 Route11GateUpstairsText_494a3:
 	text_far _Route11GateUpstairsText_494a3

@@ -11,6 +11,43 @@ RockTunnelB1F_ScriptPointers:
 	dw CheckFightingMapTrainers
 	dw DisplayEnemyTrainerTextAndStartBattle
 	dw EndTrainerBattle
+	dw RockTunnelScript1
+	
+RockTunnelScript1:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, RockTunnelDontEndBattle
+	SetEvent EVENT_BEAT_COOLTRAINER_SUPERBOSS
+	xor a
+	ld a, 9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	call GBFadeOutToBlack
+	ld a, HS_ROCK_TUNNEL_B1F_COOLTRAINER
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call GBFadeInFromBlack
+	;
+	CheckEvent EVENT_BEAT_BUGCATCHER_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	CheckEvent EVENT_BEAT_GIOVANNI_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	ld a, HS_POKEMON_TOWER_7F_AGATHA
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.dontTriggerAgathaUltima
+	;
+	xor a
+	ld [wRockTunnelB1FCurScript], a
+	ld [wCurMapScript], a
+	ret
+
+RockTunnelDontEndBattle:
+	xor a
+	ld [wRockTunnelB1FCurScript], a
+	ld [wCurMapScript], a
+	ld [wJoyIgnore], a
+	ret
 
 RockTunnelB1F_TextPointers:
 	dw RockTunnel2Text1
@@ -21,6 +58,7 @@ RockTunnelB1F_TextPointers:
 	dw RockTunnel2Text6
 	dw RockTunnel2Text7
 	dw RockTunnel2Text8
+	dw RockTunnel2Text9
 
 RockTunnel2TrainerHeaders:
 	def_trainers
@@ -37,9 +75,11 @@ RockTunnel2TrainerHeader4:
 RockTunnel2TrainerHeader5:
 	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_5, 4, RockTunnel2BattleText7, RockTunnel2EndBattleText7, RockTunnel2AfterBattleText7
 RockTunnel2TrainerHeader6:
-	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_6, 3, RockTunnel2BattleText8, RockTunnel2EndBattleText8, RockTunnel2AfterBattleText8
+	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_6, 4, RockTunnel2BattleText8, RockTunnel2EndBattleText8, RockTunnel2AfterBattleText8
 RockTunnel2TrainerHeader7:
 	trainer EVENT_BEAT_ROCK_TUNNEL_2_TRAINER_7, 3, RockTunnel2BattleText9, RockTunnel2EndBattleText9, RockTunnel2AfterBattleText9
+RockTunnel2TrainerHeader8:
+	trainer EVENT_BEAT_COOLTRAINER_SUPERBOSS, 0, RockTunnel2BattleText10, RockTunnel2EndBattleText10, RockTunnel2BattleText10
 	db -1 ; end
 
 RockTunnel2Text1:
@@ -88,6 +128,15 @@ RockTunnel2Text8:
 	text_asm
 	ld hl, RockTunnel2TrainerHeader7
 	call TalkToTrainer
+	jp TextScriptEnd
+
+RockTunnel2Text9:
+	text_asm
+	ld hl, RockTunnel2TrainerHeader8
+	call TalkToTrainer
+	ld a, 3
+	ld [wRockTunnelB1FCurScript], a
+	ld [wCurMapScript], a
 	jp TextScriptEnd
 
 RockTunnel2BattleText2:
@@ -184,4 +233,12 @@ RockTunnel2EndBattleText9:
 
 RockTunnel2AfterBattleText9:
 	text_far _RockTunnel2AfterBattleText9
+	text_end
+
+RockTunnel2BattleText10:
+	text_far _RockTunnel2BattleText10
+	text_end
+
+RockTunnel2EndBattleText10:
+	text_far _RockTunnel2EndBattleText10
 	text_end

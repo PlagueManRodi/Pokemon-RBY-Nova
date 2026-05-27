@@ -6,7 +6,7 @@ ENDM
 TrainerPicAndMoneyPointers::
 	table_width 5, TrainerPicAndMoneyPointers
 	; pic pointer, base reward money
-	; money received after battle = base money × level of last enemy mon
+	; money received after battle = base money × level of last enemy mon / 100
 	pic_money YoungsterPic,    1500
 	pic_money BugCatcherPic,   1000
 	pic_money LassPic,         1500
@@ -19,7 +19,7 @@ TrainerPicAndMoneyPointers::
 	pic_money BikerPic,        2000
 	pic_money BurglarPic,      9000
 	pic_money EngineerPic,     5000
-	pic_money JugglerPic,      3500
+	pic_money KarenPic,        9900
 	pic_money FisherPic,       3500
 	pic_money SwimmerPic,       500
 	pic_money CueBallPic,      2500

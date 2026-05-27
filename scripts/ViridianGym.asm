@@ -133,22 +133,47 @@ ViridianGymGiovanniPostBattle:
 	jp z, ViridianGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-; fallthrough
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, ViridianGymReceiveTM27	
+	ld a, 16
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 7
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, ViridianGymResetScripts
+	lb bc, FLAG_SET, 7
+	predef FlagActionPredef
+	ld a, 17
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, ViridianGymResetScripts
+	ld a, 18
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp ViridianGymResetScripts
+	;
 ViridianGymReceiveTM27:
-	ld a, $c
+	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	lb bc, TM_FISSURE, 1
 	call GiveItem
 	jr nc, .BagFull
-	ld a, $d
+	ld a, $e
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_TM27
 	jr .gymVictory
 .BagFull
-	ld a, $e
+	ld a, $f
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
@@ -156,6 +181,20 @@ ViridianGymReceiveTM27:
 	set BIT_EARTHBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_EARTHBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 60
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
@@ -178,9 +217,13 @@ ViridianGym_TextPointers:
 	dw ViridianGymTrainerText8
 	dw ViridianGymGuideText
 	dw PickUpItemText
+	dw RivalText
 	dw GiovanniEarthBadgeInfoText
 	dw ReceivedTM27Text
 	dw TM27NoRoomText
+	dw ViridianGymRematchPostBattleText ; NEW
+	dw ReceivedProEarthBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 ViridianGymTrainerHeaders:
 	def_trainers 2
@@ -225,6 +268,12 @@ GiovanniText:
 	call GBFadeInFromBlack
 	jr .done
 .beforeBeat
+	ld d, 5
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, GiovanniPreBattleText
 	call PrintText
 	ld hl, wd72d
@@ -250,7 +299,8 @@ GiovanniPreBattleText:
 
 ReceivedEarthBadgeText:
 	text_far _ReceivedEarthBadgeText
-	sound_level_up ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
+	sound_get_item_1 ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
+	text_promptbutton
 	text_end
 
 GiovanniPostBattleAdviceText:
@@ -420,6 +470,8 @@ ViridianGymAfterBattleText8:
 
 ViridianGymGuideText:
 	text_asm
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .champ
 	CheckEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	jr nz, .afterBeat
 	ld hl, ViridianGymGuidePreBattleText
@@ -427,6 +479,10 @@ ViridianGymGuideText:
 	jr .done
 .afterBeat
 	ld hl, ViridianGymGuidePostBattleText
+	call PrintText
+	jr .done
+.champ
+	ld hl, ViridianGymGuideChampText
 	call PrintText
 .done
 	jp TextScriptEnd
@@ -437,4 +493,66 @@ ViridianGymGuidePreBattleText:
 
 ViridianGymGuidePostBattleText:
 	text_far _ViridianGymGuidePostBattleText
+	text_end
+
+ViridianGymGuideChampText:
+	text_far _ViridianGymGuideChampText
+	text_end
+
+RivalText:
+	text_asm
+	predef HealParty
+	ld hl, RivalPreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, RivalPreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, ViridianGymRematchDefeatedText
+	ld de, ViridianGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_RIVAL3
+	ld [wCurOpponent], a
+	ld a, 4
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, RivalPreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	ld a, $3
+	ld [wViridianGymCurScript], a
+.done
+	jp TextScriptEnd
+
+RivalPreBattleRematchText:
+	text_far _ViridianGymRematchPreBattleText
+	text_end
+	
+RivalPreBattleRematchAcceptedText:
+	text_far _ViridianGymRematchAcceptedText
+	text_end
+	
+RivalPreBattleRematchRefusedText:
+	text_far _ViridianGymRematchRefusedText
+	text_end
+
+ViridianGymRematchDefeatedText:
+	text_far _ViridianGymRematchDefeatedText
+	text_end
+
+ViridianGymRematchPostBattleText:
+	text_far _ViridianGymRematchPostBattleText
+	text_end
+
+ReceivedProEarthBadgeText:
+	text_far _ReceivedProEarthBadgeText
+	sound_get_item_1
 	text_end

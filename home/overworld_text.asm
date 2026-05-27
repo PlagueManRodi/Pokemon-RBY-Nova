@@ -29,3 +29,8 @@ PickUpItemText::
 	text_asm
 	predef PickUpItem
 	jp TextScriptEnd
+
+ProLeagueAvailableText::
+	text_far _ProLeagueAvailableText
+	sound_get_item_1
+	text_end

@@ -21,6 +21,8 @@ VermilionHouse2Text1:
 	ld hl, wd728
 	set 3, [hl] ; got old rod
 	ld hl, VermilionHouse2Text_560b6
+	call PrintText
+	ld hl, ReceivedFISHORODText
 	jr .done
 .bag_full
 	ld hl, VermilionHouse2Text_560ca
@@ -54,4 +56,9 @@ VermilionHouse2Text_560c5:
 
 VermilionHouse2Text_560ca:
 	text_far _VermilionHouse2Text_560ca
+	text_end
+
+ReceivedFISHORODText:
+	text_far _ReceivedFISHORODText
+	sound_get_key_item
 	text_end

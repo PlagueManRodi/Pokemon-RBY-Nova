@@ -14,10 +14,20 @@
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         PSYCHIC_M,    \
-	     TELEPORT,     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     SELFDESTRUCT, EGG_BOMB,     REST,         PSYWAVE,      EXPLOSION,    \
-	     SUBSTITUTE
+IF DEF(_MODERN)
+	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     SOLARBEAM,    PSYCHIC_M,    TELEPORT,     MIMIC,        DOUBLE_TEAM,  \
+	     REFLECT,      BIDE,         SELFDESTRUCT, EGG_BOMB,     DREAM_EATER,  \
+	     REST,         PSYWAVE,      EXPLOSION,    SUBSTITUTE,   SLUDGE_BOMB,  \
+		 STRENGTH,     FLASH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     SOLARBEAM,    PSYCHIC_M,    TELEPORT,     MIMIC,        DOUBLE_TEAM,  \
+	     REFLECT,      BIDE,         SELFDESTRUCT, EGG_BOMB,     DREAM_EATER,  \
+	     REST,         PSYWAVE,      EXPLOSION,    SUBSTITUTE,   STRENGTH,     \
+		 FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(ExeggcutePicFront)
+	assert BANK(ExeggcutePicFront) == BANK(ExeggcutePicBack)

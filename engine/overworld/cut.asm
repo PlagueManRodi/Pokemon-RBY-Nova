@@ -34,9 +34,15 @@ UsedCut:
 	call GetPartyMonName
 	ld hl, wd730
 	set 6, [hl]
+	CheckEvent EVENT_ON_SELECT_MENU
+	jr z, .usedCut
+	call Delay3
+	jr .alreadyDelayed
+.usedCut
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
 	call RestoreScreenTilesAndReloadTilePatterns
+.alreadyDelayed
 	ld a, SCREEN_HEIGHT_PX
 	ldh [hWY], a
 	call Delay3
@@ -46,7 +52,11 @@ UsedCut:
 	call Delay3
 	xor a
 	ldh [hWY], a
+	CheckEvent EVENT_ON_SELECT_MENU
+	ld hl, UsedHackText
+	jr nz, .hack
 	ld hl, UsedCutText
+.hack
 	call PrintText
 	call LoadScreenTilesFromBuffer2
 	ld hl, wd730
@@ -69,6 +79,10 @@ UsedCut:
 
 UsedCutText:
 	text_far _UsedCutText
+	text_end
+
+UsedHackText:
+	text_far _UsedHackText
 	text_end
 
 InitCutAnimOAM:

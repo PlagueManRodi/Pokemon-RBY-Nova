@@ -121,3 +121,11 @@ _ViridianForestText14::
 	line "VIRIDIAN FOREST"
 	cont "PEWTER CITY AHEAD"
 	done
+
+_ViridianForestBattleText15::
+	text "..."
+	done
+
+_ViridianForestEndBattleText15::
+	text "..."
+	prompt

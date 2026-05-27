@@ -7,6 +7,8 @@ CeladonPokecenter_TextPointers:
 	dw CeladonPokecenterText2
 	dw CeladonPokecenterText3
 	dw CeladonTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 CeladonTradeNurseText:
 	script_cable_club_receptionist

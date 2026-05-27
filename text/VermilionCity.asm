@@ -125,3 +125,46 @@ _VermilionCityText12::
 _VermilionCityText13::
 	text "VERMILION HARBOR"
 	done
+
+_VermilionCityText15::
+	text "The GYM's doors"
+	line "are locked..."
+	done
+
+_SSAnneWelcomeText42::
+	text "Welcome to S.S."
+	line "ANNE!"
+	done
+
+_SSAnneWelcomeText92::
+	text "S.S. ANNE is back"
+	line "on port!"
+
+	para "Excuse me, do you"
+	line "have a gold"
+	cont "ticket?"
+	prompt
+
+_SSAnneFlashedTicketText2::
+	text "<PLAYER> flashed"
+	line "the GOLD TICKET!"
+
+	para "Great! Welcome to"
+	line "S.S.ANNE!"
+	done
+
+_SSAnneNoTicketText2::
+	text "<PLAYER> doesn't"
+	line "have the needed"
+	cont "GOLD TICKET."
+
+	para "Sorry!"
+
+	para "You need a ticket"
+	line "to get aboard."
+	done
+
+_SSAnneShipBackText::
+	text "S.S. ANNE is back"
+	line "on port!"
+	done

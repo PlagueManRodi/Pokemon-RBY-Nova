@@ -79,6 +79,15 @@ OverworldLoopLessDelay::
 	ldh [hSpriteIndexOrTextID], a
 	jp .displayDialogue
 .startButtonNotPressed
+	;
+	bit BIT_SELECT, a
+	jr z, .selectButtonNotPressed
+; if SELECT is pressed
+	ld a, $D4 ; TEXT_SELECT_MENU
+	ldh [hSpriteIndexOrTextID], a
+	jp .displayDialogue
+.selectButtonNotPressed
+	;
 	bit BIT_A_BUTTON, a
 	jp z, .checkIfDownButtonIsPressed
 ; if A is pressed
@@ -282,8 +291,29 @@ OverworldLoopLessDelay::
 	ld a, [wd736]
 	bit 6, a ; jumping a ledge?
 	jr nz, .normalPlayerSpriteAdvancement
+	; Bike is normally 2x walking speed
+	; Holding B makes the bike even faster
+	ld a, [hJoyHeld]
+	and B_BUTTON
+	jr z, .notMachBike
 	call DoBikeSpeedup
+	call DoBikeSpeedup
+.notMachBike
+	call DoBikeSpeedup
+	jr .notRunning
 .normalPlayerSpriteAdvancement
+	; surf at 2x walking speed
+	ld a, [wWalkBikeSurfState]
+	cp $02
+	jr z, .surfFaster
+	; Holding B makes you run at 2x walking speed
+	ld a, [hJoyHeld]
+	and B_BUTTON
+	jr z, .notRunning
+.surfFaster
+	call DoBikeSpeedup
+.notRunning
+	;original .normalPlayerSpriteAdvancement continues here
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
 	and a
@@ -314,7 +344,50 @@ OverworldLoopLessDelay::
 	ld a, [wIsInBattle]
 	and a
 	jp nz, CheckWarpsNoCollision
-	predef ApplyOutOfBattlePoisonDamage ; also increment daycare mon exp
+;	predef ApplyOutOfBattlePoisonDamage ; also increment daycare mon exp
+
+; ADDED - Only increment daycare mon exp
+	ld a, [wd730]
+	add a
+	jp c, .noBlackOut ; no black out if joypad states are being simulated
+	ld a, [wPartyCount]
+	and a
+	jp z, .noBlackOut
+	ld a, [wDayCareInUse]
+	and a
+	jr z, .incrementEnd
+	ld hl, wDayCareMonExp + 2
+	inc [hl]
+	jr nz, .incrementEnd
+	dec hl
+	inc [hl]
+	jr nz, .incrementEnd
+	dec hl
+	inc [hl]
+	ld a, [hl]
+	cp $50
+	jr c, .incrementEnd
+	ld a, $50
+	ld [hl], a
+.incrementEnd
+	predef AnyPartyAlive
+	ld a, d
+	and a
+	jr nz, .noBlackOut
+	call EnableAutoTextBoxDrawing
+	ld a, TEXT_BLACKED_OUT
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wd72e
+	set 5, [hl]
+	ld a, $ff
+	jr .done
+.noBlackOut
+	xor a
+.done
+	ld [wOutOfBattleBlackout], a
+; END	
+
 	ld a, [wOutOfBattleBlackout]
 	and a
 	jp nz, HandleBlackOut ; if all pokemon fainted
@@ -343,6 +416,11 @@ OverworldLoopLessDelay::
 	ld a, [wCurMap]
 	cp OAKS_LAB
 	jp z, .noFaintCheck ; no blacking out if the player lost to the rival in Oak's lab
+	;
+	ld hl, wNewFlags
+	bit 2, [hl]
+	jr nz, .allPokemonFainted
+	;
 	callfar AnyPartyAlive
 	ld a, d
 	and a
@@ -352,6 +430,10 @@ OverworldLoopLessDelay::
 	call DelayFrames
 	jp EnterMap
 .allPokemonFainted
+	;
+	ld hl, wNewFlags
+	res 2, [hl]
+	;
 	ld a, $ff
 	ld [wIsInBattle], a
 	call RunMapScript
@@ -762,10 +844,15 @@ HandleBlackOut::
 	call StopMusic
 	ld hl, wd72e
 	res 5, [hl]
-	ld a, BANK(ResetStatusAndHalveMoneyOnBlackout) ; also BANK(SpecialWarpIn) and BANK(SpecialEnterMap)
+	ld a, BANK(ResetStatusAndHalveMoneyOnBlackout)
 	ldh [hLoadedROMBank], a
 	ld [MBC1RomBank], a
 	call ResetStatusAndHalveMoneyOnBlackout
+	;
+	ld a, BANK(SpecialWarpIn) ; also BANK(SpecialEnterMap)
+	ldh [hLoadedROMBank], a
+	ld [MBC1RomBank], a
+	;
 	call SpecialWarpIn
 	call PlayDefaultMusicFadeOutCurrent
 	jp SpecialEnterMap
@@ -1899,7 +1986,7 @@ CollisionCheckOnWater::
 	ld d, a
 	ld a, [wSpritePlayerStateData1CollisionData]
 	and d ; check if a sprite is in the direction the player is trying to go
-	jr nz, .checkIfNextTileIsPassable ; bug?
+	jr nz, .collision
 	ld hl, TilePairCollisionsWater
 	call CheckForJumpingAndTilePairCollisions
 	jr c, .collision

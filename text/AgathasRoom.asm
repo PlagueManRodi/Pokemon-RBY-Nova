@@ -42,3 +42,69 @@ _AgathaDontRunAwayText::
 	text "Someone's voice:"
 	line "Don't run away!"
 	done
+
+_KarenBeforeBattleText::
+	text "Ah, you must be"
+	line "the current"
+	cont "CHAMPION!"
+
+	para "AGATHA retired and"
+	line "I've taken her"
+	cont "place."
+	
+	para "I am KAREN of the"
+	line "neighboring"
+	cont "region, JOHTO."
+	
+	para "How amusing."
+	
+	para "I love DARK-TYPE"
+	line "#MON."
+	
+	para "I find their wild,"
+	line "tough image to be"
+	cont "so appealing."
+	
+	para "And they're so"
+	line "strong."
+	
+	para "Think you can take"
+	line "them?"
+	
+	para "Just try to"
+	line "entertain me."
+	
+	para "Let's go."
+	done
+
+_KarenEndBattleText::
+	text "Well, aren't"
+	line "you good."
+	
+	para "I like that in a"
+	line "TRAINER."
+	prompt
+
+_KarenAfterBattleText::
+	text "Strong #MON."
+	
+	para "Weak #MON."
+	
+	para "That is only the"
+	line "selfish"
+	cont "perception of"
+	cont "people."
+	
+	para "Truly skilled"
+	line "TRAINERs should"
+	cont "try to win with"
+	cont "their favorites."
+	
+	para "I like your style."
+	
+	para "You understand"
+	line "what's important."
+		
+	para "Go on--LANCE is"
+	line "waiting."
+	done

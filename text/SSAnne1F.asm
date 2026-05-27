@@ -19,3 +19,14 @@ _SSAnne1Text2::
 	line "challenged by the"
 	cont "more bored ones!"
 	done
+
+_SSAnnePreHealText::
+	text "Please allow me"
+	line "to heal your"
+	cont "#MON."
+	prompt
+
+_SSAnnePostHealText::
+	text "Your #MON are"
+	line "looking healthy."
+	done

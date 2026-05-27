@@ -170,11 +170,91 @@
 	const SUPER_FANG   ; a2
 	const SLASH        ; a3
 	const SUBSTITUTE   ; a4
-	const STRUGGLE     ; a5
+IF DEF(_MODERN)
+	const MEGAHORN     ; a5
+	const POLLEN_PUFF  ; a6
+	const X_SCISSOR    ; a7
+	const SIGNAL_BEAM  ; a8
+	const CRUNCH       ; a9
+	const DARK_PULSE   ; aa
+	const FEINT_ATTACK ; ab
+	const OUTRAGE      ; ac
+	const DRAGONHAMMER ; ad
+	const DRAGON_PULSE ; ae
+	const DRAGONBREATH ; af
+	const TWISTER      ; b0
+	const DUAL_CHOP    ; b1
+	const DISCHARGE    ; b2
+	const THUNDER_FANG ; b3
+	const SPARK        ; b4
+	const MOONLIGHT    ; b5
+	const MOONBLAST    ; b6
+	const DAZZLE_GLEAM ; b7
+	const DISARM_VOICE ; b8
+	const FAIRY_WIND   ; b9
+	const METEORASSAIL ; ba
+	const FOCUS_BLAST  ; bb
+	const DRAIN_PUNCH  ; bc
+	const LOW_SWEEP    ; bd
+	const STORM_THROW  ; be
+	const VACUUM_WAVE  ; bf
+	const FIRE_FANG    ; c0
+	const FLAME_WHEEL  ; c1
+	const ROOST        ; c2
+	const BRAVE_BIRD   ; c3
+	const HURRICANE    ; c4
+	const AIR_SLASH    ; c5
+	const AERIAL_ACE   ; c6
+	const SHADOW_BONE  ; c7
+	const SHADOW_BALL  ; c8
+	const SHADOW_PUNCH ; c9
+	const SHADOW_SNEAK ; ca
+	const SYNTHESIS    ; cb
+	const GRASSWHISTLE ; cc
+	const POWER_WHIP   ; cd
+	const GIGA_DRAIN   ; ce
+	const SCORCH_SANDS ; cf
+	const MUD_SHOT     ; d0
+	const SHEER_COLD   ; d1
+	const ICICLE_CRASH ; d2
+	const ICE_FANG     ; d3
+	const ICY_WIND     ; d4
+	const SLACK_OFF    ; d5
+	const MORNING_SUN  ; d6
+	const ROCK_CLIMB   ; d7
+	const GUNK_SHOT    ; d8
+	const SLUDGE_BOMB  ; d9
+	const ROCK_POLISH  ; da
+	const ROCK_WRECKER ; db
+	const ROCK_TOMB    ; dc
+	const IRON_DEFENSE ; dd
+	const IRON_TAIL    ; de
+	const IRON_HEAD    ; df
+	const FLASH_CANNON ; e0
+	const METAL_CLAW   ; e1
+	const WATER_PULSE  ; e2
+	const AQUA_JET     ; e3
+	const STONE_EDGE   ; e4
+	const LEAF_BLADE   ; e5
+	const NIGHT_SLASH  ; e6
+	const CROSS_CHOP   ; e7
+	const ROCK_SMASH   ; e8
+	const POISON_TAIL  ; e9
+	const REFLECT_TYPE ; ea
+	const POWER_GEM    ; eb
+DEF FIRST_ACID_TYPE_MOVE EQU const_value
+	const BANE_TOUCH   ; ec
+	const ACID_STREAM  ; ed
+	const CAUSTIC_BOMB ; ee
+DEF LAST_ACID_TYPE_MOVE EQU const_value
+ENDC
+	const STRUGGLE     ; a5 vanilla / ef modern
 DEF NUM_ATTACKS EQU const_value - 1
 
-	; Moves do double duty as animation identifiers.
-
+	; Moves do double duty as animation identifiers. - NEW, now they don't
+	; Separate other battle animations
+	const_def
+	const NO_ANIM
 	const SHOWPIC_ANIM
 	const STATUS_AFFECTED_ANIM
 	const ANIM_A8
@@ -213,4 +293,5 @@ DEF NUM_ATTACKS EQU const_value - 1
 	const ROCK_ANIM ; throw rock
 	const BAIT_ANIM ; throw bait
 
-DEF NUM_ATTACK_ANIMS EQU const_value - 1
+DEF NUM_ALTERNATIVE_ANIMS EQU const_value - 1
+;DEF NUM_ATTACK_ANIMS EQU const_value - 1

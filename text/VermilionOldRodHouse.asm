@@ -22,6 +22,11 @@ _VermilionHouse2Text_560b6::
 	text "!@"
 	text_end
 
+_ReceivedFISHORODText::
+	text "FISH (O.ROD) added"
+	line "to SELECT menu!"
+	done
+
 _VermilionHouse2Text_560bb::
 	text_start
 
@@ -32,7 +37,7 @@ _VermilionHouse2Text_560bb::
 	line "rivers, go out"
 	cont "and land the big"
 	cont "one, young one!"
-	done
+	prompt
 
 _VermilionHouse2Text_560c0::
 	text "Oh... That's so"

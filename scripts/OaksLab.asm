@@ -118,6 +118,7 @@ OaksLabScript4:
 	call UpdateSprites
 	ld hl, wFlags_D733
 	res 1, [hl]
+	call DelayFrame
 	call PlayDefaultMusic
 
 	ld a, $5
@@ -598,12 +599,6 @@ OaksLabScript16:
 	call DisplayTextID
 	SetEvent EVENT_GOT_POKEDEX
 	SetEvent EVENT_OAK_GOT_PARCEL
-	ld a, HS_LYING_OLD_MAN
-	ld [wMissableObjectIndex], a
-	predef HideObject
-	ld a, HS_OLD_MAN
-	ld [wMissableObjectIndex], a
-	predef ShowObject
 	ld a, [wSavedNPCMovementDirections2Index]
 	ld b, 0
 	ld c, a
@@ -638,6 +633,18 @@ OaksLabScript17:
 	ld a, HS_ROUTE_22_RIVAL_1
 	ld [wMissableObjectIndex], a
 	predef ShowObject
+	ld a, $fc                     ; 
+	ld [wJoyIgnore], a            ; 
+	call EnableAutoTextBoxDrawing ; 
+	ld a, $1c                     ; NEW
+	ldh [hSpriteIndexOrTextID], a ; 
+	call DisplayTextID            ;
+	lb bc, EXP_ALL, 1             ; Prof Oak
+	call GiveItem                 ; gives player
+	call Delay3                   ; EXP ALL
+	ld a, $1d					  ; 
+	ldh [hSpriteIndexOrTextID], a ;
+	call DisplayTextID            ;
 	ld a, $5
 	ld [wPalletTownCurScript], a
 	xor a
@@ -663,6 +670,15 @@ OaksLabScript_RemoveParcel:
 	inc c
 	jr .loop
 .foundParcel
+
+	; update menu info
+	xor a
+	ld [wListScrollOffset], a
+	ld [wCurrentMenuItem], a
+	ld [wSavedMenuItem], a
+	ld [wBagSavedMenuItem], a
+	ld [wSavedListScrollOffset], a
+
 	ld hl, wNumBagItems
 	ld a, c
 	ld [wWhichPokemon], a
@@ -747,6 +763,8 @@ OaksLab_TextPointers:
 	dw OaksLabText25
 	dw OaksLabText26
 	dw OaksLabText27
+	dw OaksLabText28
+	dw OaksLabText29
 
 OaksLab_TextPointers2:
 	dw OaksLabText1
@@ -1219,6 +1237,15 @@ OaksLabText26:
 
 OaksLabText27:
 	text_far _OaksLabText27
+	text_end
+
+OaksLabText28:
+	text_far _OaksLabText28
+	sound_get_key_item
+	text_end
+
+OaksLabText29:
+	text_far _OaksLabText29
 	text_end
 
 OaksLabText11:

@@ -22,6 +22,7 @@ Route24_ScriptPointers:
 	dw Route24Script4
 
 Route24Script0:
+	call Route24ScriptGatekeeper
 	CheckEvent EVENT_GOT_NUGGET
 	jp nz, CheckFightingMapTrainers
 	ld hl, CoordsData_5140e
@@ -48,6 +49,10 @@ CoordsData_5140e:
 	dbmapcoord 10, 15
 	db -1 ; end
 
+CoordsData_Coords2:
+	dbmapcoord 16, 9
+	db -1 ; end
+
 Route24Script4:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
@@ -66,6 +71,9 @@ Route24Script3:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE24_ROCKET
+	ld a, HS_CERULEAN_CITY_GYM_GUARD
+	ld [wMissableObjectIndex], a
+	predef HideObject
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -76,6 +84,29 @@ Route24Script3:
 	ld [wCurMapScript], a
 	ret
 
+Route24ScriptGatekeeper:
+	CheckEvent EVENT_BEAT_MISTY
+	ret nz
+	ld hl, CoordsData_Coords2
+	call ArePlayerCoordsInArray
+	ret nc
+	ld a, $9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_LEFT
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, $4
+	ld [wRoute24CurScript], a
+	ret
+	
 Route24_TextPointers:
 	dw Route24Text1
 	dw Route24Text2
@@ -85,6 +116,7 @@ Route24_TextPointers:
 	dw Route24Text6
 	dw Route24Text7
 	dw PickUpItemText
+	dw Route24Text9
 
 Route24TrainerHeaders:
 	def_trainers 2
@@ -115,6 +147,7 @@ Route24Text1:
 	SetEvent EVENT_GOT_NUGGET
 	ld hl, Route24Text_5151a
 	call PrintText
+.rebattle                             		; Added so the ROCKET grunt will rebattle you if you lost the first time
 	ld hl, Route24Text_51526
 	call PrintText
 	ld hl, wd72d
@@ -134,6 +167,8 @@ Route24Text1:
 	ld [wCurMapScript], a
 	jp TextScriptEnd
 .got_item
+	CheckEvent EVENT_BEAT_ROUTE24_ROCKET	; Added so the ROCKET grunt will rebattle you if you lost the first time
+	jr z, .rebattle                     	; Added so the ROCKET grunt will rebattle you if you lost the first time
 	ld hl, Route24Text_51530
 	call PrintText
 	jp TextScriptEnd
@@ -277,4 +312,24 @@ Route24EndBattleText6:
 
 Route24AfterBattleText6:
 	text_far _Route24AfterBattleText6
+	text_end
+
+Route24Text9:
+	text_asm
+	ld hl, Route24Text_Gatekeeper
+	call PrintText
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_LEFT
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, $4
+	ld [wRoute24CurScript], a
+	jp TextScriptEnd
+
+Route24Text_Gatekeeper:
+	text_far _Route24Text_Gatekeeper
 	text_end

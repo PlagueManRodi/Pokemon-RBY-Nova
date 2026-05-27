@@ -10,14 +10,26 @@
 	INCBIN "gfx/pokemon/front/vileplume.pic", 0, 1 ; sprite dimensions
 	dw VileplumePicFront, VileplumePicBack
 
-	db STUN_SPORE, SLEEP_POWDER, ACID, PETAL_DANCE ; level 1 learnset
+IF DEF(_MODERN)
+	db STUN_SPORE, SLEEP_POWDER, MEGA_DRAIN, SLUDGE_BOMB ; level 1 learnset modern
+ELSE
+	db STUN_SPORE, SLEEP_POWDER, MEGA_DRAIN, GROWTH ; level 1 learnset
+ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    MIMIC,        \
 	     DOUBLE_TEAM,  REFLECT,      BIDE,         REST,         SUBSTITUTE,   \
-	     CUT
+	     SLUDGE_BOMB,  DAZZLE_GLEAM, ACID_STREAM,  CUT,          FLASH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    MIMIC,        \
+	     DOUBLE_TEAM,  REFLECT,      BIDE,         REST,         SUBSTITUTE,   \
+	     CUT,          FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(VileplumePicFront)
+	assert BANK(VileplumePicFront) == BANK(VileplumePicBack)

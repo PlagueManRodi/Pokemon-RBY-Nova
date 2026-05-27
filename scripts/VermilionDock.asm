@@ -212,5 +212,12 @@ VermilionDock_TextPointers:
 	dw VermilionDockText1
 
 VermilionDockText1:
-	text_far _VermilionDockText1
-	text_end
+	text_asm
+	lb bc, MEW, 5
+	call GivePokemon
+	jr nc, .party_full
+	ld a, HS_VERMILION_HARBOR_MEW_GIFT
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.party_full
+	jp TextScriptEnd	

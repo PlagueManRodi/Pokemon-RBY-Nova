@@ -21,6 +21,8 @@ Route12HouseText1:
 	ld hl, wd728
 	set 5, [hl] ; received super rod
 	ld hl, Route12HouseText_564c5
+	call PrintText
+	ld hl, ReceivedFISHSRODText
 	jr .done
 .bag_full
 	ld hl, Route12HouseText_564d9
@@ -42,6 +44,11 @@ Route12HouseText_564c5:
 	text_far _Route12HouseText_564c5
 	sound_get_item_1
 	text_far _Route12HouseText_564ca
+	text_end
+
+ReceivedFISHSRODText:
+	text_far _ReceivedFISHSRODText
+	sound_get_key_item
 	text_end
 
 Route12HouseText_564cf:

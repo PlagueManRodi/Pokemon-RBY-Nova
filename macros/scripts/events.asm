@@ -446,3 +446,15 @@ MACRO AdjustEventBit
 		add ((\1) % 8) - (\2)
 	ENDC
 ENDM
+
+MACRO ResetEventA
+	ld a, [wEventFlags + ((\1) / 8)]
+	res (\1) % 8, a
+	ld [wEventFlags + ((\1) / 8)], a
+ENDM
+
+MACRO SetEventA
+	ld a, [wEventFlags + ((\1) / 8)]
+	set (\1) % 8, a
+	ld [wEventFlags + ((\1) / 8)], a
+ENDM

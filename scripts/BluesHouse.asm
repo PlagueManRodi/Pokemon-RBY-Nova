@@ -43,6 +43,8 @@ BluesHouseDaisySittingText:
 	predef HideObject
 	ld hl, GotMapText
 	call PrintText
+	ld hl, ReceivedREADMAPText
+	call PrintText
 	SetEvent EVENT_GOT_TOWN_MAP
 	jr .done
 
@@ -67,6 +69,11 @@ DaisyOfferMapText:
 
 GotMapText:
 	text_far _GotMapText
+	sound_get_key_item
+	text_end
+
+ReceivedREADMAPText:
+	text_far _ReceivedREADMAPText
 	sound_get_key_item
 	text_end
 

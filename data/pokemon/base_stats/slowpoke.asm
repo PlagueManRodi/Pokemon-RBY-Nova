@@ -3,23 +3,29 @@
 	db  90,  65,  65,  15,  40
 	;   hp  atk  def  spd  spc
 
-	db WATER, PSYCHIC_TYPE ; type
+	db PSYCHIC_TYPE, PSYCHIC_TYPE ; type
 	db 190 ; catch rate
-	db 99 ; base exp
+	db 63 ; base exp
 
 	INCBIN "gfx/pokemon/front/slowpoke.pic", 0, 1 ; sprite dimensions
 	dw SlowpokePicFront, SlowpokePicBack
 
-	db CONFUSION, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TACKLE, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          PSYCHIC_M,    TELEPORT,     \
-	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         FIRE_BLAST,   \
-	     SWIFT,        SKULL_BASH,   REST,         THUNDER_WAVE, PSYWAVE,      \
-	     TRI_ATTACK,   SUBSTITUTE,   SURF,         STRENGTH,     FLASH
+IF DEF(_MODERN)
+	tmhm BODY_SLAM,    TAKE_DOWN,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      \
+	     EARTHQUAKE,   DIG,          PSYCHIC_M,    DOUBLE_TEAM,  FIRE_BLAST,   \
+	     SWIFT,        REST,         THUNDER_WAVE, TRI_ATTACK,   SUBSTITUTE,   \
+	     SHADOW_BALL,  ACID_STREAM,  SURF,         STRENGTH,     FLASH
+ELSE
+	tmhm BODY_SLAM,    TAKE_DOWN,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      \
+	     EARTHQUAKE,   DIG,          PSYCHIC_M,    DOUBLE_TEAM,  FIRE_BLAST,   \
+	     SWIFT,        REST,         THUNDER_WAVE, TRI_ATTACK,   SUBSTITUTE,   \
+	     SURF,         STRENGTH,     FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(SlowpokePicFront)
+	assert BANK(SlowpokePicFront) == BANK(SlowpokePicBack)

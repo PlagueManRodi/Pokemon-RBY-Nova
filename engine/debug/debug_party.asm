@@ -7,7 +7,7 @@
 ; http://www.ign.com/articles/2000/02/09/abc-news-pokamon-chat-transcript
 
 SetIshiharaTeam:
-	ld de, IshiharaTeam
+	ld de, TestTeam ; IshiharaTeam
 .loop
 	ld a, [de]
 	cp -1
@@ -34,6 +34,15 @@ IF DEF(_DEBUG)
 	db PIKACHU, 5
 ENDC
 	db -1 ; end
+	
+TestTeam:
+	db GENGAR, 100
+	db STARMIE, 100
+	db ALAKAZAM, 100
+	db BLISSEY, 100
+	db TAUROS, 100
+	db MAGNEZONE, 100
+	db -1 ; end
 
 DebugStart:
 IF DEF(_DEBUG)
@@ -50,7 +59,9 @@ IF DEF(_DEBUG)
 	ld [wObtainedBadges], a
 
 	call SetIshiharaTeam
-
+	
+	jp .myMoves
+	
 	; Exeggutor gets four HM moves.
 	ld hl, wPartyMon1Moves
 	ld a, FLY
@@ -93,10 +104,76 @@ IF DEF(_DEBUG)
 	ld hl, wPartyMon6PP + 2
 	ld a, 15
 	ld [hl], a
+	
+	; My moves
+
+.myMoves
+IF DEF(_MODERN)
+	ld hl, wPartyMon1Moves
+	ld a, DARK_PULSE
+	ld [hli], a
+	ld a, THUNDERBOLT
+	ld [hli], a
+	ld a, DAZZLE_GLEAM
+	ld [hli], a
+	ld a, FLY
+	ld [hl], a
+	
+	ld hl, wPartyMon2Moves
+	ld a, SURF
+	ld [hli], a
+	ld a, THUNDERBOLT
+	ld [hli], a
+	ld a, PSYCHIC_M
+	ld [hli], a
+	ld a, RECOVER
+	ld [hl], a
+	
+	ld hl, wPartyMon3Moves
+	ld a, DAZZLE_GLEAM
+	ld [hli], a
+	ld a, PSYCHIC_M
+	ld [hli], a
+	ld a, THUNDER_WAVE
+	ld [hli], a
+	ld a, RECOVER
+	ld [hl], a
+	
+	ld hl, wPartyMon4Moves
+	ld a, THUNDERBOLT
+	ld [hli], a
+	ld a, ICE_BEAM
+	ld [hli], a
+	ld a, THUNDER_WAVE
+	ld [hli], a
+	ld a, SOFTBOILED
+	ld [hl], a
+	
+	ld hl, wPartyMon5Moves
+	ld a, BODY_SLAM
+	ld [hli], a
+	ld a, HYPER_BEAM
+	ld [hli], a
+	ld a, FIRE_BLAST
+	ld [hli], a
+	ld a, EARTHQUAKE
+	ld [hl], a
+	
+	ld hl, wPartyMon6Moves
+	ld a, FLASH_CANNON
+	ld [hli], a
+	ld a, THUNDERBOLT
+	ld [hli], a
+	ld a, REFLECT
+	ld [hli], a
+	ld a, THUNDER_WAVE
+	ld [hl], a
+ENDC	
 
 	; Get some debug items.
 	ld hl, wNumBagItems
 	ld de, DebugItemsList
+;	ld de, DebugUnusedList
 .items_loop
 	ld a, [de]
 	cp -1
@@ -116,7 +193,17 @@ IF DEF(_DEBUG)
 	ld hl, wPokedexSeen
 	call DebugSetPokedexEntries
 	SetEvent EVENT_GOT_POKEDEX
-
+	
+	;
+	SetEvent EVENT_GOT_HM01
+	SetEvent EVENT_GOT_HM02
+	SetEvent EVENT_GOT_HM03
+	SetEvent EVENT_GOT_HM04
+	SetEvent EVENT_GOT_HM05
+	
+	SetEvent EVENT_GOT_POKE_FLUTE
+	;
+	
 	; Rival chose Squirtle,
 	; Player chose Charmander.
 	ld hl, wRivalStarter
@@ -135,7 +222,7 @@ DebugSetPokedexEntries:
 	ld [hli], a
 	dec b
 	jr nz, .loop
-	ld [hl], %01111111
+	ld [hl], %00111111
 	ret
 
 DebugItemsList:
@@ -150,9 +237,27 @@ DebugItemsList:
 	db CARD_KEY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1
+	db RECOVERY_KIT, 1
+	db REPEL_KIT, 1
+	db TRAINING_KIT, 1
+	db POKE_FLUTE, 1
+	db SILPH_SCOPE, 1
+	db CAPTURE_CHARM, 1
 	db -1 ; end
 
 DebugUnusedList:
+	db BIKE, 1
+	db DOWSE, 1
+	db READ_MAP, 1
+	db HEAL, 1
+	db WARD, 1
+	db TRAIN, 1
+	db FISH_S_ROD, 1
+	db FISH_G_ROD, 1
+	db FISH_O_ROD, 1
+	db ESCAPE, 1
+	db WARP, 1
+	db PERFORM, 1
 	db -1 ; end
 ELSE
 	ret

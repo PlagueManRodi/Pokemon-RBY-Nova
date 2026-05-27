@@ -22,7 +22,8 @@ Route9_TextPointers:
 	dw Route9Text7
 	dw Route9Text8
 	dw Route9Text9
-	dw PickUpItemText
+;	dw PickUpItemText
+	dw Route9Text10
 	dw Route9Text11
 
 Route9TrainerHeaders:
@@ -200,6 +201,21 @@ Route9EndBattleText9:
 
 Route9AfterBattleText9:
 	text_far _Route9AfterBattleText9
+	text_end
+
+Route9Text10:
+	text_asm
+	ld hl, PickUpItemText
+	call PrintText
+	CheckEvent EVENT_GOT_TM30
+	jp z, TextScriptEnd
+	ld hl, ReceivedWARPText
+	call PrintText
+	jp TextScriptEnd
+
+ReceivedWARPText:
+	text_far _ReceivedWARPText
+	sound_get_key_item
 	text_end
 
 Route9Text11:

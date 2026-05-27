@@ -46,8 +46,26 @@ LancesRoom_ScriptPointers:
 	dw LanceScript2
 	dw LanceScript3
 	dw LanceScript4
+	dw LanceScript5
 
 LanceScript4:
+	ret
+
+LanceScript5:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, .done
+	ld hl, wCurrentMapScriptFlags
+	set 5, [hl]
+	SetEvent EVENT_BEAT_LANCES_ROOM_TRAINER_0
+	ld a, $1
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.done
+	xor a
+	ld [wJoyIgnore], a
+	ld [wLancesRoomCurScript], a
+	ld [wCurMapScript], a
 	ret
 
 LanceScript0:
@@ -58,13 +76,21 @@ LanceScript0:
 	jp nc, CheckFightingMapTrainers
 	xor a
 	ldh [hJoyHeld], a
-	ld a, [wCoordIndex]
-	cp $3  ; Is player standing next to Lance's sprite?
-	jr nc, .notStandingNextToLance
-	ld a, $1
+	ld a, [wYCoord]
+	cp 1
+;	ld a, [wCoordIndex]
+;	cp $3  ; Is player standing next to Lance's sprite?
+	jr nz, .notStandingNextToLance
+	ld a, $2
 	ldh [hSpriteIndexOrTextID], a
-	jp DisplayTextID
+	call DisplayTextID
+	ld a, D_DOWN
+	ld [wSimulatedJoypadStatesEnd], a
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	jp StartSimulatingJoypadStates
 .notStandingNextToLance
+	ld a, [wCoordIndex]
 	cp $5  ; Is player standing on the entrance staircase?
 	jr z, WalkToLance
 	CheckAndSetEvent EVENT_LANCES_ROOM_LOCK_DOOR
@@ -127,6 +153,7 @@ LanceScript3:
 
 LancesRoom_TextPointers:
 	dw LanceText1
+	dw LanceText2
 
 LancesRoomTrainerHeaders:
 	def_trainers
@@ -136,8 +163,45 @@ LancesRoomTrainerHeader0:
 
 LanceText1:
 	text_asm
+	ld hl, wVermilionBeachFlags
+	lb bc, FLAG_TEST, 2
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr nz, .LanceRematch
+	CheckEvent EVENT_BEAT_LANCES_ROOM_TRAINER_0
+	jr nz, .noHealing
+	predef HealParty
+.noHealing
 	ld hl, LancesRoomTrainerHeader0
 	call TalkToTrainer
+	jp TextScriptEnd
+.LanceRematch
+	CheckEvent EVENT_BEAT_LANCES_ROOM_TRAINER_0
+	jr z, .beforeRematch
+	ld hl, LanceRematchAfterBattleText
+	call PrintText
+	SetEvent EVENT_BEAT_LANCE
+	jr .done
+.beforeRematch
+	predef HealParty
+	ld hl, LanceRematchBeforeBattleText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, LanceRematchEndBattleText
+	ld de, LanceRematchEndBattleText
+	call SaveEndBattleTextPointers
+	ld a, OPP_LANCE
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	ld a, 5
+	ld [wLancesRoomCurScript], a
+	ld [wCurMapScript], a
+.done
 	jp TextScriptEnd
 
 LanceBeforeBattleText:
@@ -153,3 +217,19 @@ LanceAfterBattleText:
 	text_asm
 	SetEvent EVENT_BEAT_LANCE
 	jp TextScriptEnd
+
+LanceText2:
+	text_far _LanceDontRunAwayText
+	text_end
+
+LanceRematchBeforeBattleText:
+	text_far _LanceRematchBeforeBattleText
+	text_end
+
+LanceRematchEndBattleText:
+	text_far _LanceRematchEndBattleText
+	text_end
+
+LanceRematchAfterBattleText:
+	text_far _LanceRematchAfterBattleText
+	text_end

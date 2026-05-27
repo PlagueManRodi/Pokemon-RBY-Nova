@@ -41,24 +41,70 @@ _LanceAfterBattleText::
 	cont "dragons lost to"
 	cont "you, <PLAYER>!"
 
-	para "You are now the"
-	line "#MON LEAGUE"
-	cont "champion!"
-
-	para "...Or, you would"
-	line "have been, but"
-	cont "you have one more"
-	cont "challenge ahead."
+	para "You have one more"
+	line "challenge ahead."
 
 	para "You have to face"
 	line "another trainer!"
-	cont "His name is..."
+	
+	para "He should be here"
+	line "soon."
+	done
 
-	para "<RIVAL>!"
-	line "He beat the ELITE"
-	cont "FOUR before you!"
+_LanceDontRunAwayText::
+	text "LANCE: Don't run"
+	line "away!"
+	done
 
-	para "He is the real"
-	line "#MON LEAGUE"
-	cont "champion!@"
-	text_end
+_LanceRematchBeforeBattleText::
+	text "I'm glad you've"
+	line "come."
+	
+	para "The newly updated"
+	line "#MON LEAGUE's"
+	cont "reputation has"
+	cont "really taken off!"
+
+	para "It's all thanks to"
+	line "you."
+	
+	para "I'd feel ashamed to"
+	line "call myself LANCE"
+	cont "the dragon"
+	cont "TRAINER if I"
+	cont "didn't challenge"
+	cont "you to a battle!"
+	done
+
+_LanceRematchEndBattleText::
+	text "How could I"
+	line "be pushed to such"
+	cont "a point?"
+	prompt
+
+_LanceRematchAfterBattleText::
+	text "There's no way my"
+	line "dragon brigade is"
+	cont "weak."
+	
+	para "...What I'm saying"
+	line "is that means"
+	cont "your strength is"
+	cont "truly incredible!"
+	
+	para "Now then,"
+	line "<PLAYER>!"
+	
+	para "You already know"
+	line "what's next, don't"
+	cont "you?"
+	
+	para "That's right,"
+	line "CHAMPION."
+	
+	para "Your final"
+	line "challenger awaits"
+	cont "you on the stage"
+	cont "of your final"
+	cont "battle!"
+	done

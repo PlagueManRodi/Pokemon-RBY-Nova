@@ -69,6 +69,7 @@ BlkPacket_Battle:
 	ATTR_BLK_DATA %011, 0,0,0, 10,07, 19,10 ; player HP bar: pal 0
 	ATTR_BLK_DATA %011, 2,2,0, 00,04, 08,11 ; player mon: pal 2
 	ATTR_BLK_DATA %011, 3,3,0, 11,00, 19,06 ; enemy mon : pal 3
+;	ATTR_BLK_DATA %011, 0,0,0, 10,10, 19,10 ; exp bar : pal 0
 
 ; unused
 	db $03, 00,00, 19,11, $00

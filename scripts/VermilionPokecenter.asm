@@ -7,6 +7,8 @@ VermilionPokecenter_TextPointers:
 	dw VermilionPokecenterText2
 	dw VermilionPokecenterText3
 	dw VermilionTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 VermilionHealNurseText:
 	script_pokecenter_nurse

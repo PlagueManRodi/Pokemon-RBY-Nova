@@ -1,0 +1,8 @@
+PriorityMoves:
+	db QUICK_ATTACK
+IF DEF(_MODERN)
+	db VACUUM_WAVE
+	db SHADOW_SNEAK
+	db AQUA_JET
+ENDC
+	db -1 ; end

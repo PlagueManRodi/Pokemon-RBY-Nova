@@ -54,3 +54,41 @@ _PalletTownText6::
 _PalletTownText7::
 	text "<RIVAL>'s house "
 	done
+
+_PalletTownText8::
+	text "<PLAYER>!"
+	
+	para "You can now visit"
+	line "the CELADON CITY"
+	cont "NOVA HOUSE!"
+	
+	para "You'll find many"
+	line "useful services"
+	cont "for strong"
+	cont "TRAINERs there."
+	
+	para "I've been told the"
+	line "GYM LEADERs are"
+	cont "waiting eagerly"
+	cont "for a rematch"
+	cont "with you!"
+	
+	para "I also heard that"
+	line "very strong"
+	cont "#MON appeared"
+	cont "in the world!"
+	
+	para "First, there's"
+	line "thick fog coming"
+	cont "from MOUNT MOON"
+	cont "B3F!"
+	
+	para "Second, a strong"
+	line "electro-magnetic"
+	cont "wave in VERMILION"
+	cont "BEACH!"
+	
+	para "You should try to"
+	line "catch those"
+	cont "#MON!"
+	done

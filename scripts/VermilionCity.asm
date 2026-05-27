@@ -18,9 +18,26 @@ VermilionCity_Script:
 	ldh a, [hRandomSub]
 	and $e
 	ld [wFirstLockTrashCanIndex], a
+; hide Vermilion Beach entrance
+IF DEF(_DEBUG)
 	ret
+ENDC
+	CheckEvent EVENT_BECAME_CHAMPION
+	ret nz
+	ld a, 25
+	ld [wNewTileBlockID], a
+	lb bc, 2, 0
+	predef ReplaceTileBlock
+	lb bc, 3, 0
+	predef ReplaceTileBlock
+	ld a, 21
+	ld [wNewTileBlockID], a
+	lb bc, 4, 0
+	predef_jump ReplaceTileBlock
 
 .initCityScript
+	callfar ResetVermilionBeachEvents
+	callfar RemoveVermilionBeachItems
 	CheckEventHL EVENT_SS_ANNE_LEFT
 	ret z
 	CheckEventReuseHL EVENT_WALKED_PAST_GUARD_AFTER_SS_ANNE_LEFT
@@ -38,6 +55,7 @@ VermilionCity_ScriptPointers:
 	dw VermilionCityScript4
 
 VermilionCityScript0:
+	call VermilionCityGymDoorScript
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	and a ; cp SPRITE_FACING_DOWN
 	ret nz
@@ -47,6 +65,8 @@ VermilionCityScript0:
 	xor a
 	ldh [hJoyHeld], a
 	ld [wcf0d], a
+	CheckEvent EVENT_GOT_GOLD_TICKET
+	jr nz, .inPostGame
 	ld a, $3
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -64,6 +84,49 @@ VermilionCityScript0:
 	ld [wSimulatedJoypadStatesIndex], a
 	call StartSimulatingJoypadStates
 	ld a, $1
+	ld [wVermilionCityCurScript], a
+	ret
+.inPostGame
+	ld a, $f
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld b, GOLD_TICKET
+	predef GetQuantityOfItemInBag
+	ld a, b
+	and a
+	ret nz
+	jr .shipHasDeparted
+
+VermilionCityGymDoorScript:
+	CheckEvent EVENT_SS_ANNE_LEFT
+	jr z, .gym_closed
+	ret
+.gym_closed
+	ld a, [wYCoord]
+	cp 20
+	ret nz
+	ld a, [wXCoord]
+	cp 12
+	ret nz
+	ld a, $e
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_DOWN
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ret
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	call Delay3
+	ld a, 0
 	ld [wVermilionCityCurScript], a
 	ret
 
@@ -127,6 +190,8 @@ VermilionCity_TextPointers:
 	dw VermilionCityText11
 	dw VermilionCityText12
 	dw VermilionCityText13
+	dw VermilionCityText15
+	dw VermilionCityText16
 
 VermilionCityText1:
 	text_far _VermilionCityText1
@@ -155,6 +220,8 @@ VermilionCityTextSSAnneDeparted:
 
 VermilionCityText3:
 	text_asm
+	CheckEvent EVENT_GOT_GOLD_TICKET
+	jr nz, .shipIsBack
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .shipHasDeparted
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -186,6 +253,10 @@ VermilionCityText3:
 	jr .end
 .shipHasDeparted
 	ld hl, SSAnneNotHereText
+	call PrintText
+	jr .end
+.shipIsBack
+	ld hl, SSAnneShipBackText
 	call PrintText
 .end
 	jp TextScriptEnd
@@ -254,4 +325,65 @@ VermilionCityText12:
 
 VermilionCityText13:
 	text_far _VermilionCityText13
+	text_end
+
+VermilionCityText15:
+	text_far _VermilionCityText15
+	text_end
+
+VermilionCityText16:
+	text_asm
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_RIGHT
+	jr z, .greetPlayer2
+	ld hl, .inFrontOfOrBehindGuardCoords2
+	call ArePlayerCoordsInArray
+	jr nc, .greetPlayerAndCheckTicket2
+.greetPlayer2
+	ld hl, SSAnneWelcomeText42
+	call PrintText
+	jr .end2
+.greetPlayerAndCheckTicket2
+	ld hl, SSAnneWelcomeText92
+	call PrintText
+	ld b, GOLD_TICKET
+	predef GetQuantityOfItemInBag
+	ld a, b
+	and a
+	jr nz, .playerHasTicket2
+	ld hl, SSAnneNoTicketText2
+	call PrintText
+	jr .end2
+.playerHasTicket2
+	ld hl, SSAnneFlashedTicketText2
+	call PrintText
+	ld a, $4
+	ld [wVermilionCityCurScript], a
+	jr .end2
+.end2
+	jp TextScriptEnd
+
+.inFrontOfOrBehindGuardCoords2
+	dbmapcoord 19, 29 ; in front of guard
+	dbmapcoord 19, 31 ; behind guard
+	db -1 ; end
+
+SSAnneWelcomeText42:
+	text_far _SSAnneWelcomeText42
+	text_end
+
+SSAnneWelcomeText92:
+	text_far _SSAnneWelcomeText92
+	text_end
+
+SSAnneFlashedTicketText2:
+	text_far _SSAnneFlashedTicketText2
+	text_end
+
+SSAnneNoTicketText2:
+	text_far _SSAnneNoTicketText2
+	text_end
+
+SSAnneShipBackText:
+	text_far _SSAnneShipBackText
 	text_end

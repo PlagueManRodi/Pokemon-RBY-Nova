@@ -10,16 +10,30 @@
 	INCBIN "gfx/pokemon/front/starmie.pic", 0, 1 ; sprite dimensions
 	dw StarmiePicFront, StarmiePicBack
 
-	db TACKLE, WATER_GUN, HARDEN, NO_MOVE ; level 1 learnset
+IF DEF(_MODERN)
+	db RECOVER, POWER_GEM, BUBBLEBEAM, CONFUSE_RAY ; level 1 learnset modern
+ELSE
+	db RECOVER, MINIMIZE, BUBBLEBEAM, CONFUSE_RAY ; level 1 learnset
+ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    \
 	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         THUNDERBOLT,  \
 	     THUNDER,      PSYCHIC_M,    TELEPORT,     MIMIC,        DOUBLE_TEAM,  \
-	     REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   REST,         \
-	     THUNDER_WAVE, PSYWAVE,      TRI_ATTACK,   SUBSTITUTE,   SURF,         \
-	     FLASH
+	     REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   DREAM_EATER,  \
+	     REST,         THUNDER_WAVE, PSYWAVE,      TRI_ATTACK,   SUBSTITUTE,   \
+	     DAZZLE_GLEAM, SURF,         FLASH
+ELSE
+	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    \
+	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         THUNDERBOLT,  \
+	     THUNDER,      PSYCHIC_M,    TELEPORT,     MIMIC,        DOUBLE_TEAM,  \
+	     REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   DREAM_EATER,  \
+	     REST,         THUNDER_WAVE, PSYWAVE,      TRI_ATTACK,   SUBSTITUTE,   \
+	     SURF,         FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(StarmiePicFront)
+	assert BANK(StarmiePicFront) == BANK(StarmiePicBack)

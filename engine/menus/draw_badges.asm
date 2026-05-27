@@ -65,11 +65,26 @@ DrawBadges:
 	inc a
 	ld [wBadgeNumberTile], a
 
-; Names aren't printed if the badge is owned.
-	ld a, [de]
-	and a
+; NEW, Pro Badges
+	
+	sub a, $D8 ; first Badge Number Tile
+	ld d, 1
+.loop
+	dec a
+	jr z, .foundD
+	sla d
+	jr .loop
+.foundD	
+	ld a, [wProBadgeFlags]
+	and d
 	ld a, [wBadgeNameTile]
-	jr nz, .SkipName
+	jr z, .SkipName
+	
+; Names aren't printed if the badge is owned.
+;	ld a, [de]
+;	and a
+;	ld a, [wBadgeNameTile]
+;	jr nz, .SkipName
 	call .PlaceTiles
 	jr .PlaceBadge
 

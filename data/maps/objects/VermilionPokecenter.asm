@@ -12,5 +12,7 @@ VermilionPokecenter_Object:
 	object_event 10,  5, SPRITE_FISHING_GURU, STAY, NONE, 2 ; person
 	object_event  5,  4, SPRITE_SAILOR, STAY, NONE, 3 ; person
 	object_event 11,  2, SPRITE_LINK_RECEPTIONIST, STAY, DOWN, 4 ; person
+	object_event  6,  3, SPRITE_GAMEBOY_KID, STAY, DOWN, 5
+	object_event  7,  3, SPRITE_GAMEBOY_KID, STAY, DOWN, 6
 
 	def_warps_to VERMILION_POKECENTER

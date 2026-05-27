@@ -1,5 +1,5 @@
-DEF BAG_ITEM_CAPACITY EQU 20
-DEF PC_ITEM_CAPACITY  EQU 50
+DEF BAG_ITEM_CAPACITY EQU 60
+DEF PC_ITEM_CAPACITY  EQU 150
 
 ; text box IDs
 	const_def 1
@@ -12,7 +12,7 @@ DEF PC_ITEM_CAPACITY  EQU 50
 	const MENU_TEMPLATE_07                  ; $07 unused
 	const JP_SAVE_MESSAGE_MENU_TEMPLATE     ; $08
 	const JP_SPEED_OPTIONS_MENU_TEMPLATE    ; $09
-	const_skip                              ; $0a
+	const MENU_POKEMON_ATTACKS_EXIT         ; $0a new, for attackdex
 	const BATTLE_MENU_TEMPLATE              ; $0b
 	const SWITCH_STATS_CANCEL_MENU_TEMPLATE ; $0c
 	const LIST_MENU_BOX                     ; $0d
@@ -24,9 +24,9 @@ DEF PC_ITEM_CAPACITY  EQU 50
 	const MONEY_BOX                         ; $13
 	const TWO_OPTION_MENU                   ; $14
 	const BUY_SELL_QUIT_MENU                ; $15
-	const_skip                              ; $16
-	const_skip                              ; $17
-	const_skip                              ; $18
+	const VERSION_BOX                       ; $16
+	const START_SORT_TEMPLATE               ; $17
+	const TMHM_NAME_TEMPLATE                ; $18
 	const_skip                              ; $19
 	const JP_POKEDEX_MENU_TEMPLATE          ; $1a
 	const SAFARI_BATTLE_MENU_TEMPLATE       ; $1b
@@ -42,6 +42,7 @@ DEF PC_ITEM_CAPACITY  EQU 50
 	const TRADE_CANCEL_MENU ; 5
 	const HEAL_CANCEL_MENU  ; 6
 	const NO_YES_MENU       ; 7
+	const NORMAL_PRO_MENU   ; 8 NEW
 DEF NUM_TWO_OPTION_MENUS EQU const_value
 
 ; menu exit method constants for list menus and the buy/sell/quit menu
@@ -87,3 +88,56 @@ DEF FIRST_PARTY_MENU_TEXT_ID EQU const_value
 	const NAME_PLAYER_SCREEN ; 0
 	const NAME_RIVAL_SCREEN  ; 1
 	const NAME_MON_SCREEN    ; 2
+
+; type shuffle constant
+	const_def
+	const TS_CHARIZARD			; 0
+	const TS_BLASTOISE			; 1
+	const TS_BUTTERFREE			; 2
+	const TS_PIDGEY				; 3
+	const TS_PIDGEOTTO			; 4
+	const TS_PIDGEOT			; 5
+	const TS_SPEAROW			; 6
+	const TS_FEAROW				; 7
+	const TS_EKANS				; 8		
+	const TS_ARBOK				; 9
+	const TS_BELLOSSOM			; 10
+	const TS_VENONAT			; 11
+	const TS_VENOMOTH			; 12
+	const TS_PSYDUCK			; 13
+	const TS_GOLDUCK			; 14
+	const TS_POLITOED			; 15
+	const TS_BELLSPROUT			; 16
+	const TS_WEEPINBELL			; 17
+	const TS_VICTREEBEL			; 18
+	const TS_MAGNEMITE			; 19
+	const TS_MAGNETON			; 20
+	const TS_MAGNEZONE			; 21
+	const TS_DODUO				; 22
+	const TS_DODRIO				; 23
+	const TS_GASTLY				; 24
+	const TS_HAUNTER			; 25
+	const TS_GENGAR				; 26
+	const TS_DROWZEE			; 27
+	const TS_HYPNO				; 28
+	const TS_GOLDEEN			; 29
+	const TS_SEAKING			; 30
+	const TS_STARMIE			; 31
+	const TS_ELEKID				; 32
+	const TS_ELECTABUZZ			; 33
+	const TS_ELECTIVIRE			; 34
+	const TS_PINSIR				; 35
+	const TS_GYARADOS			; 36
+	const TS_PORYGON			; 37
+	const TS_PORYGON2			; 38
+	const TS_PORYGONZ			; 39
+	const TS_KABUTO				; 40
+	const TS_KABUTOPS			; 41
+	const TS_AERODACTYL			; 42
+	const TS_DRAGONITE			; 43
+	const TS_ACID_TYPE_MOVES	; 44
+DEF LAST_ALT_TYPE 	EQU const_value
+DEF NUM_ALT_TYPE 	EQU const_value + 1
+
+DEF SPECIAL_ENTRY 		EQU -1
+DEF NUM_ALT_TYPE_PAGES	EQU 4

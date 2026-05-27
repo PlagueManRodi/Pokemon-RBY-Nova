@@ -50,6 +50,11 @@ _ReceivedHM04Text::
 	text "!@"
 	text_end
 
+_ReceivedSHOVEText::
+	text "SHOVE can be used"
+	line "on SELECT menu!"
+	done
+
 _HM04ExplanationText::
 	text "WARDEN: HM04"
 	line "teaches STRENGTH!"

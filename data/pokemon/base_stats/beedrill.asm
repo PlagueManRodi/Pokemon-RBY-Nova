@@ -10,14 +10,23 @@
 	INCBIN "gfx/pokemon/front/beedrill.pic", 0, 1 ; sprite dimensions
 	dw BeedrillPicFront, BeedrillPicBack
 
-	db FURY_ATTACK, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TWINEEDLE, FURY_ATTACK, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
-	     RAGE,         MEGA_DRAIN,   MIMIC,        DOUBLE_TEAM,  REFLECT,      \
-	     BIDE,         SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE,   \
-	     CUT
+	     RAGE,         MEGA_DRAIN,   SOLARBEAM,    MIMIC,        DOUBLE_TEAM,  \
+		 REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   REST,         \
+		 SUBSTITUTE,   SLUDGE_BOMB,  X_SCISSOR,    ACID_STREAM,  CUT,          \
+		 FLASH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
+	     RAGE,         MEGA_DRAIN,   SOLARBEAM,    MIMIC,        DOUBLE_TEAM,  \
+		 REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   REST,         \
+		 SUBSTITUTE,   CUT,          FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(BeedrillPicFront)
+	assert BANK(BeedrillPicFront) == BANK(BeedrillPicBack)

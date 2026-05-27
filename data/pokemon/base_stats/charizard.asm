@@ -10,16 +10,21 @@
 	INCBIN "gfx/pokemon/front/charizard.pic", 0, 1 ; sprite dimensions
 	dw CharizardPicFront, CharizardPicBack
 
+IF DEF(_MODERN)
+	db SCRATCH, GROWL, EMBER, METAL_CLAW ; level 1 learnset modern
+ELSE
 	db SCRATCH, GROWL, EMBER, LEER ; level 1 learnset
+ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
 	tmhm MEGA_PUNCH,   SWORDS_DANCE, MEGA_KICK,    TOXIC,        BODY_SLAM,    \
 	     TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      \
-	     SEISMIC_TOSS, RAGE,         DRAGON_RAGE,  EARTHQUAKE,   FISSURE,      \
-	     DIG,          MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     FIRE_BLAST,   SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE,   \
-	     CUT,          STRENGTH
+	     SEISMIC_TOSS, RAGE,         SOLARBEAM,    DRAGON_RAGE,  EARTHQUAKE,   \
+		 FISSURE,      DIG,          MIMIC,        DOUBLE_TEAM,  REFLECT,      \
+		 BIDE,         FIRE_BLAST,   SWIFT,        SKULL_BASH,   REST,         \
+		 ROCK_SLIDE,   SUBSTITUTE,   CUT,          FLY,          STRENGTH
 	; end
 
-	db 0 ; padding
+	db BANK(CharizardPicFront)
+	assert BANK(CharizardPicFront) == BANK(CharizardPicBack)

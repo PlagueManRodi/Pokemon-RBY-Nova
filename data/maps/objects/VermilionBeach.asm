@@ -1,0 +1,25 @@
+VermilionBeach_Object:
+	db $43 ; border block
+
+	def_warp_events
+
+	def_bg_events
+	
+	def_object_events
+	object_event 36, 18, SPRITE_SUPER_NERD, STAY, RIGHT, 1, OPP_ENGINEER, 1
+	object_event 40, 14, SPRITE_COOLTRAINER_F, STAY, DOWN, 2, OPP_COOLTRAINER_F, 4
+	object_event 38,  6, SPRITE_YOUNGSTER, STAY, DOWN, 3, OPP_BUG_CATCHER, 16
+	object_event 25,  9, SPRITE_GAMBLER, STAY, LEFT, 4, OPP_GAMBLER, 8
+	object_event 16, 13, SPRITE_SUPER_NERD, STAY, RIGHT, 5, OPP_ENGINEER, 4
+	object_event  9, 12, SPRITE_COOLTRAINER_M, STAY, LEFT, 6, OPP_COOLTRAINER_M, 7
+	object_event  2, 28, SPRITE_SWIMMER, STAY, RIGHT, 7, OPP_SWIMMER, 16
+	object_event 15, 25, SPRITE_SWIMMER, STAY, LEFT, 8, OPP_SWIMMER, 17
+	object_event 29, 15, SPRITE_GAMBLER, STAY, ANY_DIR, 9, OPP_GAMBLER, 6
+	object_event  8,  6, SPRITE_MONSTER, STAY, DOWN, 10, SANDYSHOCK, 100
+	object_event 32, 30, SPRITE_POKE_BALL, STAY, NONE, 11, HYPER_POTION
+	object_event 41,  4, SPRITE_POKE_BALL, STAY, NONE, 12, ELIXER
+	object_event  9, 28, SPRITE_POKE_BALL, STAY, NONE, 13, MAX_REVIVE
+	object_event 22,  4, SPRITE_POKE_BALL, STAY, NONE, 14, FULL_RESTORE
+	object_event  6,  8, SPRITE_POKE_BALL, STAY, NONE, 15
+	
+	def_warps_to VERMILION_BEACH

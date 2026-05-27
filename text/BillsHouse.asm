@@ -86,3 +86,21 @@ _BillsHouseText_1e8da::
 	cont "some of my rare"
 	cont "#MON on my PC!"
 	done
+
+_BillsHouseText_OfferGoldTicket::
+	text "BILL: Yo, bud,"
+	line "the S.S. Anne is"
+	cont "back and they"
+	cont "gave me a new"
+	cont "ticket."
+	
+	para "I'll just give"
+	line "it to you again."
+	prompt
+
+_BillsHouseItemGiveText::
+	text "<PLAYER> received"
+	line "a @"
+	text_ram wStringBuffer
+	text "!@"
+	text_end

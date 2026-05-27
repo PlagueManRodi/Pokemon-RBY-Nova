@@ -7,6 +7,8 @@ PewterPokecenter_TextPointers:
 	dw PewterPokecenterText2
 	dw PewterJigglypuffText
 	dw PewterTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 PewterHealNurseText:
 	script_pokecenter_nurse

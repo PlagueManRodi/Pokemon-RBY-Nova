@@ -7,6 +7,8 @@ RockTunnelPokecenter_TextPointers:
 	dw RockTunnelPokecenterText2
 	dw RockTunnelPokecenterText3
 	dw RockTunnelTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 RockTunnelHealNurseText:
 	script_pokecenter_nurse

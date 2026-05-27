@@ -9,6 +9,8 @@ MtMoonPokecenter_TextPointers:
 	dw MagikarpSalesmanText
 	dw MtMoonPokecenterText5
 	dw MtMoonTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 MtMoonHealNurseText:
 	script_pokecenter_nurse

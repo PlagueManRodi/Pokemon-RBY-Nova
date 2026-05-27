@@ -175,7 +175,27 @@ _ViridianCityText13::
 	line "#MON GYM"
 	done
 
-_ViridianCityText14::
+_ViridianCityText15::
 	text "The GYM's doors"
 	line "are locked..."
+	done
+
+_ViridianCityText14::
+	text "TRAINER TIPS"
+
+	para "Press SELECT to"
+	line "open the new"
+	cont "quick-access"
+	cont "menu."
+	
+	para "You'll find HM"
+	line "moves and key"
+	cont "items you can use"
+	cont "from this menu"
+	cont "without any"
+	cont "requirements."
+	
+	para "You can also see"
+	line "remaining REPEL"
+	cont "steps as well!"
 	done

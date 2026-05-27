@@ -41,7 +41,32 @@ PewterGymBrockPostBattle:
 	jp z, PewterGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-; fallthrough
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, PewterGymScriptReceiveTM34	
+	ld a, 7
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 0
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, PewterGymResetScripts
+	lb bc, FLAG_SET, 0
+	predef FlagActionPredef
+	ld a, 8
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, PewterGymResetScripts
+	ld a, 9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID	
+	jp PewterGymResetScripts
+	;
 PewterGymScriptReceiveTM34:
 	ld a, $4
 	ldh [hSpriteIndexOrTextID], a
@@ -64,8 +89,31 @@ PewterGymScriptReceiveTM34:
 	set BIT_BOULDERBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_BOULDERBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 16
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	ld a, HS_GYM_GUY
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_STARTER_BALL_1
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_STARTER_BALL_2
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_STARTER_BALL_3
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ld a, HS_ROUTE_22_RIVAL_1
@@ -86,6 +134,9 @@ PewterGym_TextPointers:
 	dw BeforeReceivedTM34Text
 	dw ReceivedTM34Text
 	dw TM34NoRoomText
+	dw PewterGymRematchPostBattleText ; NEW
+	dw ReceivedProBoulderBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 PewterGymTrainerHeaders:
 	def_trainers 2
@@ -101,12 +152,22 @@ BrockText:
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp .done
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .BrockRematch
+	;
 	ld hl, BrockPostBattleAdviceText
 	call PrintText
-	jr .done
+	jp .done
 .beforeBeat
+	ld d, 3
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, BrockPreBattleText
 	call PrintText
 	ld hl, wd72d
@@ -123,6 +184,36 @@ BrockText:
 	ld [wGymLeaderNo], a
 	xor a
 	ldh [hJoyHeld], a
+	;
+	jr .endBattle
+.BrockRematch
+	predef HealParty
+	ld hl, PreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, PreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, PewterGymRematchDefeatedText
+	ld de, PewterGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_BROCK
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, PreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	;
 	ld a, $3
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a
@@ -153,7 +244,7 @@ TM34NoRoomText:
 
 ReceivedBoulderBadgeText:
 	text_far _ReceivedBoulderBadgeText
-	sound_level_up ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
+	sound_get_item_1 ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
 	text_far _BrockBoulerBadgeInfoText ; Text to tell that the flash technique can be used
 	text_end
 
@@ -220,4 +311,31 @@ PewterGymText_5c524:
 
 PewterGymGuidePostBattleText:
 	text_far _PewterGymGuidePostBattleText
+	text_end
+
+;;;
+
+PreBattleRematchText:
+	text_far _PewterGymRematchPreBattleText
+	text_end
+	
+PreBattleRematchAcceptedText:
+	text_far _PewterGymRematchAcceptedText
+	text_end
+	
+PreBattleRematchRefusedText:
+	text_far _PewterGymRematchRefusedText
+	text_end
+
+PewterGymRematchDefeatedText:
+	text_far _PewterGymRematchDefeatedText
+	text_end
+
+PewterGymRematchPostBattleText:
+	text_far _PewterGymRematchPostBattleText
+	text_end
+
+ReceivedProBoulderBadgeText:
+	text_far _ReceivedProBoulderBadgeText
+	sound_get_item_1
 	text_end

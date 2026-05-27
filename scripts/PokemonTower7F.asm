@@ -20,6 +20,50 @@ PokemonTower7F_ScriptPointers:
 	dw PokemonTower7Script2
 	dw PokemonTower7Script3
 	dw PokemonTower7Script4
+	dw PokemonTower7Script5
+
+PokemonTower7Script5:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, PokemonTower7DontEndBattle
+	SetEvent EVENT_BEAT_AGATHA_ULTIMA
+	xor a
+	ld a, 5
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	call GBFadeOutToBlack
+	ld a, HS_POKEMON_TOWER_7F_AGATHA
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	CheckEvent EVENT_GOT_CAPTURECHARM
+	jr nz, .alreadyGot
+	ld a, HS_POKEMON_TOWER_7F_ITEM
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.alreadyGot
+	ResetEvent EVENT_BEAT_CHIEF
+	ResetEvent EVENT_BEAT_COOLTRAINER_SUPERBOSS
+	ResetEvent EVENT_BEAT_BUGCATCHER_SUPERBOSS
+	ResetEvent EVENT_BEAT_GIOVANNI_SUPERBOSS
+	ResetEvent EVENT_BEAT_AGATHA_ULTIMA
+	ld a, HS_ROCK_TUNNEL_B1F_COOLTRAINER
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	ld a, HS_VIRIDIAN_FOREST_BUGCATCHER
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	call GBFadeInFromBlack
+	xor a
+	ld [wPokemonTower7FCurScript], a
+	ld [wCurMapScript], a
+	ret
+
+PokemonTower7DontEndBattle:
+	xor a
+	ld [wPokemonTower7FCurScript], a
+	ld [wCurMapScript], a
+	ld [wJoyIgnore], a
+	ret
 
 PokemonTower7Script2:
 	ld hl, wFlags_0xcd60
@@ -77,6 +121,8 @@ PokemonTower7Script4:
 	ld [wDestinationWarpID], a
 	ld a, LAVENDER_TOWN
 	ld [wLastMap], a
+	ld hl, wd736
+	set 2, [hl]
 	ld hl, wd72d
 	set 3, [hl]
 	ld a, $0
@@ -191,6 +237,8 @@ PokemonTower7F_TextPointers:
 	dw PokemonTower7Text2
 	dw PokemonTower7Text3
 	dw PokemonTower7FujiText
+	dw PokemonTower7Text5
+	dw PickUpItemText
 
 PokemonTower7TrainerHeaders:
 	def_trainers
@@ -200,6 +248,8 @@ PokemonTower7TrainerHeader1:
 	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_1, 3, PokemonTower7BattleText2, PokemonTower7EndBattleText2, PokemonTower7AfterBattleText2
 PokemonTower7TrainerHeader2:
 	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_2, 3, PokemonTower7BattleText3, PokemonTower7EndBattleText3, PokemonTower7AfterBattleText3
+PokemonTower7TrainerHeader3:
+	trainer EVENT_BEAT_AGATHA_ULTIMA, 0, PokemonTower7BattleText4, PokemonTower7EndBattleText4, PokemonTower7BattleText4
 	db -1 ; end
 
 PokemonTower7Text1:
@@ -227,12 +277,6 @@ PokemonTower7FujiText:
 	SetEvent EVENT_RESCUED_MR_FUJI
 	SetEvent EVENT_RESCUED_MR_FUJI_2
 	ld a, HS_MR_FUJIS_HOUSE_MR_FUJI
-	ld [wMissableObjectIndex], a
-	predef ShowObject
-	ld a, HS_SAFFRON_CITY_E
-	ld [wMissableObjectIndex], a
-	predef HideObject
-	ld a, HS_SAFFRON_CITY_F
 	ld [wMissableObjectIndex], a
 	predef ShowObject
 	ld a, $4
@@ -278,4 +322,21 @@ PokemonTower7EndBattleText3:
 
 PokemonTower7AfterBattleText3:
 	text_far _PokemonTower7AfterBattleText3
+	text_end
+
+PokemonTower7Text5:
+	text_asm
+	ld hl, PokemonTower7TrainerHeader3
+	call TalkToTrainer
+	ld a, 5
+	ld [wPokemonTower7FCurScript], a
+	ld [wCurMapScript], a
+	jp TextScriptEnd
+
+PokemonTower7BattleText4:
+	text_far _PokemonTower7BattleText4
+	text_end
+
+PokemonTower7EndBattleText4:
+	text_far _PokemonTower7EndBattleText4
 	text_end

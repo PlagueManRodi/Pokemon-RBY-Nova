@@ -11,6 +11,43 @@ ViridianForest_ScriptPointers:
 	dw CheckFightingMapTrainers
 	dw DisplayEnemyTrainerTextAndStartBattle
 	dw EndTrainerBattle
+	dw ViridianForestScript1
+
+ViridianForestScript1:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, ViridianForestDontEndBattle
+	SetEvent EVENT_BEAT_BUGCATCHER_SUPERBOSS
+	xor a
+	ld a, 9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	call GBFadeOutToBlack
+	ld a, HS_VIRIDIAN_FOREST_BUGCATCHER
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call GBFadeInFromBlack
+	;
+	CheckEvent EVENT_BEAT_COOLTRAINER_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	CheckEvent EVENT_BEAT_GIOVANNI_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	ld a, HS_POKEMON_TOWER_7F_AGATHA
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.dontTriggerAgathaUltima
+	;
+	xor a
+	ld [wViridianForestCurScript], a
+	ld [wCurMapScript], a
+	ret
+
+ViridianForestDontEndBattle:
+	xor a
+	ld [wViridianForestCurScript], a
+	ld [wCurMapScript], a
+	ld [wJoyIgnore], a
+	ret
 
 ViridianForest_TextPointers:
 	dw ViridianForestText1
@@ -21,6 +58,7 @@ ViridianForest_TextPointers:
 	dw PickUpItemText
 	dw PickUpItemText
 	dw ViridianForestText8
+	dw BugCatcherSuperBossText
 	dw ViridianForestText9
 	dw ViridianForestText10
 	dw ViridianForestText11
@@ -36,6 +74,8 @@ ViridianForestTrainerHeader1:
 	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_1, 4, ViridianForestBattleText2, ViridianForestEndBattleText2, ViridianForestAfterBattleText2
 ViridianForestTrainerHeader2:
 	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_2, 1, ViridianForestBattleText3, ViridianForestEndBattleText3, ViridianForestAfterBattleText3
+ViridianForestTrainerHeader3:
+	trainer EVENT_BEAT_BUGCATCHER_SUPERBOSS, 0, ViridianForestBattleText15, ViridianForestEndBattleText15, ViridianForestBattleText15
 	db -1 ; end
 
 ViridianForestText1:
@@ -100,6 +140,16 @@ ViridianForestText8:
 	text_far _ViridianForestText8
 	text_end
 
+BugCatcherSuperBossText:
+	text_asm
+	ld hl, ViridianForestTrainerHeader3
+	call TalkToTrainer
+	ld a, 3
+	ld [wViridianForestCurScript], a
+	ld [wCurMapScript], a
+	jp TextScriptEnd
+
+
 ViridianForestText9:
 	text_far _ViridianForestText9
 	text_end
@@ -122,4 +172,12 @@ ViridianForestText13:
 
 ViridianForestText14:
 	text_far _ViridianForestText14
+	text_end
+
+ViridianForestBattleText15:
+	text_far _ViridianForestBattleText15
+	text_end
+
+ViridianForestEndBattleText15:
+	text_far _ViridianForestEndBattleText15
 	text_end

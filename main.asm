@@ -1,39 +1,31 @@
 SECTION "bank1", ROMX
 
 INCLUDE "data/sprites/facings.asm"
-INCLUDE "engine/events/black_out.asm"
-INCLUDE "data/pokemon/mew.asm"
 INCLUDE "engine/battle/safari_zone.asm"
 INCLUDE "engine/movie/title.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
 INCLUDE "data/items/prices.asm"
 INCLUDE "data/items/names.asm"
-INCLUDE "data/text/unused_names.asm"
 INCLUDE "engine/gfx/sprite_oam.asm"
 INCLUDE "engine/gfx/oam_dma.asm"
 INCLUDE "engine/link/print_waiting_text.asm"
 INCLUDE "engine/overworld/sprite_collisions.asm"
 INCLUDE "engine/debug/debug_menu.asm"
-INCLUDE "engine/events/pick_up_item.asm"
 INCLUDE "engine/overworld/movement.asm"
 INCLUDE "engine/link/cable_club.asm"
 INCLUDE "engine/menus/main_menu.asm"
 INCLUDE "engine/movie/oak_speech/oak_speech.asm"
 INCLUDE "engine/overworld/special_warps.asm"
-INCLUDE "engine/debug/debug_party.asm"
 INCLUDE "engine/menus/naming_screen.asm"
 INCLUDE "engine/movie/oak_speech/oak_speech2.asm"
-INCLUDE "engine/items/subtract_paid_money.asm"
 INCLUDE "engine/menus/swap_items.asm"
 INCLUDE "engine/events/pokemart.asm"
 INCLUDE "engine/pokemon/learn_move.asm"
 INCLUDE "engine/events/pokecenter.asm"
-INCLUDE "engine/events/set_blackout_map.asm"
 INCLUDE "engine/menus/display_text_id_init.asm"
 INCLUDE "engine/menus/draw_start_menu.asm"
 INCLUDE "engine/link/cable_club_npc.asm"
 INCLUDE "engine/menus/text_box.asm"
-INCLUDE "engine/battle/move_effects/drain_hp.asm"
 INCLUDE "engine/menus/players_pc.asm"
 INCLUDE "engine/pokemon/remove_mon.asm"
 INCLUDE "engine/events/display_pokedex.asm"
@@ -54,16 +46,13 @@ INCLUDE "engine/overworld/field_move_messages.asm"
 INCLUDE "engine/items/inventory.asm"
 INCLUDE "engine/overworld/wild_mons.asm"
 INCLUDE "engine/items/item_effects.asm"
-INCLUDE "engine/menus/draw_badges.asm"
 INCLUDE "engine/overworld/update_map.asm"
 INCLUDE "engine/overworld/cut.asm"
 INCLUDE "engine/overworld/missable_objects.asm"
 INCLUDE "engine/overworld/push_boulder.asm"
 INCLUDE "engine/pokemon/add_mon.asm"
 INCLUDE "engine/flag_action.asm"
-INCLUDE "engine/events/heal_party.asm"
 INCLUDE "engine/math/bcd.asm"
-INCLUDE "engine/movie/oak_speech/init_player_data.asm"
 INCLUDE "engine/items/get_bag_item_quantity.asm"
 INCLUDE "engine/overworld/pathfinding.asm"
 INCLUDE "engine/gfx/hp_bar.asm"
@@ -182,14 +171,24 @@ INCLUDE "engine/math/multiply_divide.asm"
 INCLUDE "engine/slots/game_corner_slots.asm"
 
 
-SECTION "Battle Engine 7", ROMX
+SECTION "Pokémon Base Stats", ROMX
 
 INCLUDE "data/moves/moves.asm"
-INCLUDE "data/pokemon/base_stats.asm"
 INCLUDE "data/pokemon/cries.asm"
+INCLUDE "data/pokemon/base_stats.asm"
+INCLUDE "engine/pokemon/get_base_stats.asm"
+INCLUDE "engine/pokemon/get_move_data.asm"
+
+
+SECTION "Trainer AI", ROMX
+
+INCLUDE "engine/battle/trainer_ai.asm"
+
+
+SECTION "Battle Engine 7", ROMX
+
 INCLUDE "engine/battle/unused_stats_functions.asm"
 INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
-INCLUDE "engine/battle/trainer_ai.asm"
 INCLUDE "engine/battle/draw_hud_pokeball_gfx.asm"
 INCLUDE "gfx/trade.asm"
 INCLUDE "engine/pokemon/evos_moves.asm"
@@ -220,6 +219,8 @@ INCLUDE "engine/events/pokedex_rating.asm"
 SECTION "Hidden Objects Core", ROMX
 
 INCLUDE "engine/overworld/hidden_objects.asm"
+INCLUDE "engine/debug/debug_party.asm"
+INCLUDE "engine/battle/move_effects/drain_hp.asm"
 
 
 SECTION "Screen Effects", ROMX
@@ -251,6 +252,7 @@ INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 SECTION "Battle Engine 9", ROMX
 
 INCLUDE "engine/battle/experience.asm"
+INCLUDE "engine/gfx/exp_bar.asm"
 
 
 SECTION "Diploma", ROMX
@@ -306,7 +308,6 @@ INCLUDE "engine/events/hidden_objects/pokecenter_pc.asm"
 SECTION "Battle Engine 11", ROMX
 
 INCLUDE "engine/battle/decrement_pp.asm"
-INCLUDE "gfx/version.asm"
 
 
 SECTION "bank1C", ROMX
@@ -334,23 +335,60 @@ INCLUDE "engine/items/itemfinder.asm"
 SECTION "Vending Machine", ROMX
 
 INCLUDE "engine/events/vending_machine.asm"
+INCLUDE "engine/pokemon/display_move_info.asm"
+INCLUDE "engine/items/subtract_paid_money.asm"
 
 
 SECTION "Itemfinder 2", ROMX
 
 INCLUDE "engine/menus/league_pc.asm"
 INCLUDE "engine/events/hidden_items.asm"
+INCLUDE "engine/events/set_blackout_map.asm"
 
 
 SECTION "bank1E", ROMX
 
 INCLUDE "engine/battle/animations.asm"
-INCLUDE "engine/overworld/cut2.asm"
 INCLUDE "engine/overworld/dust_smoke.asm"
-INCLUDE "gfx/fishing.asm"
 INCLUDE "data/moves/animations.asm"
 INCLUDE "data/battle_anims/subanimations.asm"
 INCLUDE "data/battle_anims/frame_blocks.asm"
+
+
+SECTION "Slot Machine Stuff", ROMX
+
+INCLUDE "engine/battle/slot_machine_stuff.asm" ; to free bank1E
 INCLUDE "engine/movie/evolution.asm"
 INCLUDE "engine/overworld/elevator.asm"
 INCLUDE "engine/items/tm_prices.asm"
+INCLUDE "gfx/fishing.asm"
+INCLUDE "engine/overworld/cut2.asm"
+INCLUDE "engine/battle/type_related_stuff.asm"
+INCLUDE "engine/items/catch_formula.asm"
+INCLUDE "engine/events/pick_up_item.asm" ; Used to be in bank 1
+INCLUDE "engine/menus/movedex.asm"
+INCLUDE "gfx/version.asm"
+INCLUDE "data/text/unused_names.asm"
+INCLUDE "engine/battle/is_move_hm.asm"
+INCLUDE "engine/events/has_enough_coins.asm"
+INCLUDE "engine/events/black_out.asm"
+INCLUDE "engine/menus/select_menu.asm"
+
+
+SECTION "Even More Stuff", ROMX
+
+INCLUDE "engine/battle/calc_stat.asm"
+INCLUDE "engine/menus/movedex_order.asm"
+INCLUDE "engine/items/sort_items.asm"
+INCLUDE "engine/pokemon/display_status_screens.asm"
+INCLUDE "engine/battle/counter_modifications.asm"
+INCLUDE "engine/menus/type_shuffle_menu.asm"
+INCLUDE "engine/events/heal_party.asm"
+INCLUDE "engine/movie/oak_speech/optional_features.asm"
+INCLUDE "engine/items/bait_rock_item_effects.asm"
+INCLUDE "engine/overworld/check_boulder_collision.asm"
+INCLUDE "engine/overworld/repel_info_box.asm"
+INCLUDE "engine/movie/oak_speech/init_player_data.asm"
+INCLUDE "engine/battle/use_another_repel.asm"
+INCLUDE "engine/menus/draw_badges.asm"
+INCLUDE "audio/play_battle_music.asm"

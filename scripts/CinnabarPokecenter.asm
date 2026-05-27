@@ -7,6 +7,8 @@ CinnabarPokecenter_TextPointers:
 	dw CinnabarPokecenterText2
 	dw CinnabarPokecenterText3
 	dw CinnabarTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 CinnabarHealNurseText:
 	script_pokecenter_nurse

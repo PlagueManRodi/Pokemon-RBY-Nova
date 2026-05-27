@@ -40,6 +40,8 @@ HealParty:
 	ld de, wcd6d
 	ld a, BANK(Moves)
 	call FarCopyData
+	ld de, wcd6d
+	callfar AcidTypeMoveCheck
 	ld a, [wcd6d + 5] ; PP is byte 5 of move data
 
 	pop bc
@@ -90,7 +92,7 @@ HealParty:
 	ld b, a
 .ppup
 	push bc
-	call RestoreBonusPP
+	callfar RestoreBonusPP
 	pop bc
 	ld hl, wWhichPokemon
 	inc [hl]

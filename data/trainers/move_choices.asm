@@ -9,7 +9,7 @@ ENDM
 ; move choice modification methods that are applied for each trainer class
 TrainerClassMoveChoiceModifications:
 	list_start TrainerClassMoveChoiceModifications
-	move_choices         ; YOUNGSTER
+	move_choices 1       ; YOUNGSTER
 	move_choices 1       ; BUG CATCHER
 	move_choices 1       ; LASS
 	move_choices 1, 3    ; SAILOR
@@ -21,10 +21,10 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1       ; BIKER
 	move_choices 1, 3    ; BURGLAR
 	move_choices 1       ; ENGINEER
-	move_choices 1, 2    ; UNUSED_JUGGLER
+	move_choices 1, 2    ; KAREN
 	move_choices 1, 3    ; FISHER
 	move_choices 1, 3    ; SWIMMER
-	move_choices         ; CUE_BALL
+	move_choices 1       ; CUE_BALL
 	move_choices 1       ; GAMBLER
 	move_choices 1, 3    ; BEAUTY
 	move_choices 1, 2    ; PSYCHIC_TR

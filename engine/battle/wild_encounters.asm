@@ -19,13 +19,16 @@ TryDoWildEncounter:
 	ld a, [wRepelRemainingSteps]
 	and a
 	jr z, .next
+	cp -1
+	jr z, .next
 	dec a
 	jr z, .lastRepelStep
 	ld [wRepelRemainingSteps], a
 .next
 ; determine if wild pokemon can appear in the half-block we're standing in
-; is the bottom right tile (9,9) of the half-block we're standing in a grass/water tile?
-	hlcoord 9, 9
+; is the bottom left tile (8,9) of the half-block we're standing in a grass/water tile?
+; note that by using the bottom left tile, this prevents the "left-shore" tiles from generating grass encounters
+	hlcoord 8, 9
 	ld c, [hl]
 	ld a, [wGrassTile]
 	cp c
@@ -81,7 +84,7 @@ TryDoWildEncounter:
 	ld a, [wRepelRemainingSteps]
 	and a
 	jr z, .willEncounter
-	ld a, [wPartyMon1Level]
+	ld a, 100 ; changed "[wPartyMon1Level]" for "100" to always prevent encounters under repel
 	ld b, a
 	ld a, [wCurEnemyLVL]
 	cp b
@@ -93,6 +96,7 @@ TryDoWildEncounter:
 	ldh [hSpriteIndexOrTextID], a
 	call EnableAutoTextBoxDrawing
 	call DisplayTextID
+	callfar CheckForMoreRepelInBag
 .CantEncounter2
 	ld a, $1
 	and a

@@ -7,6 +7,8 @@ SaffronPokecenter_TextPointers:
 	dw SaffronPokecenterText2
 	dw SaffronPokecenterText3
 	dw SaffronTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 SaffronHealNurseText:
 	script_pokecenter_nurse

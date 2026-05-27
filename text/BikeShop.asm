@@ -24,6 +24,11 @@ _BikeShopText_1d81f::
 	para "OK! Here you go!"
 	prompt
 
+_ReceivedBIKEText::
+	text "BIKE added"
+	line "to SELECT menu!"
+	done
+
 _BikeShopText_1d824::
 	text "<PLAYER> exchanged"
 	line "the BIKE VOUCHER"

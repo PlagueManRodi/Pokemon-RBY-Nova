@@ -24,6 +24,7 @@ WarpTileIDPointers:
 	dw .ClubWarpTileIDs
 	dw .FacilityWarpTileIDs
 	dw .PlateauWarpTileIDs
+	dw .CavernWarpTileIDs
 	assert_table_length NUM_TILESETS
 
 MACRO warp_tiles

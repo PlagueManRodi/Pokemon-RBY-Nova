@@ -50,11 +50,6 @@ INCLUDE "scripts/VermilionTradeHouse.asm"
 INCLUDE "data/maps/objects/VermilionTradeHouse.asm"
 VermilionTradeHouse_Blocks: INCBIN "maps/VermilionTradeHouse.blk"
 
-INCLUDE "data/maps/headers/IndigoPlateauLobby.asm"
-INCLUDE "scripts/IndigoPlateauLobby.asm"
-INCLUDE "data/maps/objects/IndigoPlateauLobby.asm"
-IndigoPlateauLobby_Blocks: INCBIN "maps/IndigoPlateauLobby.blk"
-
 INCLUDE "data/maps/headers/SilphCo4F.asm"
 INCLUDE "scripts/SilphCo4F.asm"
 INCLUDE "data/maps/objects/SilphCo4F.asm"
@@ -252,8 +247,6 @@ INCLUDE "data/maps/headers/LavenderTown.asm"
 INCLUDE "data/maps/objects/LavenderTown.asm"
 LavenderTown_Blocks: INCBIN "maps/LavenderTown.blk"
 
-ViridianPokecenter_Blocks: INCBIN "maps/ViridianPokecenter.blk"
-
 SafariZoneCenterRestHouse_Blocks:
 SafariZoneWestRestHouse_Blocks:
 SafariZoneEastRestHouse_Blocks:
@@ -263,10 +256,6 @@ INCLUDE "scripts/LavenderTown.asm"
 
 
 SECTION "Maps 6", ROMX
-
-INCLUDE "data/maps/headers/ViridianPokecenter.asm"
-INCLUDE "scripts/ViridianPokecenter.asm"
-INCLUDE "data/maps/objects/ViridianPokecenter.asm"
 
 INCLUDE "data/maps/headers/PokemonMansion1F.asm"
 INCLUDE "scripts/PokemonMansion1F.asm"
@@ -396,10 +385,6 @@ INCLUDE "data/maps/headers/Route7.asm"
 INCLUDE "data/maps/objects/Route7.asm"
 Route7_Blocks: INCBIN "maps/Route7.blk"
 
-CeladonPokecenter_Blocks:
-RockTunnelPokecenter_Blocks:
-MtMoonPokecenter_Blocks: INCBIN "maps/MtMoonPokecenter.blk"
-
 Route18Gate1F_Blocks:
 Route15Gate1F_Blocks:
 Route11Gate1F_Blocks: INCBIN "maps/Route11Gate1F.blk"
@@ -460,10 +445,6 @@ INCLUDE "scripts/CeladonMansionRoof.asm"
 INCLUDE "data/maps/objects/CeladonMansionRoof.asm"
 CeladonMansionRoof_Blocks: INCBIN "maps/CeladonMansionRoof.blk"
 
-INCLUDE "data/maps/headers/CeladonPokecenter.asm"
-INCLUDE "scripts/CeladonPokecenter.asm"
-INCLUDE "data/maps/objects/CeladonPokecenter.asm"
-
 INCLUDE "data/maps/headers/CeladonGym.asm"
 INCLUDE "scripts/CeladonGym.asm"
 INCLUDE "data/maps/objects/CeladonGym.asm"
@@ -498,14 +479,6 @@ INCLUDE "data/maps/headers/CeladonHotel.asm"
 INCLUDE "scripts/CeladonHotel.asm"
 INCLUDE "data/maps/objects/CeladonHotel.asm"
 CeladonHotel_Blocks: INCBIN "maps/CeladonHotel.blk"
-
-INCLUDE "data/maps/headers/MtMoonPokecenter.asm"
-INCLUDE "scripts/MtMoonPokecenter.asm"
-INCLUDE "data/maps/objects/MtMoonPokecenter.asm"
-
-INCLUDE "data/maps/headers/RockTunnelPokecenter.asm"
-INCLUDE "scripts/RockTunnelPokecenter.asm"
-INCLUDE "data/maps/objects/RockTunnelPokecenter.asm"
 
 INCLUDE "data/maps/headers/Route11Gate1F.asm"
 INCLUDE "scripts/Route11Gate1F.asm"
@@ -834,11 +807,6 @@ Museum1F_Blocks: INCBIN "maps/Museum1F.blk"
 
 Museum2F_Blocks: INCBIN "maps/Museum2F.blk"
 
-SaffronPokecenter_Blocks:
-VermilionPokecenter_Blocks:
-LavenderPokecenter_Blocks:
-PewterPokecenter_Blocks: INCBIN "maps/PewterPokecenter.blk"
-
 UndergroundPathRoute7_Blocks:
 UndergroundPathRoute7Copy_Blocks:
 UndergroundPathRoute6_Blocks:
@@ -868,15 +836,6 @@ INCLUDE "scripts/PewterGym.asm"
 INCLUDE "data/maps/objects/PewterGym.asm"
 PewterGym_Blocks: INCBIN "maps/PewterGym.blk"
 
-INCLUDE "data/maps/headers/PewterPokecenter.asm"
-INCLUDE "scripts/PewterPokecenter.asm"
-INCLUDE "data/maps/objects/PewterPokecenter.asm"
-
-INCLUDE "data/maps/headers/CeruleanPokecenter.asm"
-INCLUDE "scripts/CeruleanPokecenter.asm"
-INCLUDE "data/maps/objects/CeruleanPokecenter.asm"
-CeruleanPokecenter_Blocks: INCBIN "maps/CeruleanPokecenter.blk"
-
 INCLUDE "data/maps/headers/CeruleanGym.asm"
 INCLUDE "scripts/CeruleanGym.asm"
 INCLUDE "data/maps/objects/CeruleanGym.asm"
@@ -886,17 +845,9 @@ INCLUDE "data/maps/headers/CeruleanMart.asm"
 INCLUDE "scripts/CeruleanMart.asm"
 INCLUDE "data/maps/objects/CeruleanMart.asm"
 
-INCLUDE "data/maps/headers/LavenderPokecenter.asm"
-INCLUDE "scripts/LavenderPokecenter.asm"
-INCLUDE "data/maps/objects/LavenderPokecenter.asm"
-
 INCLUDE "data/maps/headers/LavenderMart.asm"
 INCLUDE "scripts/LavenderMart.asm"
 INCLUDE "data/maps/objects/LavenderMart.asm"
-
-INCLUDE "data/maps/headers/VermilionPokecenter.asm"
-INCLUDE "scripts/VermilionPokecenter.asm"
-INCLUDE "data/maps/objects/VermilionPokecenter.asm"
 
 INCLUDE "data/maps/headers/VermilionMart.asm"
 INCLUDE "scripts/VermilionMart.asm"
@@ -929,10 +880,6 @@ INCLUDE "data/maps/headers/SilphCo1F.asm"
 INCLUDE "scripts/SilphCo1F.asm"
 INCLUDE "data/maps/objects/SilphCo1F.asm"
 SilphCo1F_Blocks: INCBIN "maps/SilphCo1F.blk"
-
-INCLUDE "data/maps/headers/SaffronPokecenter.asm"
-INCLUDE "scripts/SaffronPokecenter.asm"
-INCLUDE "data/maps/objects/SaffronPokecenter.asm"
 
 INCLUDE "data/maps/headers/ViridianForestNorthGate.asm"
 INCLUDE "scripts/ViridianForestNorthGate.asm"
@@ -1104,9 +1051,6 @@ PewterMart_Blocks: INCBIN "maps/PewterMart.blk"
 
 FuchsiaBillsGrandpasHouse_Blocks: INCBIN "maps/FuchsiaBillsGrandpasHouse.blk"
 
-CinnabarPokecenter_Blocks:
-FuchsiaPokecenter_Blocks: INCBIN "maps/FuchsiaPokecenter.blk"
-
 CeruleanBadgeHouse_Blocks: INCBIN "maps/CeruleanBadgeHouse.blk"
 
 
@@ -1138,10 +1082,6 @@ SECTION "Maps 21", ROMX
 INCLUDE "data/maps/headers/FuchsiaBillsGrandpasHouse.asm"
 INCLUDE "scripts/FuchsiaBillsGrandpasHouse.asm"
 INCLUDE "data/maps/objects/FuchsiaBillsGrandpasHouse.asm"
-
-INCLUDE "data/maps/headers/FuchsiaPokecenter.asm"
-INCLUDE "scripts/FuchsiaPokecenter.asm"
-INCLUDE "data/maps/objects/FuchsiaPokecenter.asm"
 
 INCLUDE "data/maps/headers/WardensHouse.asm"
 INCLUDE "scripts/WardensHouse.asm"
@@ -1188,10 +1128,6 @@ INCLUDE "scripts/CinnabarLabFossilRoom.asm"
 INCLUDE "data/maps/objects/CinnabarLabFossilRoom.asm"
 CinnabarLabFossilRoom_Blocks: INCBIN "maps/CinnabarLabFossilRoom.blk"
 
-INCLUDE "data/maps/headers/CinnabarPokecenter.asm"
-INCLUDE "scripts/CinnabarPokecenter.asm"
-INCLUDE "data/maps/objects/CinnabarPokecenter.asm"
-
 INCLUDE "data/maps/headers/CinnabarMart.asm"
 INCLUDE "scripts/CinnabarMart.asm"
 INCLUDE "data/maps/objects/CinnabarMart.asm"
@@ -1219,3 +1155,98 @@ INCLUDE "data/maps/headers/AgathasRoom.asm"
 INCLUDE "scripts/AgathasRoom.asm"
 INCLUDE "data/maps/objects/AgathasRoom.asm"
 AgathasRoom_Blocks: INCBIN "maps/AgathasRoom.blk"
+
+
+SECTION "Maps 22", ROMX
+
+ViridianPokecenter_Blocks: INCBIN "maps/ViridianPokecenter.blk"
+
+INCLUDE "data/maps/headers/ViridianPokecenter.asm"
+INCLUDE "scripts/ViridianPokecenter.asm"
+INCLUDE "data/maps/objects/ViridianPokecenter.asm"
+
+SaffronPokecenter_Blocks:
+VermilionPokecenter_Blocks:
+LavenderPokecenter_Blocks:
+PewterPokecenter_Blocks: INCBIN "maps/PewterPokecenter.blk"
+
+INCLUDE "data/maps/headers/PewterPokecenter.asm"
+INCLUDE "scripts/PewterPokecenter.asm"
+INCLUDE "data/maps/objects/PewterPokecenter.asm"
+
+INCLUDE "data/maps/headers/VermilionPokecenter.asm"
+INCLUDE "scripts/VermilionPokecenter.asm"
+INCLUDE "data/maps/objects/VermilionPokecenter.asm"
+
+INCLUDE "data/maps/headers/SaffronPokecenter.asm"
+INCLUDE "scripts/SaffronPokecenter.asm"
+INCLUDE "data/maps/objects/SaffronPokecenter.asm"
+
+INCLUDE "data/maps/headers/LavenderPokecenter.asm"
+INCLUDE "scripts/LavenderPokecenter.asm"
+INCLUDE "data/maps/objects/LavenderPokecenter.asm"
+
+CeladonPokecenter_Blocks:
+RockTunnelPokecenter_Blocks:
+MtMoonPokecenter_Blocks: INCBIN "maps/MtMoonPokecenter.blk"
+
+INCLUDE "data/maps/headers/CeladonPokecenter.asm"
+INCLUDE "scripts/CeladonPokecenter.asm"
+INCLUDE "data/maps/objects/CeladonPokecenter.asm"
+
+INCLUDE "data/maps/headers/RockTunnelPokecenter.asm"
+INCLUDE "scripts/RockTunnelPokecenter.asm"
+INCLUDE "data/maps/objects/RockTunnelPokecenter.asm"
+
+INCLUDE "data/maps/headers/MtMoonPokecenter.asm"
+INCLUDE "scripts/MtMoonPokecenter.asm"
+INCLUDE "data/maps/objects/MtMoonPokecenter.asm"
+
+INCLUDE "data/maps/headers/CeruleanPokecenter.asm"
+INCLUDE "scripts/CeruleanPokecenter.asm"
+INCLUDE "data/maps/objects/CeruleanPokecenter.asm"
+CeruleanPokecenter_Blocks: INCBIN "maps/CeruleanPokecenter.blk"
+
+CinnabarPokecenter_Blocks:
+FuchsiaPokecenter_Blocks: INCBIN "maps/FuchsiaPokecenter.blk"
+
+INCLUDE "data/maps/headers/CinnabarPokecenter.asm"
+INCLUDE "scripts/CinnabarPokecenter.asm"
+INCLUDE "data/maps/objects/CinnabarPokecenter.asm"
+
+INCLUDE "data/maps/headers/FuchsiaPokecenter.asm"
+INCLUDE "scripts/FuchsiaPokecenter.asm"
+INCLUDE "data/maps/objects/FuchsiaPokecenter.asm"
+
+INCLUDE "data/maps/headers/IndigoPlateauLobby.asm"
+INCLUDE "scripts/IndigoPlateauLobby.asm"
+INCLUDE "data/maps/objects/IndigoPlateauLobby.asm"
+IndigoPlateauLobby_Blocks: INCBIN "maps/IndigoPlateauLobby.blk"
+; Mateo's move relearner/deleter files
+INCLUDE "scripts/move_deleter.asm"
+INCLUDE "scripts/move_relearner.asm"
+
+INCLUDE "data/maps/headers/CeladonNovaHouse.asm"
+INCLUDE "scripts/CeladonNovaHouse.asm"
+INCLUDE "data/maps/objects/CeladonNovaHouse.asm"
+CeladonNovaHouse_Blocks: INCBIN "maps/CeladonNovaHouse.blk"
+
+INCLUDE "data/maps/headers/VermilionBeach.asm"
+INCLUDE "scripts/VermilionBeach.asm"
+INCLUDE "data/maps/objects/VermilionBeach.asm"
+VermilionBeach_Blocks: INCBIN "maps/VermilionBeach.blk"
+
+INCLUDE "data/maps/headers/MtMoonB3F.asm"
+INCLUDE "scripts/MtMoonB3F.asm"
+INCLUDE "data/maps/objects/MtMoonB3F.asm"
+MtMoonB3F_Blocks: INCBIN "maps/MtMoonB3F.blk"
+
+INCLUDE "data/maps/headers/MtMoonB4F.asm"
+INCLUDE "scripts/MtMoonB4F.asm"
+INCLUDE "data/maps/objects/MtMoonB4F.asm"
+MtMoonB4F_Blocks: INCBIN "maps/MtMoonB4F.blk"
+
+INCLUDE "data/maps/headers/MtMoonB5F.asm"
+INCLUDE "scripts/MtMoonB5F.asm"
+INCLUDE "data/maps/objects/MtMoonB5F.asm"
+MtMoonB5F_Blocks: INCBIN "maps/MtMoonB5F.blk"

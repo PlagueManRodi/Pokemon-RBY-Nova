@@ -28,6 +28,8 @@ BikeShopText1:
 	SetEvent EVENT_GOT_BICYCLE
 	ld hl, BikeShopText_1d824
 	call PrintText
+	ld hl, ReceivedBIKEText
+	call PrintText
 	jr .Done
 .BagFull
 	ld hl, BikeShopText_1d834
@@ -62,11 +64,11 @@ BikeShopText1:
 	call PlaceString
 	ld hl, BikeShopText_1d815
 	call PrintText
+	ld hl, wd730
+	res 6, [hl]
 	call HandleMenuInput
 	bit BIT_B_BUTTON, a
 	jr nz, .cancel
-	ld hl, wd730
-	res 6, [hl]
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .cancel
@@ -103,6 +105,11 @@ BikeShopText_1d81f:
 
 BikeShopText_1d824:
 	text_far _BikeShopText_1d824
+	sound_get_key_item
+	text_end
+
+ReceivedBIKEText:
+	text_far _ReceivedBIKEText
 	sound_get_key_item
 	text_end
 

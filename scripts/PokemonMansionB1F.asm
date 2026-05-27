@@ -49,7 +49,7 @@ Mansion4Script_Switches::
 	ret nz
 	xor a
 	ldh [hJoyHeld], a
-	ld a, $9
+	ld a, $A
 	ldh [hSpriteIndexOrTextID], a
 	jp DisplayTextID
 
@@ -57,7 +57,44 @@ PokemonMansionB1F_ScriptPointers:
 	dw CheckFightingMapTrainers
 	dw DisplayEnemyTrainerTextAndStartBattle
 	dw EndTrainerBattle
+	dw MansionB1FScript1
+	
+MansionB1FScript1:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, MansionB1FDontEndBattle
+	SetEvent EVENT_BEAT_GIOVANNI_SUPERBOSS
+	xor a
+	ld a, 9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	call GBFadeOutToBlack
+	ld a, HS_POKEMON_MANSION_GIOVANNI
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call GBFadeInFromBlack
+	;
+	CheckEvent EVENT_BEAT_BUGCATCHER_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	CheckEvent EVENT_BEAT_COOLTRAINER_SUPERBOSS
+	jr z, .dontTriggerAgathaUltima
+	ld a, HS_POKEMON_TOWER_7F_AGATHA
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.dontTriggerAgathaUltima
+	;
+	xor a
+	ld [wPokemonMansionB1FCurScript], a
+	ld [wCurMapScript], a
+	ret
 
+MansionB1FDontEndBattle:
+	xor a
+	ld [wPokemonMansionB1FCurScript], a
+	ld [wCurMapScript], a
+	ld [wJoyIgnore], a
+	ret
+	
 PokemonMansionB1F_TextPointers:
 	dw Mansion4Text1
 	dw Mansion4Text2
@@ -67,6 +104,7 @@ PokemonMansionB1F_TextPointers:
 	dw PickUpItemText
 	dw Mansion4Text7
 	dw PickUpItemText
+	dw Mansion4Text9
 	dw Mansion3Text6
 
 Mansion4TrainerHeaders:
@@ -75,6 +113,8 @@ Mansion4TrainerHeader0:
 	trainer EVENT_BEAT_MANSION_4_TRAINER_0, 0, Mansion4BattleText1, Mansion4EndBattleText1, Mansion4AfterBattleText1
 Mansion4TrainerHeader1:
 	trainer EVENT_BEAT_MANSION_4_TRAINER_1, 3, Mansion4BattleText2, Mansion4EndBattleText2, Mansion4AfterBattleText2
+Mansion4TrainerHeader2:
+	trainer EVENT_BEAT_GIOVANNI_SUPERBOSS, 0, Mansion4BattleText3, Mansion4EndBattleText3, Mansion4BattleText3
 	db -1 ; end
 
 Mansion4Text1:
@@ -115,4 +155,21 @@ Mansion4AfterBattleText2:
 
 Mansion4Text7:
 	text_far _Mansion4Text7
+	text_end
+
+Mansion4Text9:
+	text_asm
+	ld hl, Mansion4TrainerHeader2
+	call TalkToTrainer
+	ld a, 3
+	ld [wPokemonMansionB1FCurScript], a
+	ld [wCurMapScript], a
+	jp TextScriptEnd
+
+Mansion4BattleText3:
+	text_far _Mansion4BattleText3
+	text_end
+
+Mansion4EndBattleText3:
+	text_far _Mansion4EndBattleText3
 	text_end

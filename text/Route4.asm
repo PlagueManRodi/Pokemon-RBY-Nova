@@ -23,6 +23,14 @@ _Route4AfterBattleText1::
 	line "them all."
 	done
 
+_Route4Text4::
+	text "I'm the traveling"
+	line "merchant."
+	
+	para "Get some drinks"
+	line "for your trip."
+	done
+
 _Route4Text5::
 	text "MT.MOON"
 	line "Tunnel Entrance"

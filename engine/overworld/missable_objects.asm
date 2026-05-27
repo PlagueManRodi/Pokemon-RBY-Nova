@@ -2,11 +2,32 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown
+	cp VERMILION_BEACH
+	jr z, .notInTown
+	ld [wLastBlackoutMap], a
 	ld c, a
 	ld b, FLAG_SET
 	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
 	predef FlagActionPredef
+	jr .cont
 .notInTown
+	cp ROUTE_4
+	jr nz, .checkRoute10
+	ld [wLastBlackoutMap], a
+	ld c, 11
+	ld b, FLAG_SET
+	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
+	predef FlagActionPredef
+	jr .cont
+.checkRoute10
+	cp ROUTE_10
+	jr nz, .cont
+	ld [wLastBlackoutMap], a
+	ld c, 12
+	ld b, FLAG_SET
+	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
+	predef FlagActionPredef
+.cont
 	ld hl, MapHSPointers
 	ld a, [wCurMap]
 	ld b, $0
@@ -20,7 +41,29 @@ MarkTownVisitedAndLoadMissableObjects::
 LoadMissableObjects:
 	ld l, a
 	push hl
+	
+	;;;;;;;;;; PureRGBnote: ADDED: when in some maps we use a different set of flags for hiding/showing objects.
+	ld de, NewMissableObjects
+	; check if hl address is >= ExtraMissableObjects, if so load ExtraMissableObjects
+	ld a, d
+	sub h
+	jr c, .newMissables
+	jr nz, .normal
+	ld a, e
+	sub l
+	jr z, .newMissables
+	jr c, .newMissables
+.normal
+	
+	ResetEventA EVENT_IN_NEW_MISSABLE_OBJECTS_MAP
 	ld de, MissableObjects     ; calculate difference between out pointer and the base pointer
+	jr .load
+.newMissables
+	SetEventA EVENT_IN_NEW_MISSABLE_OBJECTS_MAP
+.load
+;;;;;;;;;;
+	
+;	ld de, MissableObjects     ; calculate difference between out pointer and the base pointer
 	ld a, l
 	sub e
 	jr nc, .noCarry
@@ -75,6 +118,7 @@ InitializeMissableObjectsFlags:
 	ld hl, MissableObjects
 	xor a
 	ld [wMissableObjectCounter], a
+	ld d, 0
 .missableObjectsLoop
 	ld a, [hli]
 	cp -1           ; end of list
@@ -84,14 +128,25 @@ InitializeMissableObjectsFlags:
 	ld a, [hl]
 	cp HIDE
 	jr nz, .skip
+	ld a, d
+	and a
 	ld hl, wMissableObjectFlags
+	jr z, .normal
+	ld hl, wMissableObjectFlags+32
+.normal
 	ld a, [wMissableObjectCounter]
 	ld c, a
 	ld b, FLAG_SET
 	call MissableObjectFlagAction ; set flag if Item is hidden
 .skip
-	ld hl, wMissableObjectCounter
-	inc [hl]
+	ld a, [wMissableObjectCounter]
+	inc a
+	cp NUM_HS_OBJECTS
+	jr nz, .cont
+	xor a
+	ld d, 1
+.cont
+	ld [wMissableObjectCounter], a
 	pop hl
 	inc hl
 	inc hl
@@ -112,7 +167,13 @@ IsObjectHidden:
 	jr nz, .loop
 	ld c, a
 	ld b, FLAG_TEST
+;;;;;;;;;; PureRGBnote: ADDED: when in certain maps we use a different set of flags for hiding/showing objects.
+	CheckEvent EVENT_IN_NEW_MISSABLE_OBJECTS_MAP
 	ld hl, wMissableObjectFlags
+	jr z, .doAction
+	ld hl, wMissableObjectFlags+32
+.doAction
+;;;;;;;;;;
 	call MissableObjectFlagAction
 	ld a, c
 	and a
@@ -128,6 +189,12 @@ IsObjectHidden:
 ShowObject:
 ShowObject2:
 	ld hl, wMissableObjectFlags
+	jr ShowObjectCommon
+	
+ShowNewObject:
+	ld hl, wMissableObjectFlags+32
+	; fallthrough
+ShowObjectCommon:
 	ld a, [wMissableObjectIndex]
 	ld c, a
 	ld b, FLAG_RESET
@@ -138,6 +205,12 @@ ShowObject2:
 ; [wMissableObjectIndex]: index of the missable object to be removed (global index)
 HideObject:
 	ld hl, wMissableObjectFlags
+	jr HideObjectCommon
+	
+HideNewObject:
+	ld hl, wMissableObjectFlags+32
+	; fallthrough
+HideObjectCommon:
 	ld a, [wMissableObjectIndex]
 	ld c, a
 	ld b, FLAG_SET
@@ -213,3 +286,34 @@ MissableObjectFlagAction:
 	pop hl
 	ld c, a
 	ret
+
+; lb de, FIRST_HS_INDEX, LAST_HS_INDEX
+SetNewMissableObjectRangeBackToDefaultStatus::
+	inc e
+.loop
+	ld a, d
+	cp e
+	ret nc
+	ld [wMissableObjectIndex], a
+	call GetNewObjectDefaultStatus
+	cp SHOW
+	jr z, .showObject
+	call HideNewObject
+	jr .skip
+.showObject
+	call ShowNewObject
+.skip
+	inc d
+	jr .loop
+
+; input a = which new object flag it is
+; output a = what the default state is
+GetNewObjectDefaultStatus:
+	ld hl, NewMissableObjects + 2
+	ld b, 0
+	ld c, a
+	add hl, bc
+	add hl, bc
+	add hl, bc
+	ld a, [hl]
+	ret	

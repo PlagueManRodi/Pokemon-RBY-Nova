@@ -180,6 +180,8 @@ Credits:
 	ld a, [de]
 	inc de
 	push de
+	cp CRED_FUZIWARA
+	call z, PlayTitleScreenSong
 	cp CRED_TEXT_FADE_MON
 	jr z, .fadeInTextAndShowMon
 	cp CRED_TEXT_MON
@@ -195,9 +197,11 @@ Credits:
 	push hl
 	push hl
 	ld hl, CreditsTextPointers
-	add a
+;	add a
 	ld c, a
 	ld b, 0
+	sla c
+	rl b
 	add hl, bc
 	ld e, [hl]
 	inc hl
@@ -255,6 +259,20 @@ Credits:
 	inc de
 	call PlaceString
 	jp FadeInCreditsText
+
+PlayTitleScreenSong:
+	push af
+	push bc
+	push de
+	push hl
+	ld c, BANK(Music_TitleScreen)
+	ld a, MUSIC_TITLE_SCREEN
+	call PlayMusic
+	pop hl
+	pop de
+	pop bc
+	pop af
+	ret
 
 TheEndTextString:
 ; "T H E  E N D"

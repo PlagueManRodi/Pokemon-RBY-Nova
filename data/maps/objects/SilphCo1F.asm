@@ -7,6 +7,7 @@ SilphCo1F_Object:
 	warp_event 26,  0, SILPH_CO_2F, 1
 	warp_event 20,  0, SILPH_CO_ELEVATOR, 1
 	warp_event 16, 10, SILPH_CO_3F, 7
+	warp_event 27, 13, SILPH_CO_11F, 6
 
 	def_bg_events
 

@@ -5,8 +5,12 @@ _RhydonDexEntry::
 
 	page "living in molten"
 	next "lava of 3,600"
-	next "degrees"
-	dex
+	next "degrees."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _KangaskhanDexEntry::
 	text "The infant rarely"
@@ -15,8 +19,12 @@ _KangaskhanDexEntry::
 
 	page "protective pouch"
 	next "until it is 3"
-	next "years old"
-	dex
+	next "years old."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _NidoranMDexEntry::
 	text "Stiffens its ears"
@@ -25,8 +33,12 @@ _NidoranMDexEntry::
 
 	page "horns, the more"
 	next "powerful its"
-	next "secreted venom"
-	dex
+	next "secreted venom."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ClefairyDexEntry::
 	text "Its magical and"
@@ -35,8 +47,12 @@ _ClefairyDexEntry::
 
 	page "It is rare and"
 	next "found only in"
-	next "certain areas"
-	dex
+	next "certain areas."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _SpearowDexEntry::
 	text "Eats bugs in"
@@ -45,18 +61,26 @@ _SpearowDexEntry::
 
 	page "short wings at"
 	next "high speed to"
-	next "stay airborne"
-	dex
+	next "stay airborne."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _VoltorbDexEntry::
-	text "Usually found in"
-	next "power plants."
-	next "Easily mistaken"
+	text "When excited, it"
+	next "discharges the"
+	next "electric current"
 
-	page "for a # BALL,"
-	next "they have zapped"
-	next "many people"
-	dex
+	page "it has stored in"
+	next "its belly, then"
+	next "lets out a laugh."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _NidokingDexEntry::
 	text "It uses its"
@@ -65,18 +89,26 @@ _NidokingDexEntry::
 
 	page "constrict, then"
 	next "break the prey's"
-	next "bones"
-	dex
+	next "bones."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _SlowbroDexEntry::
-	text "The SHELLDER that"
-	next "is latched onto"
-	next "SLOWPOKE's tail"
+	text "A SHELLDER bite"
+	next "set off a chemical"
+	next "reaction inside"
 
-	page "is said to feed"
-	next "on the host's left"
-	next "over scraps"
-	dex
+	page "SLOWBRO's body,"
+	next "causing it to turn"
+	next "into POISON-TYPE."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _IvysaurDexEntry::
 	text "When the bulb on"
@@ -85,18 +117,26 @@ _IvysaurDexEntry::
 
 	page "to lose the"
 	next "ability to stand"
-	next "on its hind legs"
-	dex
+	next "on its hind legs."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ExeggutorDexEntry::
-	text "Legend has it that"
-	next "on rare occasions,"
-	next "one of its heads"
+	text "It swings its long"
+	next "neck like a whip"
+	next "and smacks its"
 
-	page "will drop off and"
-	next "continue on as an"
-	next "EXEGGCUTE"
-	dex
+	page "opponents. This"
+	next "makes EXEGGUTOR"
+	next "itself dizzy, too."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>wittycrow"
+	next "<BA><CK> SuunZ"
+	done
 
 _LickitungDexEntry::
 	text "Its tongue can be"
@@ -105,8 +145,12 @@ _LickitungDexEntry::
 
 	page "leaves a tingling"
 	next "sensation when it"
-	next "licks enemies"
-	dex
+	next "licks enemies."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ExeggcuteDexEntry::
 	text "Often mistaken"
@@ -115,18 +159,26 @@ _ExeggcuteDexEntry::
 
 	page "they quickly"
 	next "gather and attack"
-	next "in swarms"
-	dex
+	next "in swarms."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _GrimerDexEntry::
-	text "Appears in filthy"
-	next "areas. Thrives by"
-	next "sucking up"
+	text "The crystals on"
+	next "GRIMER's body are"
+	next "lumps of toxins."
 
-	page "polluted sludge"
-	next "that is pumped"
-	next "out of factories"
-	dex
+	page "If one falls off,"
+	next "lethal poisons"
+	next "leak out."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>ZetaPhoenix"
+	next "<BA><CK> SuunZ"
+	done
 
 _GengarDexEntry::
 	text "Under a full moon,"
@@ -135,8 +187,12 @@ _GengarDexEntry::
 
 	page "the shadows of"
 	next "people and laugh"
-	next "at their fright"
-	dex
+	next "at their fright."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _NidoranFDexEntry::
 	text "Although small,"
@@ -145,8 +201,12 @@ _NidoranFDexEntry::
 
 	page "#MON dangerous."
 	next "The female has"
-	next "smaller horns"
-	dex
+	next "smaller horns."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _NidoqueenDexEntry::
 	text "Its hard scales"
@@ -155,8 +215,12 @@ _NidoqueenDexEntry::
 
 	page "uses its hefty"
 	next "bulk to execute"
-	next "powerful moves"
-	dex
+	next "powerful moves."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _CuboneDexEntry::
 	text "Because it never"
@@ -165,8 +229,12 @@ _CuboneDexEntry::
 
 	page "has ever seen"
 	next "this #MON's"
-	next "real face"
-	dex
+	next "real face."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _RhyhornDexEntry::
 	text "Its massive bones"
@@ -175,8 +243,12 @@ _RhyhornDexEntry::
 
 	page "bones. It can"
 	next "easily knock a"
-	next "trailer flying"
-	dex
+	next "trailer flying."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _LaprasDexEntry::
 	text "A #MON that"
@@ -185,18 +257,26 @@ _LaprasDexEntry::
 
 	page "extinction. It"
 	next "can ferry people"
-	next "across the water"
-	dex
+	next "across the water."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ArcanineDexEntry::
-	text "A #MON that"
-	next "has been admired"
-	next "since the past"
+	text "It deftly feints"
+	next "every which way,"
+	next "leading opponents"
 
-	page "for its beauty."
-	next "It runs agilely"
-	next "as if on wings"
-	dex
+	page "on a merry chase"
+	next "as it dances"
+	next "around them."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _MewDexEntry::
 	text "So rare that it"
@@ -205,9 +285,12 @@ _MewDexEntry::
 
 	page "many experts. Only"
 	next "a few people have"
-	next "seen it worldwide"
-	dex
-
+	next "seen it worldwide."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 _GyaradosDexEntry::
 	text "Rarely seen in"
 	next "the wild. Huge"
@@ -215,8 +298,12 @@ _GyaradosDexEntry::
 
 	page "is capable of"
 	next "destroying entire"
-	next "cities in a rage"
-	dex
+	next "cities in a rage."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ShellderDexEntry::
 	text "Its hard shell"
@@ -225,8 +312,12 @@ _ShellderDexEntry::
 
 	page "It is vulnerable"
 	next "only when its"
-	next "shell is open"
-	dex
+	next "shell is open."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _TentacoolDexEntry::
 	text "Drifts in shallow"
@@ -235,8 +326,12 @@ _TentacoolDexEntry::
 
 	page "accident are"
 	next "often punished by"
-	next "its stinging acid"
-	dex
+	next "its stinging acid."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _GastlyDexEntry::
 	text "Almost invisible,"
@@ -245,8 +340,12 @@ _GastlyDexEntry::
 
 	page "the target and"
 	next "puts it to sleep"
-	next "without notice"
-	dex
+	next "without notice."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ScytherDexEntry::
 	text "With ninja-like"
@@ -255,8 +354,12 @@ _ScytherDexEntry::
 
 	page "illusion that"
 	next "there is more"
-	next "than one"
-	dex
+	next "than one."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _StaryuDexEntry::
 	text "An enigmatic"
@@ -265,8 +368,12 @@ _StaryuDexEntry::
 
 	page "regenerate any"
 	next "appendage it"
-	next "loses in battle"
-	dex
+	next "loses in battle."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _BlastoiseDexEntry::
 	text "A brutal #MON"
@@ -275,8 +382,12 @@ _BlastoiseDexEntry::
 
 	page "shell. They are"
 	next "used for high"
-	next "speed tackles"
-	dex
+	next "speed tackles."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _PinsirDexEntry::
 	text "If it fails to"
@@ -285,8 +396,12 @@ _PinsirDexEntry::
 
 	page "it will swing it"
 	next "around and toss"
-	next "it hard"
-	dex
+	next "it hard."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _TangelaDexEntry::
 	text "The whole body is"
@@ -295,18 +410,54 @@ _TangelaDexEntry::
 
 	page "similar to sea-"
 	next "weed. Its vines"
-	next "shake as it walks"
-	dex
+	next "shake as it walks."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_PichuDexEntry::
+	text "The electric sacs"
+	next "on its cheeks are"
+	next "small. If even a"
+
+	page "little electricity"
+	next "leaks, it becomes"
+	next "shocked."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_CleffaDexEntry::
+	text "When numerous"
+	next "meteors illuminate"
+	next "the night sky,"
+
+	page "sightings of"
+	next "CLEFFA strangely"
+	next "increase."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _GrowlitheDexEntry::
-	text "Very protective"
-	next "of its territory."
-	next "It will bark and"
+	text "They patrol their"
+	next "territory in"
+	next "pairs. The igneous"
 
-	page "bite to repel"
-	next "intruders from"
-	next "its space"
-	dex
+	page "rock components in"
+	next "its fur result of"
+	next "volcanic activity."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _OnixDexEntry::
 	text "As it grows, the"
@@ -315,8 +466,12 @@ _OnixDexEntry::
 
 	page "to become similar"
 	next "to a diamond, but"
-	next "colored black"
-	dex
+	next "colored black."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _FearowDexEntry::
 	text "With its huge and"
@@ -325,8 +480,12 @@ _FearowDexEntry::
 
 	page "without ever"
 	next "having to land"
-	next "for rest"
-	dex
+	next "for rest."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Green"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _PidgeyDexEntry::
 	text "A common sight in"
@@ -335,18 +494,26 @@ _PidgeyDexEntry::
 
 	page "wings at ground"
 	next "level to kick up"
-	next "blinding sand"
-	dex
+	next "blinding sand."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _SlowpokeDexEntry::
-	text "Incredibly slow"
-	next "and dopey. It"
-	next "takes 5 seconds"
+	text "Although this"
+	next "#MON is"
+	next "normally zoned"
 
-	page "for it to feel"
-	next "pain when under"
-	next "attack"
-	dex
+	page "out, its face"
+	next "abruptly sharpens"
+	next "on occasion."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _KadabraDexEntry::
 	text "It emits special"
@@ -355,18 +522,26 @@ _KadabraDexEntry::
 
 	page "induce headaches"
 	next "just by being"
-	next "close by"
-	dex
+	next "close by."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _GravelerDexEntry::
-	text "Rolls down slopes"
-	next "to move. It rolls"
-	next "over any obstacle"
+	text "GRAVELER's entire"
+	next "body is tinged"
+	next "with electricity"
 
-	page "without slowing"
-	next "or changing its"
-	next "direction"
-	dex
+	page "due to the stones"
+	next "it likes to eat."
+	next "It's hot-tempered."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
 
 _ChanseyDexEntry::
 	text "A rare and elusive"
@@ -375,8 +550,12 @@ _ChanseyDexEntry::
 
 	page "happiness to those"
 	next "who manage to get"
-	next "it"
-	dex
+	next "it."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _MachokeDexEntry::
 	text "Its muscular body"
@@ -385,18 +564,26 @@ _MachokeDexEntry::
 
 	page "save belt to be"
 	next "able to regulate"
-	next "its motions"
-	dex
+	next "its motions."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _MrMimeDexEntry::
-	text "If interrupted"
-	next "while it is"
-	next "miming, it will"
+	text "It can radiate"
+	next "chilliness from"
+	next "the bottoms of its"
 
-	page "slap around the"
-	next "offender with its"
-	next "broad hands"
-	dex
+	page "feet. It'll spend"
+	next "the whole day"
+	next "tap-dancing."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
 
 _HitmonleeDexEntry::
 	text "When in a hurry,"
@@ -405,8 +592,12 @@ _HitmonleeDexEntry::
 
 	page "It runs smoothly"
 	next "with extra long,"
-	next "loping strides"
-	dex
+	next "loping strides."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _HitmonchanDexEntry::
 	text "While apparently"
@@ -415,8 +606,12 @@ _HitmonchanDexEntry::
 
 	page "lightning fast"
 	next "volleys that are"
-	next "impossible to see"
-	dex
+	next "impossible to see."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ArbokDexEntry::
 	text "It is rumored that"
@@ -425,8 +620,12 @@ _ArbokDexEntry::
 
 	page "on its belly"
 	next "differ from area"
-	next "to area"
-	dex
+	next "to area."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _ParasectDexEntry::
 	text "A host-parasite"
@@ -435,8 +634,12 @@ _ParasectDexEntry::
 
 	page "has taken over the"
 	next "host bug. Prefers"
-	next "damp places"
-	dex
+	next "damp places."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _PsyduckDexEntry::
 	text "While lulling its"
@@ -445,8 +648,12 @@ _PsyduckDexEntry::
 
 	page "wily #MON will"
 	next "use psychokinetic"
-	next "powers"
-	dex
+	next "powers."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _DrowzeeDexEntry::
 	text "Puts enemies to"
@@ -455,18 +662,40 @@ _DrowzeeDexEntry::
 
 	page "Occasionally gets"
 	next "sick from eating"
-	next "bad dreams"
-	dex
+	next "bad dreams."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _GolemDexEntry::
-	text "Its boulder-like"
-	next "body is extremely"
-	next "hard. It can"
+	text "If you upset it,"
+	next "it discharges"
+	next "electricity from"
 
-	page "easily withstand"
-	next "dynamite blasts"
-	next "without damage"
-	dex
+	page "the surface of its"
+	next "body and growls"
+	next "like thunder."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
+
+_CrobatDexEntry::
+	text "The transformation"
+	next "of its legs into"
+	next "wings made it"
+
+	page "better at flying,"
+	next "but more clumsy at"
+	next "walking."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _MagmarDexEntry::
 	text "Its body always"
@@ -475,8 +704,26 @@ _MagmarDexEntry::
 
 	page "enables it to"
 	next "hide perfectly"
-	next "among flames"
-	dex
+	next "among flames."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_BellossomDexEntry::
+	text "When the heavy"
+	next "rainfall season"
+	next "ends, it is drawn"
+
+	page "out by warm"
+	next "sunlight to dance"
+	next "in the open."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _ElectabuzzDexEntry::
 	text "Normally found"
@@ -485,8 +732,12 @@ _ElectabuzzDexEntry::
 
 	page "away and cause"
 	next "major blackouts"
-	next "in cities"
-	dex
+	next "in cities."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _MagnetonDexEntry::
 	text "Formed by several"
@@ -495,8 +746,12 @@ _MagnetonDexEntry::
 
 	page "frequently appear"
 	next "when sunspots"
-	next "flare up"
-	dex
+	next "flare up."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _KoffingDexEntry::
 	text "Because it stores"
@@ -505,8 +760,26 @@ _KoffingDexEntry::
 
 	page "its body, it is"
 	next "prone to exploding"
-	next "without warning"
-	dex
+	next "without warning."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_AnnihilapeDexEntry::
+	text "When its anger"
+	next "rose beyond a"
+	next "critical point,"
+
+	page "it gained power"
+	next "unfettered by its"
+	next "body's limits."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
 
 _MankeyDexEntry::
 	text "Extremely quick to"
@@ -515,8 +788,12 @@ _MankeyDexEntry::
 
 	page "moment then"
 	next "thrashing away"
-	next "the next instant"
-	dex
+	next "the next instant."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _SeelDexEntry::
 	text "The protruding"
@@ -525,18 +802,26 @@ _SeelDexEntry::
 
 	page "It is used for"
 	next "bashing through"
-	next "thick ice"
-	dex
+	next "thick ice."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _DiglettDexEntry::
-	text "Lives about one"
-	next "yard underground"
-	next "where it feeds on"
+	text "Its golden hairs"
+	next "function as"
+	next "sensors. It pokes"
 
-	page "plant roots. It"
-	next "sometimes appears"
-	next "above ground"
-	dex
+	page "them out of its"
+	next "burrow to monitor"
+	next "its surroundings."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>ZetaPhoenix"
+	next "<BA><CK> SuunZ"
+	done
 
 _TaurosDexEntry::
 	text "When it targets"
@@ -545,18 +830,68 @@ _TaurosDexEntry::
 
 	page "while whipping its"
 	next "body with its"
-	next "long tails"
-	dex
+	next "long tails."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_PolitoedDexEntry::
+	text "If POLIWAG and"
+	next "POLIWHIRL hear its"
+	next "echoing cry, they"
+
+	page "respond by"
+	next "gathering from far"
+	next "and wide."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_SlowkingDexEntry::
+	text "While chanting"
+	next "strange spells, it"
+	next "combines its"
+
+	page "internal toxins"
+	next "with what it's"
+	next "eaten."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>utytft"
+	next "<BA><CK> utytft"
+	done
+
+_MagnezoneDexEntry::
+	text "A group tried to"
+	next "use scientific"
+	next "means to make"
+
+	page "MAGNEZONE evolve,"
+	next "but their efforts"
+	next "ended in failure."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>Blue Emerald"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _FarfetchdDexEntry::
-	text "The sprig of"
-	next "green onions it"
-	next "holds is its"
+	text "FARFETCH'D of the"
+	next "KANTO region are"
+	next "brave warriors,"
 
-	page "weapon. It is"
-	next "used much like a"
-	next "metal sword"
-	dex
+	page "and they wield"
+	next "thick, tough leeks"
+	next "in battle."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
 
 _VenonatDexEntry::
 	text "Lives in the"
@@ -565,8 +900,12 @@ _VenonatDexEntry::
 
 	page "eats insects. It"
 	next "is attracted by"
-	next "light at night"
-	dex
+	next "light at night."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Green"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _DragoniteDexEntry::
 	text "An extremely"
@@ -575,8 +914,54 @@ _DragoniteDexEntry::
 
 	page "Its intelligence"
 	next "is said to match"
-	next "that of humans"
-	dex
+	next "that of humans."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_SirfetchdDexEntry::
+	text "After deflecting"
+	next "attacks with its"
+	next "hard leaf shield,"
+
+	page "it strikes back"
+	next "with its sharp"
+	next "leek stalk."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
+
+_SteelixDexEntry::
+	text "It is thought its"
+	next "body transformed"
+	next "as a result of"
+
+	page "iron accumulating"
+	next "internally from"
+	next "swallowing soil."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_IgglybuffDexEntry::
+	text "It has a soft and"
+	next "bouncy body. Once"
+	next "it starts"
+
+	page "bouncing, it"
+	next "becomes impossible"
+	next "to stop."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _DoduoDexEntry::
 	text "A bird that makes"
@@ -585,8 +970,12 @@ _DoduoDexEntry::
 
 	page "fast foot speed."
 	next "Leaves giant"
-	next "footprints"
-	dex
+	next "footprints."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _PoliwagDexEntry::
 	text "Its newly grown"
@@ -595,8 +984,12 @@ _PoliwagDexEntry::
 
 	page "appears to prefer"
 	next "swimming than"
-	next "trying to stand"
-	dex
+	next "trying to stand."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _JynxDexEntry::
 	text "It seductively"
@@ -605,38 +998,54 @@ _JynxDexEntry::
 
 	page "can cause people"
 	next "to dance in"
-	next "unison with it"
-	dex
+	next "unison with it."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _MoltresDexEntry::
-	text "Known as the"
-	next "legendary bird of"
-	next "fire. Every flap"
+	text "This #MON's"
+	next "sinister,"
+	next "flame-like aura"
 
-	page "of its wings"
-	next "creates a dazzling"
-	next "flash of flames"
-	dex
+	page "will consume the"
+	next "spirit of any"
+	next "creature it hits."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>yoellistrator"
+	next "<BA><CK> yoellistrator"
+	done
 
 _ArticunoDexEntry::
-	text "A legendary bird"
-	next "#MON that is"
-	next "said to appear to"
+	text "This #MON fires"
+	next "beams that can"
+	next "immobilize"
 
-	page "doomed people who"
-	next "are lost in icy"
-	next "mountains"
-	dex
+	page "opponents as if"
+	next "they had been"
+	next "frozen solid."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>yoellistrator"
+	next "<BA><CK> yoellistrator"
+	done
 
 _ZapdosDexEntry::
-	text "A legendary bird"
-	next "#MON that is"
-	next "said to appear"
+	text "When its feathers"
+	next "rub together, they"
+	next "produce a"
 
-	page "from clouds while"
-	next "dropping enormous"
-	next "lightning bolts"
-	dex
+	page "crackling sound"
+	next "like the zapping"
+	next "of electricity."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>yoellistrator"
+	next "<BA><CK> yoellistrator"
+	done
 
 _DittoDexEntry::
 	text "Capable of copying"
@@ -645,8 +1054,12 @@ _DittoDexEntry::
 
 	page "transform itself"
 	next "into a duplicate"
-	next "of the enemy"
-	dex
+	next "of the enemy."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _MeowthDexEntry::
 	text "Adores circular"
@@ -656,7 +1069,11 @@ _MeowthDexEntry::
 	page "nightly basis to"
 	next "look for dropped"
 	next "loose change"
-	dex
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Red/Blue"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _KrabbyDexEntry::
 	text "Its pincers are"
@@ -665,28 +1082,82 @@ _KrabbyDexEntry::
 
 	page "used for balance"
 	next "when walking"
-	next "sideways"
-	dex
+	next "sideways."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_TyrogueDexEntry::
+	text "Even though it is"
+	next "small, it can't be"
+	next "ignored because it"
+
+	page "will slug any"
+	next "handy target"
+	next "without warning."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_HitmontopDexEntry::
+	text "It launches kicks"
+	next "while spinning. If"
+	next "it spins at high"
+
+	page "speed, it may bore"
+	next "its way into the"
+	next "ground."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_LickilickyDexEntry::
+	text "The long tongue is"
+	next "always soggy with"
+	next "slobber. The"
+
+	page "saliva contains a"
+	next "solvent that"
+	next "causes numbness."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _VulpixDexEntry::
-	text "At the time of"
-	next "birth, it has"
-	next "just one tail."
+	text "In hot weather,"
+	next "this #MON makes"
+	next "ice shards with"
 
-	page "The tail splits"
-	next "from its tip as"
-	next "it grows older"
-	dex
+	page "its six tails and"
+	next "sprays them around"
+	next "to cool off."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>wittycrow"
+	next "<BA><CK> SuunZ"
+	done
 
 _NinetalesDexEntry::
-	text "Very smart and"
-	next "very vengeful."
-	next "Grabbing one of"
+	text "It creates drops"
+	next "of ice in its coat"
+	next "and showers them"
 
-	page "its many tails"
-	next "could result in a"
-	next "1000-year curse"
-	dex
+	page "over its enemies."
+	next "Anyone who angers"
+	next "it will be frozen."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>wittycrow"
+	next "<BA><CK> SuunZ"
+	done
 
 _PikachuDexEntry::
 	text "When several of"
@@ -695,18 +1166,54 @@ _PikachuDexEntry::
 
 	page "electricity could"
 	next "build and cause"
-	next "lightning storms"
-	dex
+	next "lightning storms."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _RaichuDexEntry::
-	text "Its long tail"
-	next "serves as a"
-	next "ground to protect"
+	text "When you rub its"
+	next "cheeks, a sweet"
+	next "fragrance comes"
 
-	page "itself from its"
-	next "own high voltage"
-	next "power"
-	dex
+	page "wafting out."
+	next "However, you'll"
+	next "also get shocked!"
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>Dreammaker23"
+	next "<BA><CK> SuunZ"
+	done
+
+_RhyperiorDexEntry::
+	text "From holes in its"
+	next "palms, it fires"
+	next "out GEODUDE. Its"
+
+	page "carapace can"
+	next "withstand volcanic"
+	next "eruptions."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>Blue Emerald"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_HappinyDexEntry::
+	text "It carries a"
+	next "round, egg-shaped"
+	next "rock in its belly"
+
+	page "pouch and gives"
+	next "the rock to its"
+	next "friends."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>Axel-Comics"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _DratiniDexEntry::
 	text "Long considered a"
@@ -715,8 +1222,12 @@ _DratiniDexEntry::
 
 	page "when a small"
 	next "colony was found"
-	next "living underwater"
-	dex
+	next "living underwater."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _DragonairDexEntry::
 	text "A mystical #MON"
@@ -725,8 +1236,12 @@ _DragonairDexEntry::
 
 	page "Has the ability"
 	next "to change climate"
-	next "conditions"
-	dex
+	next "conditions."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _KabutoDexEntry::
 	text "A #MON that"
@@ -735,8 +1250,12 @@ _KabutoDexEntry::
 
 	page "found in what was"
 	next "once the ocean"
-	next "floor eons ago"
-	dex
+	next "floor eons ago."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _KabutopsDexEntry::
 	text "Its sleek shape is"
@@ -745,8 +1264,12 @@ _KabutopsDexEntry::
 
 	page "prey with its"
 	next "claws and drains"
-	next "the body fluids"
-	dex
+	next "the body fluids."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _HorseaDexEntry::
 	text "Known to shoot"
@@ -755,8 +1278,12 @@ _HorseaDexEntry::
 
 	page "blasts of ink"
 	next "from the surface"
-	next "of the water"
-	dex
+	next "of the water."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _SeadraDexEntry::
 	text "Capable of swim-"
@@ -765,28 +1292,68 @@ _SeadraDexEntry::
 
 	page "its wing-like"
 	next "pectoral fins and"
-	next "stout tail"
-	dex
+	next "stout tail."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
+
+_BlisseyDexEntry::
+	text "The eggs it lays"
+	next "are filled with"
+	next "happiness. Eating"
+
+	page "even one bite will"
+	next "bring a smile to"
+	next "anyone."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Crystal"
+	next "<BA><CK> ZetaPhoenix"
+	done
+
+_TangrowthDexEntry::
+	text "It ensnares prey"
+	next "by extending arms"
+	next "made of vines."
+
+	page "Losing arms to"
+	next "predators does not"
+	next "trouble it."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>Blue Emerald"
+	next "<BA><CK> ZetaPhoenix"
+	done
 
 _SandshrewDexEntry::
-	text "Burrows deep"
-	next "underground in"
-	next "arid locations"
+	text "Life on mountains"
+	next "covered with deep"
+	next "snow has granted"
 
-	page "far from water."
-	next "It only emerges"
-	next "to hunt for food"
-	dex
+	page "this #MON a"
+	next "body of ice that's"
+	next "as hard as steel."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
 
 _SandslashDexEntry::
-	text "Curls up into a"
-	next "spiny ball when"
-	next "threatened. It"
+	text "A long time ago,"
+	next "it lived in the"
+	next "desert. With its"
 
-	page "can roll while"
-	next "curled up to"
-	next "attack or escape"
-	dex
+	page "sharp claws fully"
+	next "extended, it can"
+	next "climb an iceberg."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T>SuunZ"
+	next "<BA><CK> SuunZ"
+	done
 
 _OmanyteDexEntry::
 	text "Although long"
@@ -795,8 +1362,12 @@ _OmanyteDexEntry::
 
 	page "genetically"
 	next "resurrected from"
-	next "fossils"
-	dex
+	next "fossils."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Gold"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _OmastarDexEntry::
 	text "A prehistoric"
@@ -805,8 +1376,12 @@ _OmastarDexEntry::
 
 	page "heavy shell made"
 	next "it impossible to"
-	next "catch prey"
-	dex
+	next "catch prey."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Silver"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done
 
 _JigglypuffDexEntry::
 	text "When its huge eyes"
@@ -815,695 +1390,9 @@ _JigglypuffDexEntry::
 
 	page "soothing melody"
 	next "that lulls its"
-	next "enemies to sleep"
-	dex
-
-_WigglytuffDexEntry::
-	text "The body is soft"
-	next "and rubbery. When"
-	next "angered, it will"
-
-	page "suck in air and"
-	next "inflate itself to"
-	next "an enormous size"
-	dex
-
-_EeveeDexEntry::
-	text "Its genetic code"
-	next "is irregular."
-	next "It may mutate if"
-
-	page "it is exposed to"
-	next "radiation from"
-	next "element STONEs"
-	dex
-
-_FlareonDexEntry::
-	text "When storing"
-	next "thermal energy in"
-	next "its body, its"
-
-	page "temperature could"
-	next "soar to over 1600"
-	next "degrees"
-	dex
-
-_JolteonDexEntry::
-	text "It accumulates"
-	next "negative ions in"
-	next "the atmosphere to"
-
-	page "blast out 10000-"
-	next "volt lightning"
-	next "bolts"
-	dex
-
-_VaporeonDexEntry::
-	text "Lives close to"
-	next "water. Its long"
-	next "tail is ridged"
-
-	page "with a fin which"
-	next "is often mistaken"
-	next "for a mermaid's"
-	dex
-
-_MachopDexEntry::
-	text "Loves to build"
-	next "its muscles."
-	next "It trains in all"
-
-	page "styles of martial"
-	next "arts to become"
-	next "even stronger"
-	dex
-
-_ZubatDexEntry::
-	text "Forms colonies in"
-	next "perpetually dark"
-	next "places. Uses"
-
-	page "ultrasonic waves"
-	next "to identify and"
-	next "approach targets"
-	dex
-
-_EkansDexEntry::
-	text "Moves silently"
-	next "and stealthily."
-	next "Eats the eggs of"
-
-	page "birds, such as"
-	next "PIDGEY and"
-	next "SPEAROW, whole"
-	dex
-
-_ParasDexEntry::
-	text "Burrows to suck"
-	next "tree roots. The"
-	next "mushrooms on its"
-
-	page "back grow by draw-"
-	next "ing nutrients from"
-	next "the bug host"
-	dex
-
-_PoliwhirlDexEntry::
-	text "Capable of living"
-	next "in or out of"
-	next "water. When out"
-
-	page "of water, it"
-	next "sweats to keep"
-	next "its body slimy"
-	dex
-
-_PoliwrathDexEntry::
-	text "An adept swimmer"
-	next "at both the front"
-	next "crawl and breast"
-
-	page "stroke. Easily"
-	next "overtakes the best"
-	next "human swimmers"
-	dex
-
-_WeedleDexEntry::
-	text "Often found in"
-	next "forests, eating"
-	next "leaves."
-
-	page "It has a sharp"
-	next "venomous stinger"
-	next "on its head"
-	dex
-
-_KakunaDexEntry::
-	text "Almost incapable"
-	next "of moving, this"
-	next "#MON can only"
-
-	page "harden its shell"
-	next "to protect itself"
-	next "from predators"
-	dex
-
-_BeedrillDexEntry::
-	text "Flies at high"
-	next "speed and attacks"
-	next "using its large"
-
-	page "venomous stingers"
-	next "on its forelegs"
-	next "and tail"
-	dex
-
-_DodrioDexEntry::
-	text "Uses its three"
-	next "brains to execute"
-	next "complex plans."
-
-	page "While two heads"
-	next "sleep, one head"
-	next "stays awake"
-	dex
-
-_PrimeapeDexEntry::
-	text "Always furious"
-	next "and tenacious to"
-	next "boot. It will not"
-
-	page "abandon chasing"
-	next "its quarry until"
-	next "it is caught"
-	dex
-
-_DugtrioDexEntry::
-	text "A team of DIGLETT"
-	next "triplets."
-	next "It triggers huge"
-
-	page "earthquakes by"
-	next "burrowing 60 miles"
-	next "underground"
-	dex
-
-_VenomothDexEntry::
-	text "The dust-like"
-	next "scales covering"
-	next "its wings are"
-
-	page "color coded to"
-	next "indicate the kinds"
-	next "of poison it has"
-	dex
-
-_DewgongDexEntry::
-	text "Stores thermal"
-	next "energy in its"
-	next "body. Swims at a"
-
-	page "steady 8 knots"
-	next "even in intensely"
-	next "cold waters"
-	dex
-
-_CaterpieDexEntry::
-	text "Its short feet"
-	next "are tipped with"
-	next "suction pads that"
-
-	page "enable it to"
-	next "tirelessly climb"
-	next "slopes and walls"
-	dex
-
-_MetapodDexEntry::
-	text "This #MON is"
-	next "vulnerable to"
-	next "attack while its"
-
-	page "shell is soft,"
-	next "exposing its weak"
-	next "and tender body"
-	dex
-
-_ButterfreeDexEntry::
-	text "In battle, it"
-	next "flaps its wings"
-	next "at high speed to"
-
-	page "release highly"
-	next "toxic dust into"
-	next "the air"
-	dex
-
-_MachampDexEntry::
-	text "Using its heavy"
-	next "muscles, it throws"
-	next "powerful punches"
-
-	page "that can send the"
-	next "victim clear over"
-	next "the horizon"
-	dex
-
-_GolduckDexEntry::
-	text "Often seen swim-"
-	next "ming elegantly by"
-	next "lake shores. It"
-
-	page "is often mistaken"
-	next "for the Japanese"
-	next "monster, Kappa"
-	dex
-
-_HypnoDexEntry::
-	text "When it locks eyes"
-	next "with an enemy, it"
-	next "will use a mix of"
-
-	page "PSI moves such as"
-	next "HYPNOSIS and"
-	next "CONFUSION"
-	dex
-
-_GolbatDexEntry::
-	text "Once it strikes,"
-	next "it will not stop"
-	next "draining energy"
-
-	page "from the victim"
-	next "even if it gets"
-	next "too heavy to fly"
-	dex
-
-_MewtwoDexEntry::
-	text "It was created by"
-	next "a scientist after"
-	next "years of horrific"
-
-	page "gene splicing and"
-	next "DNA engineering"
-	next "experiments"
-	dex
-
-_SnorlaxDexEntry::
-	text "Very lazy. Just"
-	next "eats and sleeps."
-	next "As its rotund"
-
-	page "bulk builds, it"
-	next "becomes steadily"
-	next "more slothful"
-	dex
-
-_MagikarpDexEntry::
-	text "In the distant"
-	next "past, it was"
-	next "somewhat stronger"
-
-	page "than the horribly"
-	next "weak descendants"
-	next "that exist today"
-	dex
-
-_MukDexEntry::
-	text "Thickly covered"
-	next "with a filthy,"
-	next "vile sludge. It"
-
-	page "is so toxic, even"
-	next "its footprints"
-	next "contain poison"
-	dex
-
-_KinglerDexEntry::
-	text "The large pincer"
-	next "has 10000 hp of"
-	next "crushing power."
-
-	page "However, its huge"
-	next "size makes it"
-	next "unwieldy to use"
-	dex
-
-_CloysterDexEntry::
-	text "When attacked, it"
-	next "launches its"
-	next "horns in quick"
-
-	page "volleys. Its"
-	next "innards have"
-	next "never been seen"
-	dex
-
-_ElectrodeDexEntry::
-	text "It stores electric"
-	next "energy under very"
-	next "high pressure."
-
-	page "It often explodes"
-	next "with little or no"
-	next "provocation"
-	dex
-
-_ClefableDexEntry::
-	text "A timid fairy"
-	next "#MON that is"
-	next "rarely seen. It"
-
-	page "will run and hide"
-	next "the moment it"
-	next "senses people"
-	dex
-
-_WeezingDexEntry::
-	text "Where two kinds"
-	next "of poison gases"
-	next "meet, 2 KOFFINGs"
-
-	page "can fuse into a"
-	next "WEEZING over many"
-	next "years"
-	dex
-
-_PersianDexEntry::
-	text "Although its fur"
-	next "has many admirers,"
-	next "it is tough to"
-
-	page "raise as a pet"
-	next "because of its"
-	next "fickle meanness"
-	dex
-
-_MarowakDexEntry::
-	text "The bone it holds"
-	next "is its key weapon."
-	next "It throws the"
-
-	page "bone skillfully"
-	next "like a boomerang"
-	next "to KO targets"
-	dex
-
-_HaunterDexEntry::
-	text "Because of its"
-	next "ability to slip"
-	next "through block"
-
-	page "walls, it is said"
-	next "to be from an-"
-	next "other dimension"
-	dex
-
-_AbraDexEntry::
-	text "Using its ability"
-	next "to read minds, it"
-	next "will identify"
-
-	page "impending danger"
-	next "and TELEPORT to"
-	next "safety"
-	dex
-
-_AlakazamDexEntry::
-	text "Its brain can out-"
-	next "perform a super-"
-	next "computer."
-
-	page "Its intelligence"
-	next "quotient is said"
-	next "to be 5,000"
-	dex
-
-_PidgeottoDexEntry::
-	text "Very protective"
-	next "of its sprawling"
-	next "territorial area,"
-
-	page "this #MON will"
-	next "fiercely peck at"
-	next "any intruder"
-	dex
-
-_PidgeotDexEntry::
-	text "When hunting, it"
-	next "skims the surface"
-	next "of water at high"
-
-	page "speed to pick off"
-	next "unwary prey such"
-	next "as MAGIKARP"
-	dex
-
-_StarmieDexEntry::
-	text "Its central core"
-	next "glows with the"
-	next "seven colors of"
-
-	page "the rainbow. Some"
-	next "people value the"
-	next "core as a gem"
-	dex
-
-_BulbasaurDexEntry::
-	text "A strange seed was"
-	next "planted on its"
-	next "back at birth."
-
-	page "The plant sprouts"
-	next "and grows with"
-	next "this #MON"
-	dex
-
-_VenusaurDexEntry::
-	text "The plant blooms"
-	next "when it is"
-	next "absorbing solar"
-
-	page "energy. It stays"
-	next "on the move to"
-	next "seek sunlight"
-	dex
-
-_TentacruelDexEntry::
-	text "The tentacles are"
-	next "normally kept"
-	next "short. On hunts,"
-
-	page "they are extended"
-	next "to ensnare and"
-	next "immobilize prey"
-	dex
-
-_GoldeenDexEntry::
-	text "Its tail fin"
-	next "billows like an"
-	next "elegant ballroom"
-
-	page "dress, giving it"
-	next "the nickname of"
-	next "the Water Queen"
-	dex
-
-_SeakingDexEntry::
-	text "In the autumn"
-	next "spawning season,"
-	next "they can be seen"
-
-	page "swimming power-"
-	next "fully up rivers"
-	next "and creeks"
-	dex
-
-_PonytaDexEntry::
-	text "Its hooves are 10"
-	next "times harder than"
-	next "diamonds. It can"
-
-	page "trample anything"
-	next "completely flat"
-	next "in little time"
-	dex
-
-_RapidashDexEntry::
-	text "Very competitive,"
-	next "this #MON will"
-	next "chase anything"
-
-	page "that moves fast"
-	next "in the hopes of"
-	next "racing it"
-	dex
-
-_RattataDexEntry::
-	text "Bites anything"
-	next "when it attacks."
-	next "Small and very"
-
-	page "quick, it is a"
-	next "common sight in"
-	next "many places"
-	dex
-
-_RaticateDexEntry::
-	text "It uses its whis-"
-	next "kers to maintain"
-	next "its balance."
-
-	page "It apparently"
-	next "slows down if"
-	next "they are cut off"
-	dex
-
-_NidorinoDexEntry::
-	text "An aggressive"
-	next "#MON that is"
-	next "quick to attack."
-
-	page "The horn on its"
-	next "head secretes a"
-	next "powerful venom"
-	dex
-
-_NidorinaDexEntry::
-	text "The female's horn"
-	next "develops slowly."
-	next "Prefers physical"
-
-	page "attacks such as"
-	next "clawing and"
-	next "biting"
-	dex
-
-_GeodudeDexEntry::
-	text "Found in fields"
-	next "and mountains."
-	next "Mistaking them"
-
-	page "for boulders,"
-	next "people often step"
-	next "or trip on them"
-	dex
-
-_PorygonDexEntry::
-	text "A #MON that"
-	next "consists entirely"
-	next "of programming"
-
-	page "code. Capable of"
-	next "moving freely in"
-	next "cyberspace"
-	dex
-
-_AerodactylDexEntry::
-	text "A ferocious, pre-"
-	next "historic #MON"
-	next "that goes for the"
-
-	page "enemy's throat"
-	next "with its serrated"
-	next "saw-like fangs"
-	dex
-
-_MagnemiteDexEntry::
-	text "Uses anti-gravity"
-	next "to stay suspended."
-	next "Appears without"
-
-	page "warning and uses"
-	next "THUNDER WAVE and"
-	next "similar moves"
-	dex
-
-_CharmanderDexEntry::
-	text "Obviously prefers"
-	next "hot places. When"
-	next "it rains, steam"
-
-	page "is said to spout"
-	next "from the tip of"
-	next "its tail"
-	dex
-
-_SquirtleDexEntry::
-	text "After birth, its"
-	next "back swells and"
-	next "hardens into a"
-
-	page "shell. Powerfully"
-	next "sprays foam from"
-	next "its mouth"
-	dex
-
-_CharmeleonDexEntry::
-	text "When it swings"
-	next "its burning tail,"
-	next "it elevates the"
-
-	page "temperature to"
-	next "unbearably high"
-	next "levels"
-	dex
-
-_WartortleDexEntry::
-	text "Often hides in"
-	next "water to stalk"
-	next "unwary prey. For"
-
-	page "swimming fast, it"
-	next "moves its ears to"
-	next "maintain balance"
-	dex
-
-_CharizardDexEntry::
-	text "Spits fire that"
-	next "is hot enough to"
-	next "melt boulders."
-
-	page "Known to cause"
-	next "forest fires"
-	next "unintentionally"
-	dex
-
-_OddishDexEntry::
-	text "During the day,"
-	next "it keeps its face"
-	next "buried in the"
-
-	page "ground. At night,"
-	next "it wanders around"
-	next "sowing its seeds"
-	dex
-
-_GloomDexEntry::
-	text "The fluid that"
-	next "oozes from its"
-	next "mouth isn't drool."
-
-	page "It is a nectar"
-	next "that is used to"
-	next "attract prey"
-	dex
-
-_VileplumeDexEntry::
-	text "The larger its"
-	next "petals, the more"
-	next "toxic pollen it"
-
-	page "contains. Its big"
-	next "head is heavy and"
-	next "hard to hold up"
-	dex
-
-_BellsproutDexEntry::
-	text "A carnivorous"
-	next "#MON that traps"
-	next "and eats bugs."
-
-	page "It uses its root"
-	next "feet to soak up"
-	next "needed moisture"
-	dex
-
-_WeepinbellDexEntry::
-	text "It spits out"
-	next "POISONPOWDER to"
-	next "immobilize the"
-
-	page "enemy and then"
-	next "finishes it with"
-	next "a spray of ACID"
-	dex
-
-_VictreebelDexEntry::
-	text "Said to live in"
-	next "huge colonies"
-	next "deep in jungles,"
-
-	page "although no one"
-	next "has ever returned"
-	next "from there"
-	dex
+	next "enemies to sleep."
+	
+	page "Sprite Art:"
+	next "<FR><ON><T><PK><MN> Yellow"
+	next "<BA><CK> <PK><MN> Red/Green"
+	done

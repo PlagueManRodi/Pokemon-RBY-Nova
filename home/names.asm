@@ -29,6 +29,8 @@ GetItemName::
 ;     starting at wcd6d
 	push hl
 	push bc
+	ld a, ITEM_NAME
+	ld [wNameListType], a
 	ld a, [wd11e]
 	cp HM01 ; is this a TM/HM?
 	jr nc, .Machine
@@ -119,13 +121,13 @@ IsItemHM::
 
 ; sets carry if move is an HM, clears carry if move is not an HM
 ; Input: a = move ID
-IsMoveHM::
-	ld hl, HMMoves
-	ld de, 1
-	jp IsInArray
-
-HMMoves::
-INCLUDE "data/moves/hm_moves.asm"
+;IsMoveHM::
+;	ld hl, HMMoves
+;	ld de, 1
+;	jp IsInArray
+;
+;HMMoves::
+;INCLUDE "data/moves/hm_moves.asm"
 
 GetMoveName::
 	push hl

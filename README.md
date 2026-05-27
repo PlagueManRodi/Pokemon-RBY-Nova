@@ -1,48 +1,43 @@
-# Pokémon Red and Blue [![Build Status][ci-badge]][ci]
+# Pokémon RBY Nova
 
-This is a disassembly of Pokémon Red and Blue.
+Pokémon RBY Nova is a rom hack of Pokémon Red & Blue that aims to add modern Pokémon concepts into the game but keep the originals charm.
 
-It builds the following ROMs:
+- [**Preview Video**][previewvideo]
 
-- Pokemon Red (UE) [S][!].gb `sha1: ea9bcae617fdf159b045185467ae58b2e4a48b9a`
-- Pokemon Blue (UE) [S][!].gb `sha1: d7037c83e1ae5b39bde3c30787637ba1d4c48ce2`
-- BLUEMONS.GB (debug build) `sha1: 5b1456177671b79b263c614ea0e7cc9ac542e9c4`
-- dmgapae0.e69.patch `sha1: 0fb5f743696adfe1dbb2e062111f08f9bc5a293a`
-- dmgapee0.e68.patch `sha1: ed4be94dc29c64271942c87f2157bca9ca1019c7`
+Current version: v1.0.2
 
-To set up the repository, see [**INSTALL.md**](INSTALL.md).
+Features:
 
+- Pokémon pool expanded to 190 generation 1 related Pokémon and some of the newer variants replace some of the originals as well.
+- 2 versions: CLASSIC keeps the original Move pool intact. MODERN brings 70+ additional Moves into the game.
+- A myriad of bug fixes and quality of life updates for a better experience.
+- Access the new Select Menu for quick access to HM Moves and Key Items without needing them in your Bag.
+- Ton of options for players to tailor the experience to their liking, going further from vanilla or facilitating challenge runs.
+- Full game rebalanced and story streamlined for a more sensible Level progression.
+- While the main story is mostly the same, there are minor differences to be surprised by!
+- Battle AI logic fully redesigned including different Pokémon DVs and battle styles for each Trainer Class.
+- Extra content added to the post-game. 2 new areas, Gym Leader & League rematches and more to explore...
+- Full 190 Pokémon obtainable on a single save without needing to trade.
 
-## See also
+Made using the pokered disassembly by the Pokémon Retro Engineering Team (pret).
 
-- [**Wiki**][wiki] (includes [tutorials][tutorials])
-- [**Symbols**][symbols]
-- **Discord:** [pret][discord]
-- **IRC:** [libera#pret][irc]
+- [**Pokered**][pokered]
 
-Other disassembly projects:
+Credits:
 
-- [**Pokémon Yellow**][pokeyellow]
-- [**Pokémon Gold/Silver**][pokegold]
-- [**Pokémon Crystal**][pokecrystal]
-- [**Pokémon Pinball**][pokepinball]
-- [**Pokémon TCG**][poketcg]
-- [**Pokémon Ruby**][pokeruby]
-- [**Pokémon FireRed**][pokefirered]
-- [**Pokémon Emerald**][pokeemerald]
+- Programmer: ZetaPhoenix.
+- Programming help: ariahiro64, BlueZangoose, Dannye, devolov, Engezerstorung, jojobear13, JustRegularLuna, Mateo, Mauve, Mord, RainbowMetalPigeon, Rangi42, ShiraTheMogul, suloku, Vortiene & Xillicis.
+- Lead Art: SuunZ & ZetaPhoenix.
+- Additional Art: Axel-Comics, Blue Emerald, Dreammaker23, Essentures, ninboy01, patattackerman, RainbowDevs, SageDeoxys, utytft, wittycrow & yoellistrator.
+- Party Menu Icons: Blue Emerald, Chamber, Lake, Neslug, Pikachu25, Ryta, Soloo993 & SuunZ.
+- Testing: Chris05, Hyd, Oblivion Wing, PatoMareado, pk87, RainbowMetalPigeon, SuunZ, The Wise Brotha & ZetaPhoenix.
+- GSC Graphics Design: Hironobu Yoshida, Jun Okutani, Asuka Iwashita & Tetsuya Watanabe.
+- All monster designs belong to NINTENDO, GAME FREAK and their respective creators.
+- Pokered Contributors: kanzure, Rangi42, Dannye, iimarckus, yenatch & many more…
+- Special Thanks: Big Yellow, Lyra made a website, Pret Discord Server & Retro Game Mechanics Explained.
 
-[pokeyellow]: https://github.com/pret/pokeyellow
-[pokegold]: https://github.com/pret/pokegold
-[pokecrystal]: https://github.com/pret/pokecrystal
-[pokepinball]: https://github.com/pret/pokepinball
-[poketcg]: https://github.com/pret/poketcg
-[pokeruby]: https://github.com/pret/pokeruby
-[pokefirered]: https://github.com/pret/pokefirered
-[pokeemerald]: https://github.com/pret/pokeemerald
-[wiki]: https://github.com/pret/pokered/wiki
-[tutorials]: https://github.com/pret/pokered/wiki/Tutorials
-[symbols]: https://github.com/pret/pokered/tree/symbols
-[discord]: https://discord.gg/d5dubZ3
-[irc]: https://web.libera.chat/?#pret
-[ci]: https://github.com/pret/pokered/actions
-[ci-badge]: https://github.com/pret/pokered/actions/workflows/main.yml/badge.svg
+- [**Full Game Download**][fullgame]
+
+[previewvideo]: https://youtu.be/OH_6ZjkdDBA
+[pokered]: https://github.com/pret/pokered
+[fullgame]: https://drive.google.com/drive/folders/1eLoRxeZcg5hFr1VjKjXNNnteCb92prYt?usp=drive_link

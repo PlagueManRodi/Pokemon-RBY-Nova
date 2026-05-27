@@ -12,25 +12,25 @@ _Route1ViridianMartSampleText::
 	cont "Here you go!"
 	prompt
 
-_Route1Text_1cae8::
+_Route1Text_2cae8::
 	text "<PLAYER> got"
 	line "@"
 	text_ram wStringBuffer
 	text "!@"
 	text_end
 
-_Route1Text_1caee::
+_Route1Text_2caee::
 	text "We also carry"
 	line "# BALLs for"
 	cont "catching #MON!"
 	done
 
-_Route1Text_1caf3::
+_Route1Text_2caf3::
 	text "You have too much"
 	line "stuff with you!"
 	done
 
-_Route1Text2::
+_Route1Text3::
 	text "See those ledges"
 	line "along the road?"
 
@@ -43,7 +43,7 @@ _Route1Text2::
 	cont "quicker that way."
 	done
 
-_Route1Text3::
+_Route1Text4::
 	text "ROUTE 1"
 	line "PALLET TOWN -"
 	cont "VIRIDIAN CITY"

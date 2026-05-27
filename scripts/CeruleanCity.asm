@@ -34,7 +34,7 @@ CeruleanCityScript4:
 	ld [wCeruleanCityCurScript], a
 	ret
 
-CeruleanCityScript0:
+CeruleanCityScript0:  
 IF DEF(_DEBUG)
 	call DebugPressedOrHeldB
 	ret nz
@@ -72,6 +72,7 @@ ENDC
 	ld [wNewSoundID], a
 	call PlaySound
 .walking
+	predef HealParty
 	ld c, BANK(Music_MeetRival)
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
@@ -109,7 +110,7 @@ CeruleanCityCoords2:
 	dbmapcoord 20,  6
 	dbmapcoord 21,  6
 	db -1 ; end
-
+	
 CeruleanCityMovement1:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
@@ -172,6 +173,21 @@ CeruleanCityScript2:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_RIVAL
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 20
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
+	
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -245,10 +261,11 @@ CeruleanCity_TextPointers:
 	dw CeruleanCityText11
 	dw CeruleanCityText12
 	dw CeruleanCityText13
+	dw CeruleanCityText14
 	dw MartSignText
 	dw PokeCenterSignText
-	dw CeruleanCityText16
 	dw CeruleanCityText17
+	dw CeruleanCityText18
 
 CeruleanCityText1:
 	text_asm
@@ -310,6 +327,7 @@ CeruleanCityText2:
 	call PrintText
 	jr .Done
 .Success
+	SetEvent EVENT_GOT_TM28
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, ReceivedTM28Text
@@ -325,6 +343,8 @@ CeruleanCityText_196d9:
 ReceivedTM28Text:
 	text_far _ReceivedTM28Text
 	sound_get_item_1
+	text_far _ReceivedESCAPEText
+	sound_get_key_item
 	text_far _ReceivedTM28Text2
 	text_waitbutton
 	text_end
@@ -443,17 +463,21 @@ CeruleanCityText10:
 	text_end
 
 CeruleanCityText12:
-	text_far _CeruleanCityText12
+	text_far _CeruleanCityText_GymGuard
 	text_end
 
 CeruleanCityText13:
+	text_far _CeruleanCityText12
+	text_end
+
+CeruleanCityText14:
 	text_far _CeruleanCityText13
 	text_end
 
-CeruleanCityText16:
+CeruleanCityText17:
 	text_far _CeruleanCityText16
 	text_end
 
-CeruleanCityText17:
+CeruleanCityText18:
 	text_far _CeruleanCityText17
 	text_end

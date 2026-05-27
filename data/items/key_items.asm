@@ -43,7 +43,7 @@ KeyItemFlags:
 	dbit TRUE  ; DOME_FOSSIL
 	dbit TRUE  ; HELIX_FOSSIL
 	dbit TRUE  ; SECRET_KEY
-	dbit TRUE  ; UNUSED_ITEM
+	dbit FALSE ; BIG_NUGGET
 	dbit TRUE  ; BIKE_VOUCHER
 	dbit FALSE ; X_ACCURACY
 	dbit FALSE ; LEAF_STONE
@@ -74,7 +74,7 @@ KeyItemFlags:
 	dbit TRUE  ; SILPH_SCOPE
 	dbit TRUE  ; POKE_FLUTE
 	dbit TRUE  ; LIFT_KEY
-	dbit FALSE ; EXP_ALL
+	dbit TRUE  ; EXP_ALL
 	dbit TRUE  ; OLD_ROD
 	dbit TRUE  ; GOOD_ROD
 	dbit TRUE  ; SUPER_ROD
@@ -83,4 +83,35 @@ KeyItemFlags:
 	dbit FALSE ; MAX_ETHER
 	dbit FALSE ; ELIXER
 	dbit FALSE ; MAX_ELIXER
+	dbit FALSE ; SUN_STONE
+	dbit FALSE ; DAWN_STONE
+	dbit FALSE ; DUSK_STONE
+	dbit FALSE ; SHINY_STONE
+	dbit FALSE ; ICE_STONE
+	dbit FALSE ; ROCK_STONE
+	dbit FALSE ; STEEL_STONE
+	dbit FALSE ; STARDUST
+	dbit TRUE  ; TEA
+	dbit TRUE  ; RECOVERY_KIT
+	dbit TRUE  ; REPELLING_KIT
+	dbit TRUE  ; TRAINING_KIT
+	dbit TRUE  ; GOLD_TICKET
+	dbit FALSE ; DUSK_BALL
+	dbit FALSE ; NET_BALL
+	dbit TRUE  ; MOVEDEX
+	dbit TRUE  ; CAPTURECHARM
+	dbit FALSE ; TINY_MUSHROOM
+	dbit FALSE ; BIG_MUSHROOM
+	dbit TRUE  ; BIKE
+	dbit TRUE  ; DOWSE
+	dbit TRUE  ; READ_MAP
+	dbit TRUE  ; HEAL
+	dbit TRUE  ; WARD
+	dbit TRUE  ; TRAIN
+	dbit TRUE  ; FISH_S_ROD
+	dbit TRUE  ; FISH_G_ROD
+	dbit TRUE  ; FISH_O_ROD
+	dbit TRUE  ; ESCAPE
+	dbit TRUE  ; WARP
+	dbit TRUE  ; PERFORM
 	end_bit_array NUM_ITEMS

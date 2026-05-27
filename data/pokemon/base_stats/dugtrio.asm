@@ -1,22 +1,29 @@
 	db DEX_DUGTRIO ; pokedex id
 
-	db  35,  80,  50, 120,  70
+	db  35, 100,  60, 110,  70
 	;   hp  atk  def  spd  spc
 
-	db GROUND, GROUND ; type
+	db GROUND, STEEL ; type
 	db 50 ; catch rate
-	db 153 ; base exp
+	db 149 ; base exp
 
 	INCBIN "gfx/pokemon/front/dugtrio.pic", 0, 1 ; sprite dimensions
 	dw DugtrioPicFront, DugtrioPicBack
 
-	db SCRATCH, GROWL, DIG, NO_MOVE ; level 1 learnset
+	db SCRATCH, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
-	     RAGE,         EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        \
-	     DOUBLE_TEAM,  BIDE,         REST,         ROCK_SLIDE,   SUBSTITUTE
+IF DEF(_MODERN)
+	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    HYPER_BEAM,   DOUBLE_EDGE,  \
+	     EARTHQUAKE,   FISSURE,      DIG,          DOUBLE_TEAM,  REST,         \
+		 ROCK_SLIDE,   TRI_ATTACK,   SUBSTITUTE,   SLUDGE_BOMB,  FLASH
+ELSE
+	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    HYPER_BEAM,   DOUBLE_EDGE,  \
+	     EARTHQUAKE,   FISSURE,      DIG,          DOUBLE_TEAM,  REST,         \
+		 ROCK_SLIDE,   TRI_ATTACK,   SUBSTITUTE,   FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(DugtrioPicFront)
+	assert BANK(DugtrioPicFront) == BANK(DugtrioPicBack)

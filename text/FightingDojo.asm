@@ -29,9 +29,6 @@ _FightingDojoText_5ce98::
 	para "In return, I will"
 	line "give you a prized"
 	cont "fighting #MON!"
-
-	para "Choose whichever"
-	line "one you like!"
 	done
 
 _FightingDojoText_5ce9d::
@@ -114,14 +111,14 @@ _FightingDojoAfterBattleText4::
 
 _WantHitmonleeText::
 	text "You want the"
-	line "hard kicking"
-	cont "HITMONLEE?"
+	line "SCUFFLE #MON"
+	cont "TYROGUE?"
 	done
 
 _WantHitmonchanText::
 	text "You want the"
-	line "piston punching"
-	cont "HITMONCHAN?"
+	line "SCUFFLE #MON"
+	cont "TYROGUE?"
 	done
 
 _OtherHitmonText::

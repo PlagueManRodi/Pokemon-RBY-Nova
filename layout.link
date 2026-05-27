@@ -99,7 +99,7 @@ ROMX $12
 	"Screen Effects"
 	"Maps 8"
 ROMX $13
-	"Pics 6"
+	"Trainer Pics 1"
 	"Maps 9"
 	"Predefs"
 ROMX $14
@@ -177,6 +177,13 @@ ROMX $2B
 	"Pokédex Text"
 ROMX $2C
 	"Move Names"
+ROMX $30
+	org $4000
+	"Party Mon Sprites Gfx 1"
+ROMX $31
+	org $4000
+	"Party Mon Sprites Gfx 2"
+	"Party Mon Sprites Routines"
 WRAM0
 	"Audio RAM"
 	org $c100

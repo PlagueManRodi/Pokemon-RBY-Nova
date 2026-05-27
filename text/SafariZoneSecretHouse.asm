@@ -21,6 +21,11 @@ _ReceivedHM03Text::
 	text "!@"
 	text_end
 
+_ReceivedSAILText::
+	text "SAIL can be used"
+	line "on SELECT menu!"
+	done
+
 _HM03ExplanationText::
 	text "HM03 is SURF!"
 

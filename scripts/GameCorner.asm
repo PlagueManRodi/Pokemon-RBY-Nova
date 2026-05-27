@@ -13,7 +13,7 @@ CeladonGameCornerScript_48bcf:
 	ret z
 	call Random
 	ldh a, [hRandomAdd]
-	cp $7
+	cp $8
 	jr nc, .asm_48be2
 	ld a, $8
 .asm_48be2
@@ -152,7 +152,7 @@ CeladonGameCornerText2:
 	xor a
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
-	ld a, $10
+	ld a, $20
 	ldh [hMoney + 1], a
 	call HasEnoughMoney
 	jr nc, .asm_48cdb
@@ -162,7 +162,7 @@ CeladonGameCornerText2:
 	xor a
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
-	ld a, $10
+	ld a, $20
 	ldh [hMoney + 1], a
 	ld hl, hMoney + 2
 	ld de, wPlayerMoney + 2
@@ -171,7 +171,7 @@ CeladonGameCornerText2:
 	xor a
 	ldh [hUnusedCoinsByte], a
 	ldh [hCoins], a
-	ld a, $50
+	ld a, $A0
 	ldh [hCoins + 1], a
 	ld de, wPlayerCoins + 1
 	ld hl, hCoins + 1
@@ -366,7 +366,7 @@ CeladonGameCornerText10:
 	call IsItemInBag
 	jr z, .asm_48e7f
 	call Has9990Coins
-	jr z, .asm_48e7a
+	jr nc, .asm_48e7a
 	xor a
 	ldh [hUnusedCoinsByte], a
 	ldh [hCoins], a
@@ -412,6 +412,8 @@ CeladonGameCornerText11:
 	text_asm
 	ld hl, CeladonGameCornerText_48ece
 	call PrintText
+	CheckEvent EVENT_BEAT_ERIKA
+	jr z, .endConvo
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
@@ -428,6 +430,7 @@ CeladonGameCornerText11:
 	ldh [hJoyReleased], a
 	ld a, $1
 	ld [wGameCornerCurScript], a
+.endConvo
 	jp TextScriptEnd
 
 CeladonGameCornerText_48ece:
@@ -524,4 +527,7 @@ Has9990Coins:
 	ldh [hCoins], a
 	ld a, $90
 	ldh [hCoins + 1], a
-	jp HasEnoughCoins
+	callfar HasEnoughCoins
+	push de
+	pop af
+	ret

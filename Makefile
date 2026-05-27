@@ -1,7 +1,10 @@
 roms := \
 	pokered.gbc \
 	pokeblue.gbc \
-	pokeblue_debug.gbc
+	pokered_debug.gbc \
+	pokeblue_debug.gbc \
+	pokered_modern.gbc \
+	pokered_modern_debug.gbc
 patches := \
 	pokered.patch \
 	pokeblue.patch
@@ -18,8 +21,11 @@ rom_obj := \
 	gfx/tilesets.o
 
 pokered_obj        := $(rom_obj:.o=_red.o)
+pokered_debug_obj  := $(rom_obj:.o=_red_debug.o)
 pokeblue_obj       := $(rom_obj:.o=_blue.o)
 pokeblue_debug_obj := $(rom_obj:.o=_blue_debug.o)
+pokered_modern_obj := $(rom_obj:.o=_red_modern.o)
+pokered_modern_debug_obj := $(rom_obj:.o=_red_modern_debug.o)
 pokered_vc_obj     := $(rom_obj:.o=_red_vc.o)
 pokeblue_vc_obj    := $(rom_obj:.o=_blue_vc.o)
 
@@ -50,7 +56,10 @@ RGBLINK ?= $(RGBDS)rgblink
 all: $(roms)
 red:        pokered.gbc
 blue:       pokeblue.gbc
+red_debug:  pokered_debug.gbc
 blue_debug: pokeblue_debug.gbc
+red_modern: pokered_modern.gbc
+red_modern_debug: pokered_modern_debug.gbc
 red_vc:     pokered.patch
 blue_vc:    pokeblue.patch
 
@@ -74,7 +83,10 @@ tidy:
 	      $(pokeblue_obj) \
 	      $(pokered_vc_obj) \
 	      $(pokeblue_vc_obj) \
+		  $(pokered_debug_obj) \
 	      $(pokeblue_debug_obj) \
+		  $(pokered_modern_obj) \
+		  $(pokered_modern_debug_obj) \
 	      rgbdscheck.o
 	$(MAKE) clean -C tools/
 
@@ -93,7 +105,10 @@ endif
 
 $(pokered_obj):        RGBASMFLAGS += -D _RED
 $(pokeblue_obj):       RGBASMFLAGS += -D _BLUE
+$(pokered_debug_obj):  RGBASMFLAGS += -D _RED -D _DEBUG
 $(pokeblue_debug_obj): RGBASMFLAGS += -D _BLUE -D _DEBUG
+$(pokered_modern_obj):  RGBASMFLAGS += -D _RED -D _MODERN
+$(pokered_modern_debug_obj): RGBASMFLAGS += -D _RED -D _MODERN -D _DEBUG
 $(pokered_vc_obj):     RGBASMFLAGS += -D _RED -D _RED_VC
 $(pokeblue_vc_obj):    RGBASMFLAGS += -D _BLUE -D _BLUE_VC
 
@@ -121,7 +136,10 @@ endef
 # Dependencies for objects (drop _red and _blue from asm file basenames)
 $(foreach obj, $(pokered_obj), $(eval $(call DEP,$(obj),$(obj:_red.o=.asm))))
 $(foreach obj, $(pokeblue_obj), $(eval $(call DEP,$(obj),$(obj:_blue.o=.asm))))
+$(foreach obj, $(pokered_debug_obj), $(eval $(call DEP,$(obj),$(obj:_red_debug.o=.asm))))
 $(foreach obj, $(pokeblue_debug_obj), $(eval $(call DEP,$(obj),$(obj:_blue_debug.o=.asm))))
+$(foreach obj, $(pokered_modern_obj), $(eval $(call DEP,$(obj),$(obj:_red_modern.o=.asm))))
+$(foreach obj, $(pokered_modern_debug_obj), $(eval $(call DEP,$(obj),$(obj:_red_modern_debug.o=.asm))))
 $(foreach obj, $(pokered_vc_obj), $(eval $(call DEP,$(obj),$(obj:_red_vc.o=.asm))))
 $(foreach obj, $(pokeblue_vc_obj), $(eval $(call DEP,$(obj),$(obj:_blue_vc.o=.asm))))
 
@@ -139,13 +157,19 @@ pokered_pad        = 0x00
 pokeblue_pad       = 0x00
 pokered_vc_pad     = 0x00
 pokeblue_vc_pad    = 0x00
+pokered_modern_pad = 0x00
+pokered_modern_debug_pad = 0xff
+pokered_debug_pad  = 0xff
 pokeblue_debug_pad = 0xff
 
-pokered_opt        = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RED"
-pokeblue_opt       = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON BLUE"
-pokeblue_debug_opt = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON BLUE"
-pokered_vc_opt     = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RED"
-pokeblue_vc_opt    = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON BLUE"
+pokered_opt        = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokeblue_opt       = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokered_debug_opt  = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokeblue_debug_opt = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokered_modern_opt = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokered_modern_debug_opt = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokered_vc_opt     = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
+pokeblue_vc_opt    = -jsv -n 0 -k 01 -l 0x33 -m 0x13 -r 03 -t "POKEMON RBY NOVA"
 
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -p $($*_pad) -d -m $*.map -n $*.sym -l layout.link -o $@ $(filter %.o,$^)

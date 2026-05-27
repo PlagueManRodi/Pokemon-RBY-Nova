@@ -236,7 +236,13 @@ wPlayerMonNumber:: db
 ; the address of the menu cursor's current location within wTileMap
 wMenuCursorLocation:: dw
 
-	ds 2
+;	ds 2
+	ds 1
+	
+; bit 0: from main menu
+; bit 1: from nova house
+; bit 2: entered from nova house
+wShownPokeShuffleInfo:: db
 
 ; how many times should HandleMenuInput poll the joypad state before it returns?
 wMenuJoypadPollCount:: db
@@ -377,7 +383,14 @@ wSlotMachineSevenAndBarModeChance:: db
 	ds 2
 ; ROM back to return to when the player is done with the slot machine
 wSlotMachineSavedROMBank:: db
-	ds 166
+
+; Move Buffer stuff for Mateo's code
+wMoveBuffer::
+wRelearnableMoves::
+	ds 164
+; Try not to use this stack. 
+; A good amount of space is needed to store data for the move relearner.
+; If it's like, 2, it'll lag like crazy and show garbage from elsewhere.
 wLuckySlotHiddenObjectIndex:: db
 
 NEXTU
@@ -558,6 +571,7 @@ wEnemyMonEvasionMod:: db
 wEnemyMonStatModsEnd::
 
 NEXTU
+wTempColCoords::
 	ds 30
 wEngagedTrainerClass:: db
 wEngagedTrainerSet:: db
@@ -664,7 +678,7 @@ wRivalStarterBallSpriteIndex:: db
 NEXTU
 wFlyAnimUsingCoordList:: db
 ; $ff sentinel values at each end
-wFlyLocationsList:: ds NUM_CITY_MAPS + 2
+wFlyLocationsList:: ds NUM_CITY_MAPS + 4
 
 NEXTU
 wWhichTownMapLocation:: db
@@ -702,6 +716,7 @@ wSlotMachineWheel2TopTile:: db
 wSlotMachineWheel3BottomTile:: db
 wSlotMachineWheel3MiddleTile:: db
 wSlotMachineWheel3TopTile:: db
+wStartBattleLevels:: ds PARTY_LENGTH ; which is 6 bytes
 wPayoutCoins:: dw
 ; These flags are set randomly and control when the wheels stop.
 ; bit 6: allow the player to win in general
@@ -854,12 +869,25 @@ wRightGBMonSpecies:: db
 
 ; bit 0: is player engaged by trainer (to avoid being engaged by multiple trainers simultaneously)
 ; bit 1: boulder dust animation (from using Strength) pending
+; bit 2: Allow item sorting option
 ; bit 3: using generic PC
+; bit 4: If 1, then in PC bag
 ; bit 5: don't play sound when A or B is pressed in menu
 ; bit 6: tried pushing against boulder once (you need to push twice before it will move)
 wFlags_0xcd60:: db
 
-	ds 9
+wTempWhichMonStorage:: db
+
+wDVBuffer:: db
+
+wCurMoveData::
+wCurMoveNum:: db
+wCurMoveEffect:: db
+wCurMovePower:: db
+wCurMoveType:: db
+wCurMoveAccuracy:: db
+wCurMoveMaxPP:: db
+	ds 1 ; used to be 9
 
 ; This has overlapping related uses.
 ; When the player tries to use an item or use certain field moves, 0 is stored
@@ -1060,7 +1088,8 @@ wGymCityName:: ds 17
 
 wGymLeaderName:: ds NAME_LENGTH
 
-wItemList:: ds 16
+;	ds 16; removed 13 for MAX_EVOLUTIONS union
+	ds 3
 
 wListPointer:: dw
 
@@ -1072,6 +1101,7 @@ wItemPrices:: dw
 wcf91:: db ; used with a lot of things (too much to list here)
 
 ; which pokemon you selected
+wWhichMon::
 wWhichPokemon:: db
 
 ; if non-zero, then print item prices when displaying lists
@@ -1505,6 +1535,7 @@ wSpriteDecodeTable0Ptr:: dw
 ; pointer to differential decoding table (assuming initial value 1)
 wSpriteDecodeTable1Ptr:: dw
 
+wCurSpecies::
 wd0b5:: db ; used as a temp storage area for Pokemon Species, and other Pokemon/Battle related things
 
 wNameListType:: db
@@ -1532,7 +1563,7 @@ wMonHBackSprite:: dw
 wMonHMoves:: ds NUM_MOVES
 wMonHGrowthRate:: db
 wMonHLearnset:: flag_array NUM_TMS + NUM_HMS
-	ds 1
+wMonHPicBank:: db
 wMonHeaderEnd::
 
 ; saved at the start of a battle and then written back at the end of the battle
@@ -1542,7 +1573,9 @@ wSavedTileAnimations:: db
 
 wDamage:: dw
 
-	ds 2
+;	ds 1, used to be 2
+
+wRepelTotalSteps:: db
 
 wRepelRemainingSteps:: db
 
@@ -1551,6 +1584,7 @@ wMoves:: ds NUM_MOVES
 
 wMoveNum:: db
 
+wItemList::            ; moved here to free space and make it so 56 items can be sold on stores
 wMovesString:: ds 56
 
 wUnusedD119:: db
@@ -1582,6 +1616,7 @@ wCalculateWhoseStats::
 wTypeEffectiveness::
 wMoveType::
 wNumSetBits::
+wPokedexNum::
 ; used as a Pokemon and Item storage value. Also used as an output value for CountSetBits
 wd11e::
 	db
@@ -1646,7 +1681,11 @@ wSavedSpriteScreenX:: db
 wSavedSpriteMapY:: db
 wSavedSpriteMapX:: db
 
-	ds 5
+wCounterDamagePlayer:: dw
+wCounterDamageEnemy:: dw
+	; ds 5
+	
+wTypeShufflePage:: db
 
 wWhichPrize:: db
 
@@ -1740,7 +1779,7 @@ wPokedexSeenEnd::
 
 wNumBagItems:: db
 ; item, quantity
-wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
+wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1 ; ds 41
 
 wPlayerMoney:: ds 3 ; BCD
 
@@ -1760,7 +1799,9 @@ wOptions:: db
 
 wObtainedBadges:: flag_array NUM_BADGES
 
-	ds 1
+; ds 1
+
+wPlayerMoveAccuracyPercent:: db ; new, to host the accuracy in [0,100] rather than [0,255]
 
 ; bit 0: If 0, limit the delay to 1 frame. Note that this has no effect if
 ;        the delay has been disabled entirely through bit 1 of this variable
@@ -1817,7 +1858,11 @@ wSpriteSetID:: db
 
 wObjectDataPointerTemp:: dw
 
-	ds 2
+;	ds 2 added wAltAnimationID and wLevelCap
+
+wLevelCap:: db
+	
+wAltAnimationID:: db
 
 ; the tile shown outside the boundaries of the map
 wMapBackgroundTile:: db
@@ -1831,7 +1876,7 @@ wWarpEntries:: ds 32 * 4 ; Y, X, warp ID, map ID
 ; if $ff, the player's coordinates are not updated when entering the map
 wDestinationWarpID:: db
 
-	ds 128
+;	ds 128; FOR MORE BAG/PC INVENTORY
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
@@ -1888,11 +1933,13 @@ wTilesetTalkingOverTiles:: ds 3
 
 wGrassTile:: db
 
-	ds 4
+;	ds 2
+
+wDamageBuffer:: dw ; new
 
 wNumBoxItems:: db
 ; item, quantity
-wBoxItems:: ds PC_ITEM_CAPACITY * 2 + 1
+wBoxItems:: ds PC_ITEM_CAPACITY * 2 + 1 ; ds 121
 
 ; bits 0-6: box number
 ; bit 7: whether the player has changed boxes before
@@ -1906,10 +1953,27 @@ wUnusedD5A3:: db
 wPlayerCoins:: ds 2 ; BCD
 
 ; bit array of missable objects. set = removed
-wMissableObjectFlags:: flag_array $100
+wMissableObjectFlags:: flag_array 296
 wMissableObjectFlagsEnd::
 
-	ds 7
+wPrinterPokedexEntryTextPointer:: dw ; added
+
+wOtherSavedMenuItem:: db ; unused
+
+wOtherSavedListScrollOffset:: db ; unused
+
+;	ds 8
+
+; bit 0: Vermilion Beach forced to save items
+; bit 1: Mt Moon B4F which boulder
+; bit 2: PRO LEAGUE flag
+; bit 5: player counter active
+; bit 6: enemy counter active
+wVermilionBeachFlags:: db
+
+; wShownPokeShuffleInfo:: db
+	
+wMostDamage:: dw ; new
 
 ; temp copy of SPRITESTATEDATA1_IMAGEINDEX (used for sprite facing/anim)
 wd5cd:: db
@@ -1920,19 +1984,20 @@ wd5cd:: db
 ; terminated with $FF
 wMissableObjectList:: ds 16 * 2 + 1
 
-	ds 1
+;	ds 1
 
 wGameProgressFlags::
 wOaksLabCurScript:: db
 wPalletTownCurScript:: db
-	ds 1
+;	ds 1
 wBluesHouseCurScript:: db
 wViridianCityCurScript:: db
-	ds 2
+wRoute1CurScript:: db
+wVermilionBeachCurScript:: db
 wPewterCityCurScript:: db
 wRoute3CurScript:: db
 wRoute4CurScript:: db
-	ds 1
+;	ds 1
 wViridianGymCurScript:: db
 wPewterGymCurScript:: db
 wCeruleanGymCurScript:: db
@@ -1949,12 +2014,17 @@ wMtMoonB2FCurScript:: db
 wSSAnne1FRoomsCurScript:: db
 wSSAnne2FRoomsCurScript:: db
 wRoute22CurScript:: db
-	ds 1
+;	ds 1
+wMtMoonB5FCurScript:: db
 wRedsHouse2FCurScript:: db
 wViridianMartCurScript:: db
 wRoute22GateCurScript:: db
 wCeruleanCityCurScript:: db
-	ds 7
+wNovaHouseCurScript:: db
+wChiefHouseCurScript:: db
+;	ds 2 , originally 5
+wMtMoonB3FCurScript:: db
+wMtMoonB4FCurScript:: db
 wSSAnneBowCurScript:: db
 wViridianForestCurScript:: db
 wMuseum1FCurScript:: db
@@ -1966,7 +2036,7 @@ wRoute21CurScript:: db
 wSafariZoneGateCurScript:: db
 wRockTunnelB1FCurScript:: db
 wRockTunnel1FCurScript:: db
-	ds 1
+;	ds 1
 wRoute11CurScript:: db
 wRoute12CurScript:: db
 wRoute15CurScript:: db
@@ -1985,10 +2055,10 @@ wRocketHideoutB1FCurScript:: db
 wRocketHideoutB2FCurScript:: db
 wRocketHideoutB3FCurScript:: db
 wRocketHideoutB4FCurScript:: db
-	ds 1
+;	ds 1
 wRoute6GateCurScript:: db
 wRoute8GateCurScript:: db
-	ds 1
+;	ds 1
 wCinnabarIslandCurScript:: db
 wPokemonMansion1FCurScript:: db
 	ds 1
@@ -2016,13 +2086,14 @@ wCeruleanCaveB1FCurScript:: db
 wVictoryRoad1FCurScript:: db
 	ds 1
 wLancesRoomCurScript:: db
-	ds 4
+	ds 1 ; originally 4
 wSilphCo10FCurScript:: db
 wSilphCo11FCurScript:: db
 	ds 1
 wFuchsiaGymCurScript:: db
 wSaffronGymCurScript:: db
-	ds 1
+;	ds 1
+wCeladonCityCurScript:: db
 wCinnabarGymCurScript:: db
 wGameCornerCurScript:: db
 wRoute16Gate1FCurScript:: db
@@ -2030,16 +2101,21 @@ wBillsHouseCurScript:: db
 wRoute5GateCurScript:: db
 wPowerPlantCurScript:: ; overload
 wRoute7GateCurScript:: db
-	ds 1
+;	ds 1
+wIndigoPlateauLobbyCurScript:: db
 wSSAnne2FCurScript:: db
 wSeafoamIslandsB3FCurScript:: db
 wRoute23CurScript:: db
 wSeafoamIslandsB4FCurScript:: db
 wRoute18Gate1FCurScript:: db
-	ds 78
+	ds 2 ; originally 78
 wGameProgressFlagsEnd::
 
-	ds 56
+;	ds 132; originally 56, FOR MORE BAG/PC INVENTORY
+
+wProBadgeFlags:: db
+
+wTypeShuffleFlags:: flag_array NUM_ALT_TYPE
 
 wObtainedHiddenItemsFlags:: flag_array 112
 
@@ -2050,9 +2126,9 @@ wObtainedHiddenCoinsFlags:: flag_array 16
 ; $02 = surfing
 wWalkBikeSurfState:: db
 
-	ds 10
+;	ds 10; FOR MORE BAG/PC INVENTORY
 
-wTownVisitedFlag:: flag_array NUM_CITY_MAPS
+wTownVisitedFlag:: flag_array NUM_CITY_MAPS+2
 
 ; starts at 502
 wSafariSteps:: dw
@@ -2062,7 +2138,9 @@ wFossilItem:: db
 ; mon that will result from the item
 wFossilMon:: db
 
-	ds 2
+wGuaranteedMostDamage:: dw ; new
+
+wRollFactor:: db ; originally ds 2
 
 ; trainer classes start at OPP_ID_OFFSET
 wEnemyMonOrTrainerClass:: db
@@ -2071,7 +2149,9 @@ wPlayerJumpingYScreenCoordsIndex:: db
 
 wRivalStarter:: db
 
-	ds 1
+;	ds 1
+
+wPrioMoveMostDamage:: dw ; new
 
 wPlayerStarter:: db
 
@@ -2083,7 +2163,7 @@ wLastBlackoutMap:: db
 ; destination map (for certain types of special warps, not ordinary walking)
 wDestinationMap:: db
 
-wUnusedD71B:: db
+wUnusedD71B:: db ; now used for port. pc
 
 ; used to store the tile in front of the boulder when trying to push a boulder
 ; also used to store the result of the collision check ($ff for a collision and $00 for no collision)
@@ -2095,9 +2175,9 @@ wDungeonWarpDestinationMap:: db
 ; which dungeon warp within the source map was used
 wWhichDungeonWarp:: db
 
-wUnusedD71F:: db
+wUnusedD71F:: db ; now used for port. pc
 
-	ds 8
+;	ds 8; FOR MORE BAG/PC INVENTORY
 
 ; bit 0: using Strength outside of battle
 ; bit 1: set by IsSurfingAllowed when surfing's allowed, but the caller resets it after checking the result
@@ -2108,13 +2188,13 @@ wUnusedD71F:: db
 ; bit 7: set by ItemUseCardKey, which is leftover code from a previous implementation of the Card Key
 wd728:: db
 
-	ds 1
+;	ds 1; FOR MORE BAG/PC INVENTORY
 
 ; redundant because it matches wObtainedBadges
 ; used to determine whether to show name on statue and in two NPC text scripts
 wBeatGymFlags:: db
 
-	ds 1
+;	ds 1; FOR MORE BAG/PC INVENTORY
 
 ; bit 0: if not set, the 3 minimum steps between random battles have passed
 ; bit 1: prevent audio fade out
@@ -2142,7 +2222,7 @@ wd72d:: db
 ; bit 7: set if scripted NPC movement has been initialised
 wd72e:: db
 
-	ds 1
+;	ds 1 (for PrioMoveMostDamage)
 
 ; bit 0: NPC sprite being moved by script
 ; bit 5: ignore joypad input
@@ -2150,7 +2230,7 @@ wd72e:: db
 ; bit 7: set if joypad states are being simulated in the overworld or an NPC's movement is being scripted
 wd730:: db
 
-	ds 1
+;	ds 1 (for GuaranteedMostDamage)
 
 ; bit 0: play time being counted
 ; bit 1: remnant of debug mode; only set by the debug build.
@@ -2183,7 +2263,18 @@ wFlags_D733:: db
 ; the game uses this to tell when Elite 4 events need to be reset
 wBeatLorelei:: db
 
-	ds 1
+; ds 2
+
+; bit 0: learning move through rare candy
+; bit 1: learning move through evolution
+; bit 2: run from trainer battle
+; bit 3: pressed left on StatusScreen
+; bit 4: watching DVs
+; bit 5: watching SXP
+; bit 7: type shuffle set
+wNewFlags:: db
+
+wFishForCrits:: db
 
 ; bit 0: check if the player is standing on a door and make him walk down a step if so
 ; bit 1: the player is currently stepping down from a door
@@ -2194,22 +2285,36 @@ wd736:: db
 
 wCompletedInGameTradeFlags:: dw
 
-	ds 2
+;	ds 2
+
+wDamage2:: dw ; new
 
 wWarpedFromWhichWarp:: db
 wWarpedFromWhichMap:: db
 
-	ds 2
+;	ds 2
+
+wHasDamagingPhysicalMove:: db ; new
+
+wHasDamagingSpecialMove:: db ; new
 
 wCardKeyDoorY:: db
 wCardKeyDoorX:: db
 
-	ds 2
+;	ds 2
+	
+wEnemyAIAlreadySelectedAMove:: db ; new
+	
+wEncourageStatusMove:: db ; new
 
 wFirstLockTrashCanIndex:: db
 wSecondLockTrashCanIndex:: db
 
-	ds 2
+;	ds 2
+
+wBattleMonTurnsOut:: db ; new
+
+wSwitchTarget:: db ; new
 
 wEventFlags:: flag_array NUM_EVENTS
 
@@ -2259,7 +2364,7 @@ ENDU
 
 wTrainerHeaderPtr:: dw
 
-	ds 6
+;	ds 6
 
 ; the trainer the player must face after getting a wrong answer in the Cinnabar
 ; gym quiz
@@ -2270,7 +2375,17 @@ wUnusedDA38:: db
 ; mostly copied from map-specific map script pointer and written back later
 wCurMapScript:: db
 
-	ds 7
+;	ds 9
+
+wSelectSavedMenuItem:: db
+
+wSavedMenuItem:: db
+
+wEXPBarPixelLength::  ds 1
+wEXPBarBaseEXP::      ds 3
+wEXPBarCurEXP::       ds 3
+wEXPBarNeededEXP::    ds 3
+wEXPBarKeepFullFlag:: ds 1
 
 wPlayTimeHours:: db
 wPlayTimeMaxed:: db

@@ -10,14 +10,23 @@
 	INCBIN "gfx/pokemon/front/venusaur.pic", 0, 1 ; sprite dimensions
 	dw VenusaurPicFront, VenusaurPicBack
 
-	db TACKLE, GROWL, LEECH_SEED, VINE_WHIP ; level 1 learnset
+	db TACKLE, GROWL, VINE_WHIP, LEECH_SEED ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    MIMIC,        \
-	     DOUBLE_TEAM,  REFLECT,      BIDE,         REST,         SUBSTITUTE,   \
-	     CUT
+	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    EARTHQUAKE,   \
+		 MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SKULL_BASH,   \
+		 REST,         SUBSTITUTE,   SLUDGE_BOMB,  ACID_STREAM,  CUT,          \
+		 STRENGTH,     FLASH
+ELSE
+	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    EARTHQUAKE,   \
+		 MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SKULL_BASH,   \
+		 REST,         SUBSTITUTE,   CUT,          STRENGTH,     FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(VenusaurPicFront)
+	assert BANK(VenusaurPicFront) == BANK(VenusaurPicBack)

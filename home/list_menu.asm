@@ -50,7 +50,15 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
+	;;
+	ld a, [wFlags_0xcd60]
+	ld b, a
 	ld a, A_BUTTON | B_BUTTON | SELECT
+	bit 2, b
+	jr z, .noSortingOption
+	or a, START
+.noSortingOption
+	;;
 	ld [wMenuWatchedKeys], a
 	ld c, 10
 	call DelayFrames
@@ -132,6 +140,12 @@ DisplayListMenuIDLoop::
 	call GetItemPrice
 	pop hl
 	ld a, [wListMenuID]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;needed to make Mateo's move deleter/relearner work
+	cp a, MOVESLISTMENU
+	jr z, .skipStoringItemName
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	cp ITEMLISTMENU
 	jr nz, .skipGettingQuantity
 ; if it's an item menu
@@ -158,12 +172,13 @@ DisplayListMenuIDLoop::
 .storeChosenEntry ; store the menu entry that the player chose and return
 	ld de, wcd6d
 	call CopyToStringBuffer
+.skipStoringItemName	;skip here if skipping storing item name
 	ld a, CHOSE_MENU_ITEM
 	ld [wMenuExitMethod], a
 	ld a, [wCurrentMenuItem]
 	ld [wChosenMenuItem], a
 	xor a
-	ldh [hJoy7], a ; joypad state update flag
+	ld [hJoy7], a ; joypad state update flag
 	ld hl, wd730
 	res 6, [hl] ; turn on letter printing delay
 	jp BankswitchBack
@@ -172,6 +187,10 @@ DisplayListMenuIDLoop::
 	jp nz, ExitListMenu ; if so, exit the menu
 	bit BIT_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
+	;
+	bit 3,a ; was the start button pressed?
+	jp nz,.sortItems ; if so, allow the player to swap menu entries
+	;
 	ld b, a
 	bit BIT_D_DOWN, b
 	ld hl, wListScrollOffset
@@ -191,6 +210,12 @@ DisplayListMenuIDLoop::
 	jp z, DisplayListMenuIDLoop
 	dec [hl]
 	jp DisplayListMenuIDLoop
+	;
+.sortItems
+	rra ; Sets the zero flag to 0 so the sorting function will happen
+	rla
+	jp BankswitchBack
+	;
 
 DisplayChooseQuantityMenu::
 ; text box dimensions/coordinates for just quantity
@@ -228,7 +253,39 @@ DisplayChooseQuantityMenu::
 	jr nz, .incrementQuantity
 	bit BIT_D_DOWN, a
 	jr nz, .decrementQuantity
+	;
+	bit BIT_D_RIGHT, a
+	jr nz, .incrementQuantityBy10
+	bit BIT_D_LEFT, a
+	jr nz, .decrementQuantityBy10
+	;
 	jr .waitForKeyPressLoop
+	;
+.incrementQuantityBy10
+	ld a, [wMaxItemQuantity]
+	ld c, a
+	inc a
+	ld b, a
+	ld hl, wItemQuantity ; current quantity
+	ld a, [hl]
+	cp c
+	jr z, .wrapTo1
+	add a, 10
+	ld [hl], a
+	cp b
+	jr c, .handleNewQuantity
+	jr .wrapToMaxItemQuantity
+.decrementQuantityBy10
+	ld hl, wItemQuantity ; current quantity
+	ld a, [hl]
+	cp 1
+	jr z, .wrapToMaxItemQuantity
+	sub a, 10
+	ld [hl], a
+	jr z, .wrapTo1
+	jr c, .wrapTo1
+	jr .handleNewQuantity
+	;
 .incrementQuantity
 	ld a, [wMaxItemQuantity]
 	inc a
@@ -238,6 +295,7 @@ DisplayChooseQuantityMenu::
 	ld a, [hl]
 	cp b
 	jr nz, .handleNewQuantity
+.wrapTo1
 ; wrap to 1 if the player goes above the max quantity
 	ld a, 1
 	ld [hl], a
@@ -246,6 +304,7 @@ DisplayChooseQuantityMenu::
 	ld hl, wItemQuantity ; current quantity
 	dec [hl]
 	jr nz, .handleNewQuantity
+.wrapToMaxItemQuantity
 ; wrap to the max quantity if the player goes below 1
 	ld a, [wMaxItemQuantity]
 	ld [hl], a

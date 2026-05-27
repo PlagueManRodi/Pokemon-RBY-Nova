@@ -43,11 +43,42 @@ FuchsiaGymKogaPostBattle:
 	jp z, FuchsiaGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-; fallthrough
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, FuchsiaGymReceiveTM06	
+	ld a, 12
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 4
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, FuchsiaGymResetScripts
+	lb bc, FLAG_SET, 4
+	predef FlagActionPredef
+	ld a, 13
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, FuchsiaGymResetScripts
+	ld a, 14
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp FuchsiaGymResetScripts
+	;
 FuchsiaGymReceiveTM06:
 	ld a, $9
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
+	ld a, HS_SAFFRON_CITY_E
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_SAFFRON_CITY_F
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	SetEvent EVENT_BEAT_KOGA
 	lb bc, TM_TOXIC, 1
 	call GiveItem
@@ -66,6 +97,20 @@ FuchsiaGymReceiveTM06:
 	set BIT_SOULBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_SOULBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 46
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
@@ -84,6 +129,9 @@ FuchsiaGym_TextPointers:
 	dw KogaSoulBadgeInfoText
 	dw ReceivedTM06Text
 	dw TM06NoRoomText
+	dw FuchsiaGymRematchPostBattleText ; NEW
+	dw ReceivedProSoulBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 FuchsiaGymTrainerHeaders:
 	def_trainers 2
@@ -109,12 +157,22 @@ KogaText:
 	jr nz, .afterBeat
 	call z, FuchsiaGymReceiveTM06
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp .done
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .KogaRematch
+	;
 	ld hl, KogaPostBattleAdviceText
 	call PrintText
-	jr .done
+	jp .done
 .beforeBeat
+	ld d, 4
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, KogaBeforeBattleText
 	call PrintText
 	ld hl, wd72d
@@ -131,6 +189,36 @@ KogaText:
 	ld [wGymLeaderNo], a
 	xor a
 	ldh [hJoyHeld], a
+	;
+	jr .endBattle
+.KogaRematch
+	predef HealParty
+	ld hl, KogaPreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, KogaPreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, FuchsiaGymRematchDefeatedText
+	ld de, FuchsiaGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_KOGA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, KogaPreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	;
 	ld a, $3
 	ld [wFuchsiaGymCurScript], a
 .done
@@ -142,6 +230,8 @@ KogaBeforeBattleText:
 
 ReceivedSoulBadgeText:
 	text_far _ReceivedSoulBadgeText
+	sound_get_item_1
+	text_promptbutton
 	text_end
 
 KogaPostBattleAdviceText:
@@ -288,4 +378,31 @@ FuchsiaGymGuidePreBattleText:
 
 FuchsiaGymGuidePostBattleText:
 	text_far _FuchsiaGymGuidePostBattleText
+	text_end
+
+;;;
+
+KogaPreBattleRematchText:
+	text_far _FuchsiaGymRematchPreBattleText
+	text_end
+	
+KogaPreBattleRematchAcceptedText:
+	text_far _FuchsiaGymRematchAcceptedText
+	text_end
+	
+KogaPreBattleRematchRefusedText:
+	text_far _FuchsiaGymRematchRefusedText
+	text_end
+
+FuchsiaGymRematchDefeatedText:
+	text_far _FuchsiaGymRematchDefeatedText
+	text_end
+
+FuchsiaGymRematchPostBattleText:
+	text_far _FuchsiaGymRematchPostBattleText
+	text_end
+
+ReceivedProSoulBadgeText:
+	text_far _ReceivedProSoulBadgeText
+	sound_get_item_1
 	text_end

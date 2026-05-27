@@ -343,33 +343,32 @@ _CinnabarQuizQuestionsText1::
 	done
 
 _CinnabarQuizQuestionsText2::
-	text "There are 9"
-	line "certified #MON"
-	cont "LEAGUE BADGEs?"
+	text "GHOST is super"
+	line "effective against"
+	cont "PSYCHIC?"
 	done
 
 _CinnabarQuizQuestionsText3::
-	text "POLIWAG evolves 3"
-	line "times?"
+	text "The mitochondria"
+	line "is the powerhouse"
+	cont "of the cell?"
 	done
 
 _CinnabarQuizQuestionsText4::
-	text "Are thunder moves"
-	line "effective against"
-	cont "ground element-"
-	cont "type #MON?"
+	text "Is it correct that"
+	line "“32x3-422/50-79”"
+	cont "is equal to 8.52?"
 	done
 
 _CinnabarQuizQuestionsText5::
-	text "#MON of the"
-	line "same kind and"
-	cont "level are not"
-	cont "identical?"
+	text "What's a word used"
+	line "to express assent"
+	cont "or agreement?"
 	done
 
 _CinnabarQuizQuestionsText6::
 	text "TM28 contains"
-	line "TOMBSTONER?"
+	line "EARTHQUAKE?"
 	done
 
 _CinnabarGymQuizCorrectText::
@@ -676,7 +675,9 @@ _ViridianBlackboardPoisonText::
 _ViridianBlackboardPrlzText::
 	text "Paralysis could"
 	line "make #MON"
-	cont "moves misfire!"
+	cont "moves misfire! It"
+	cont "also reduces"
+	cont "SPEED."
 
 	para "Paralysis remains"
 	line "after battles."
@@ -687,9 +688,9 @@ _ViridianBlackboardPrlzText::
 
 _ViridianBlackboardBurnText::
 	text "A burn reduces"
-	line "power and speed."
-	cont "It also causes"
-	cont "ongoing damage."
+	line "ATTACK. It also"
+	cont "causes ongoing"
+	cont "damage."
 
 	para "Burns remain"
 	line "after battles."
@@ -938,9 +939,7 @@ _CantEscapeText::
 	prompt
 
 _NoRunningText::
-	text "No! There's no"
-	line "running from a"
-	cont "trainer battle!"
+	text "Can't give up now!"
 	prompt
 
 _GotAwayText::
@@ -1211,8 +1210,8 @@ _GainedText::
 	text_end
 
 _WithExpAllText::
-	text "with EXP.ALL,"
-	cont "@"
+	text "Party gained"
+	next "@"
 	text_end
 
 _BoostedText::
@@ -1620,6 +1619,15 @@ _MonWasReleasedText::
 	text "!"
 	prompt
 
+_MonKnowsHMText::
+	text_ram wStringBuffer
+	text " knows"
+	line "an HM move!"
+	
+	para "It can't be"
+	line "released!"
+	prompt
+
 _RequireCoinCaseText::
 	text "A COIN CASE is"
 	line "required!@"
@@ -1788,3 +1796,8 @@ _TextIDErrorText::
 _ContCharText::
 	text "<_CONT>@"
 	text_end
+
+_CantUsePCHere:: ; new, for portablePC
+	text "You cannot use"
+	line "this here!"
+	prompt

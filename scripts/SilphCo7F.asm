@@ -124,6 +124,7 @@ SilphCo7Script0:
 	ld hl, CoordsData_51c78
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
+	predef HealParty
 	xor a
 	ldh [hJoyHeld], a
 	ld a, $f0
@@ -305,9 +306,11 @@ SilphCo7Text1:
 .givelapras
 	ld hl, .MeetLaprasGuyText
 	call PrintText
-	lb bc, LAPRAS, 15
-	call GivePokemon
-	jr nc, .done
+	lb bc, BIG_NUGGET, 1
+	call GiveItem
+	jr nc, .bag_full
+	ld hl, .LaprasGuyItemGiveText
+	call PrintText
 	ld a, [wSimulatedJoypadStatesEnd]
 	and a
 	call z, WaitForTextScrollButtonPress
@@ -320,11 +323,21 @@ SilphCo7Text1:
 .savedsilph
 	ld hl, .LaprasGuySavedText
 	call PrintText
+	jr .done
+.bag_full
+	ld hl, .LaprasGuyBagFullText
+	call PrintText
 .done
 	jp TextScriptEnd
 
 .MeetLaprasGuyText
 	text_far _MeetLaprasGuyText
+	text_end
+
+.LaprasGuyItemGiveText
+	text_far _LaprasGuyItemGiveText
+	sound_get_item_1
+;	text_promptbutton
 	text_end
 
 .HeresYourLaprasText
@@ -337,6 +350,10 @@ SilphCo7Text1:
 
 .LaprasGuySavedText
 	text_far _LaprasGuySavedText
+	text_end
+
+.LaprasGuyBagFullText
+	text_far _LaprasGuyBagFullText
 	text_end
 
 SilphCo7Text2:

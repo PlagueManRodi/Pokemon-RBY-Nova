@@ -18,7 +18,7 @@ ExternalMapEntries:
 	external_map  2, 15, CinnabarIslandName
 	external_map  0,  2, IndigoPlateauName
 	external_map 10,  5, SaffronCityName
-	external_map  0,  0, PalletTownName ; unused
+	external_map  8,  7, VermilionBeachName ; unused
 	external_map  2, 10, Route1Name
 	external_map  2,  6, Route2Name
 	external_map  4,  3, Route3Name
@@ -76,7 +76,9 @@ InternalMapEntries:
 	internal_map BILLS_HOUSE,                   12,  0, SeaCottageName
 	internal_map VERMILION_DOCK,                10,  9, VermilionCityName
 	internal_map SS_ANNE_B1F_ROOMS,              9, 10, SSAnneName
+	internal_map CELADON_NOVA_HOUSE,             7,  5, CeladonCityName
 	internal_map VICTORY_ROAD_1F,                0,  4, VictoryRoadName
+	internal_map MT_MOON_B5F,					 6,  2, MountMoonName
 	internal_map HALL_OF_FAME,                   0,  2, PokemonLeagueName
 	internal_map UNDERGROUND_PATH_NORTH_SOUTH,  10,  5, UndergroundPathName
 	internal_map CHAMPIONS_ROOM,                 0,  2, PokemonLeagueName

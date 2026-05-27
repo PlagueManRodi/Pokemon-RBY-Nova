@@ -23,6 +23,11 @@ PrintType:
 	push hl
 	jr PrintType_
 
+HomePrintType_::
+	push hl
+	ld a, d
+	jr PrintType_
+
 ; erase "TYPE2/" if the mon only has 1 type
 EraseType2Text:
 	ld a, " "

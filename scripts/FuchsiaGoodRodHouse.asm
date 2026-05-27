@@ -21,6 +21,8 @@ FuchsiaHouse3Text1:
 	ld hl, wd728
 	set 4, [hl] ; got good rod
 	ld hl, FuchsiaHouse3Text_561c2
+	call PrintText
+	ld hl, ReceivedFISHGRODText
 	jr .done
 .bag_full
 	ld hl, FuchsiaHouse3Text_5621c
@@ -41,6 +43,11 @@ FuchsiaHouse3Text_561bd:
 FuchsiaHouse3Text_561c2:
 	text_far _FuchsiaHouse3Text_561c2
 	sound_get_item_1
+	text_end
+
+ReceivedFISHGRODText:
+	text_far _ReceivedFISHGRODText
+	sound_get_key_item
 	text_end
 
 UnusedText_561c8:

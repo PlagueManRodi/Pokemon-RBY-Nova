@@ -3,7 +3,9 @@ DrawPartyMenu_::
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
 	call UpdateSprites
-	farcall LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
+;	farcall LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
+RedrawPartyMenu_ReloadSprites:
+	farcall LoadPartyMonSprites ; load pokemon icon graphics
 
 RedrawPartyMenu_::
 	ld a, [wPartyMenuTypeOrMessageID]
@@ -30,7 +32,8 @@ RedrawPartyMenu_::
 	call GetPartyMonName
 	pop hl
 	call PlaceString ; print the pokemon's name
-	farcall WriteMonPartySpriteOAMByPartyIndex ; place the appropriate pokemon icon
+;	farcall WriteMonPartySpriteOAMByPartyIndex ; place the appropriate pokemon icon
+	farcall PlacePartyMonSprite ; place the appropriate pokemon icon
 	ldh a, [hPartyMonIndex]
 	ld [wWhichPokemon], a
 	inc a
@@ -176,6 +179,8 @@ RedrawPartyMenu_::
 	ld a, [hl]
 	push af
 	push hl
+;	cp 255      ; TEST
+;	jr z, .done ; TEST
 	set 6, [hl] ; turn off letter printing delay
 	ld a, [wPartyMenuTypeOrMessageID] ; message ID
 	cp FIRST_PARTY_MENU_TEXT_ID
@@ -196,7 +201,13 @@ RedrawPartyMenu_::
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
-	jp GBPalNormal
+;	jp GBPalNormal
+	;
+	ld a, %11100100 ; 3210
+	ldh [rBGP], a
+	ldh [rOBP0], a
+	ret
+	;
 .printItemUseMessage
 	and $0F
 	ld hl, PartyMenuItemUseMessagePointers
@@ -292,7 +303,7 @@ RareCandyText:
 	text_promptbutton
 	text_end
 
-SetPartyMenuHPBarColor:
+SetPartyMenuHPBarColor::
 	ld hl, wPartyMenuHPBarColors
 	ld a, [wWhichPartyMenuHPBar]
 	ld c, a
@@ -304,3 +315,81 @@ SetPartyMenuHPBarColor:
 	ld hl, wWhichPartyMenuHPBar
 	inc [hl]
 	ret
+
+DrawHPBars:
+	ld a, [wWhichPokemon]
+	push af
+	farcall InitPartyMenuBlkPacket
+	hlcoord 3, 0
+	ld de, wPartySpecies
+	xor a
+	ld c, a
+	ldh [hPartyMonIndex], a
+	ld [wWhichPartyMenuHPBar], a
+.loop2
+	ld a, [de]
+	cp $FF ; reached the terminator?
+	jr z, .done2
+	push bc
+	push de
+	push hl
+; redraw and color hp bars
+	ld a, c
+	ld [wWhichPokemon], a
+	call LoadMonData
+	pop hl
+	push hl
+	ld bc, 21
+	ldh a, [hUILayoutFlags]
+	set 0, a
+	ldh [hUILayoutFlags], a
+	add hl, bc
+	predef DrawHP2 ; draw HP bar and prints current / max HP
+	ldh a, [hUILayoutFlags]
+	res 0, a
+	ldh [hUILayoutFlags], a
+	call SetPartyMenuHPBarColor ; color the HP bar (on SGB)
+; prepare next loop
+	pop hl
+	ld bc, 40
+	add hl, bc
+	pop de
+	pop bc
+	inc de
+	inc c
+	jr .loop2
+.done2
+	pop af
+	ld [wWhichPokemon], a
+	ld b, SET_PAL_PARTY_MENU
+	call RunPaletteCommand
+	ld a, %11100100 ; 3210
+	ldh [rBGP], a
+	ldh [rOBP0], a
+	ret
+
+DrawPartySprites:
+	hlcoord 3, 0
+	ld de, wPartySpecies
+	xor a
+	ld c, a
+	ldh [hPartyMonIndex], a
+.loop3
+	ld a, [de]
+	cp $FF ; reached the terminator?
+	ret z
+	push bc
+	push de
+	push hl
+	ld a, c
+	ldh [hPartyMonIndex], a
+	farcall PlacePartyMonSprite ; place the appropriate pokemon icon
+; prepare next loop
+	pop hl
+	ld bc, 40
+	add hl, bc
+	pop de
+	pop bc
+	inc de
+	inc c
+	jr .loop3

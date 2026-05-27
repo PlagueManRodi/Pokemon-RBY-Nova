@@ -3,9 +3,9 @@
 	db  30,  56,  35,  72,  25
 	;   hp  atk  def  spd  spc
 
-	db NORMAL, NORMAL ; type
+	db DARK, NORMAL ; type
 	db 255 ; catch rate
-	db 57 ; base exp
+	db 51 ; base exp
 
 	INCBIN "gfx/pokemon/front/rattata.pic", 0, 1 ; sprite dimensions
 	dw RattataPicFront, RattataPicBack
@@ -14,10 +14,16 @@
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    BLIZZARD,     RAGE,         THUNDERBOLT,  THUNDER,      \
-	     DIG,          MIMIC,        DOUBLE_TEAM,  BIDE,         SWIFT,        \
-	     SKULL_BASH,   REST,         SUBSTITUTE
+IF DEF(_MODERN)
+	tmhm TOXIC,        DOUBLE_EDGE,  ICE_BEAM,    BLIZZARD,     COUNTER,      \  
+	     DOUBLE_TEAM,  REST,         SUBSTITUTE,  SLUDGE_BOMB,  SHADOW_BALL,  \
+		 ACID_STREAM,  CUT
+ELSE
+	tmhm TOXIC,        DOUBLE_EDGE,  ICE_BEAM,    BLIZZARD,     COUNTER,      \  
+	     DOUBLE_TEAM,  REST,         SUBSTITUTE,  CUT
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(RattataPicFront)
+	assert BANK(RattataPicFront) == BANK(RattataPicBack)
+	

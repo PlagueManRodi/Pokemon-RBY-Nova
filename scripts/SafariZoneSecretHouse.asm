@@ -15,7 +15,10 @@ SafariZoneSecretHouseText1:
 	jr nc, .bag_full
 	ld hl, ReceivedHM03Text
 	call PrintText
+	ld hl, ReceivedSAILText
+	call PrintText
 	SetEvent EVENT_GOT_HM03
+	SetEvent EVENT_SS_ANNE_LEFT
 	jr .done
 .bag_full
 	ld hl, HM03NoRoomText
@@ -33,6 +36,11 @@ SafariZoneSecretHouseText_4a350:
 
 ReceivedHM03Text:
 	text_far _ReceivedHM03Text
+	sound_get_item_1
+	text_end
+
+ReceivedSAILText:
+	text_far _ReceivedSAILText
 	sound_get_item_1
 	text_end
 

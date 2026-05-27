@@ -29,7 +29,7 @@ ViridianCityScript_1900b:
 	ld a, [wXCoord]
 	cp 32
 	ret nz
-	ld a, $e
+	ld a, $f
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	xor a
@@ -40,7 +40,7 @@ ViridianCityScript_1900b:
 	ret
 
 ViridianCityScript_1903d:
-	CheckEvent EVENT_GOT_POKEDEX
+	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
 	ret nz
 	ld a, [wYCoord]
 	cp 9
@@ -94,7 +94,7 @@ ViridianCityScript2:
 	call Delay3
 	xor a
 	ld [wJoyIgnore], a
-	ld a, $f
+	ld a, $10
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	xor a
@@ -140,6 +140,7 @@ ViridianCity_TextPointers:
 	dw ViridianCityText13
 	dw ViridianCityText14
 	dw ViridianCityText15
+	dw ViridianCityText16
 
 ViridianCityText1:
 	text_far _ViridianCityText1
@@ -302,7 +303,7 @@ ViridianCityText_19214:
 	text_far _ViridianCityText_19214
 	text_end
 
-ViridianCityText15:
+ViridianCityText16:
 	text_far _ViridianCityText_19219
 	text_end
 
@@ -320,6 +321,10 @@ ViridianCityText10:
 
 ViridianCityText13:
 	text_far _ViridianCityText13
+	text_end
+
+ViridianCityText15:
+	text_far _ViridianCityText15
 	text_end
 
 ViridianCityText14:

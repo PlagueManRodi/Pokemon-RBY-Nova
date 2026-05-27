@@ -14,9 +14,19 @@
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BLIZZARD,     \
-	     RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        DOUBLE_TEAM,  \
-	     REFLECT,      BIDE,         SKULL_BASH,   REST,         SUBSTITUTE
+IF DEF(_MODERN)
+	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  ICE_BEAM,     \
+	     BLIZZARD,     COUNTER,      RAGE,         THUNDERBOLT,  THUNDER,      \
+	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SKULL_BASH,   \
+		 REST,         SUBSTITUTE,   SLUDGE_BOMB,  ACID_STREAM,  CUT,          \
+		 STRENGTH
+ELSE
+	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  ICE_BEAM,     \
+	     BLIZZARD,     COUNTER,      RAGE,         THUNDERBOLT,  THUNDER,      \
+	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SKULL_BASH,   \
+		 REST,         SUBSTITUTE,   CUT,          STRENGTH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(NidoranFPicFront)
+	assert BANK(NidoranFPicFront) == BANK(NidoranFPicBack)

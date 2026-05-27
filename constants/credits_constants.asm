@@ -64,6 +64,73 @@
 	const CRED_FUKUI          ; $3D
 	const CRED_CLUB           ; $3E
 	const CRED_PAAD           ; $3F
+	const CRED_NOVA			  ; $40
+	const CRED_PROGRAMMER	  ; $41
+	const CRED_ZETAPHOENIX    ; $42
+	const CRED_PROGRAMMING_H  ; $43
+	const CRED_ARIAHIRO		  ; $44
+	const CRED_BLUEZANGOOSE   ; $45
+	const CRED_DANNYE		  ; $46
+	const CRED_DEVOLOV        ; $47
+	const CRED_ENGEZERSTORUNG ; $48
+	const CRED_JOJOBEAR       ; $49
+	const CRED_LUNA           ; $4A
+	const CRED_MATEO          ; $4B
+	const CRED_MAUVE          ; $4C
+	const CRED_MORD           ; $4D
+	const CRED_RMP            ; $4E
+	const CRED_RANGI          ; $4F
+	const CRED_STM            ; $50
+	const CRED_SOLUKU         ; $51
+	const CRED_VORTIENE       ; $52
+	const CRED_XILLICIS       ; $53
+	const CRED_LEAD_ART		  ; $54
+	const CRED_SUUNZ		  ; $55
+	const CRED_ADDITIONAL_ART ; $56
+	const CRED_AXEL_COMICS    ; $57
+	const CRED_DREAMMAKER     ; $58
+	const CRED_ESSENTURES     ; $59
+	const CRED_NINBOY         ; $5A
+	const CRED_PAT            ; $5B
+	const CRED_RAINBOWDEVS    ; $5C
+	const CRED_UTYTFT         ; $5D
+	const CRED_WITTYCROW      ; $5E
+	const CRED_YOELLISTRATOR  ; $5F
+	const CRED_PARTY_MENU_I   ; $60
+	const CRED_BLUE_EMERALD   ; $61
+	const CRED_CHAMBER        ; $62
+	const CRED_LAKE			  ; $63
+	const CRED_NESLUG         ; $64
+	const CRED_PIKACHU25      ; $65
+	const CRED_RYTA           ; $66
+	const CRED_SOLOO          ; $67
+	const CRED_GSC_GRAPHICS   ; $68
+	const CRED_GSC_G_DESIGN   ; $69
+	const CRED_YOSHIDA        ; $6A
+	const CRED_OKUTANI        ; $6B
+	const CRED_IWASHITA       ; $6C
+	const CRED_MONSTERS_1     ; $6D
+	const CRED_MONSTERS_2     ; $6E
+	const CRED_MONSTERS_3     ; $6F
+	const CRED_MONSTERS_4     ; $70
+	const CRED_POKERED_CONT   ; $71
+	const CRED_KANZURE		  ; $72
+	const CRED_IIMARCKUS      ; $73
+	const CRED_YENATCH        ; $74
+	const CRED_MANY_MORE      ; $75
+	const CRED_BIG_YELLOW     ; $76
+	const CRED_LYRA_WEBSITE   ; $77
+	const CRED_PRET_DISCORD   ; $78
+	const CRED_RETRO_GAME_1   ; $79
+	const CRED_RETRO_GAME_2   ; $7A
+	const CRED_SAGEDEOXYS     ; $7B
+	const CRED_TESTING		  ; $7C
+	const CRED_CHRIS05		  ; $7D
+	const CRED_HYD            ; $7E
+	const CRED_OBLIVION_WING  ; $7F
+	const CRED_PATOMAREADO    ; $80
+	const CRED_PK87           ; $81
+	const CRED_THE_WISE_BRO   ; $82
 DEF NUM_CRED_STRINGS EQU const_value
 
 	const_def -1, -1

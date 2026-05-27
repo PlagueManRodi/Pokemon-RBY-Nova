@@ -21,11 +21,14 @@ DisplayTextID::
 	ldh a, [hSpriteIndexOrTextID] ; text ID
 	ld [wSpriteIndex], a
 
-	dict TEXT_START_MENU,       DisplayStartMenu
-	dict TEXT_SAFARI_GAME_OVER, DisplaySafariGameOverText
-	dict TEXT_MON_FAINTED,      DisplayPokemonFaintedText
-	dict TEXT_BLACKED_OUT,      DisplayPlayerBlackedOutText
-	dict TEXT_REPEL_WORE_OFF,   DisplayRepelWoreOffText
+	dict TEXT_START_MENU,        DisplayStartMenu
+	dict TEXT_SAFARI_GAME_OVER,  DisplaySafariGameOverText
+	dict TEXT_MON_FAINTED,       DisplayPokemonFaintedText
+	dict TEXT_BLACKED_OUT,       DisplayPlayerBlackedOutText
+	dict TEXT_REPEL_WORE_OFF,    DisplayRepelWoreOffText
+	;
+	dict TEXT_SELECT_MENU,       DisplaySelectMenu
+	dict TEXT_USE_ANOTHER_REPEL, DisplayUseAnotherRepelText
 
 	ld a, [wNumSprites]
 	ld e, a
@@ -36,11 +39,11 @@ DisplayTextID::
 .spriteHandling
 ; get the text ID of the sprite
 	push hl
-	push de
-	push bc
-	farcall UpdateSpriteFacingOffsetAndDelayMovement ; update the graphics of the sprite the player is talking to (to face the right direction)
-	pop bc
-	pop de
+;	push de
+;	push bc
+;	farcall UpdateSpriteFacingOffsetAndDelayMovement ; update the graphics of the sprite the player is talking to (to face the right direction)
+;	pop bc
+;	pop de
 	ld hl, wMapSpriteData ; NPC text entries
 	ldh a, [hSpriteIndexOrTextID]
 	dec a
@@ -199,6 +202,16 @@ DisplayPlayerBlackedOutText::
 	ld a, [wd732]
 	res 5, a ; reset forced to use bike bit
 	ld [wd732], a
+	CheckEvent EVENT_IN_SAFARI_ZONE
+	jr z, .didnotblackoutinsafari
+	xor a
+	ld [wNumSafariBalls], a
+	ld [wSafariSteps], a
+	ld [wSafariSteps + 1], a
+	ResetEvent EVENT_IN_SAFARI_ZONE
+	ld [wcf0d], a
+	ld [wSafariZoneGateCurScript], a
+.didnotblackoutinsafari
 	jp HoldTextDisplayOpen
 
 PlayerBlackedOutText::
@@ -212,4 +225,23 @@ DisplayRepelWoreOffText::
 
 RepelWoreOffText::
 	text_far _RepelWoreOffText
+	text_end
+	
+DisplayUseAnotherRepelText::
+	ld hl, UseAnotherRepelText
+	call PrintText
+	call YesNoChoice ; Yes/No Prompt
+	xor a
+	ld [wActionResultOrTookBattleTurn], a
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .done ; no
+	; yes
+	call UseItem
+.done 
+;	jp HoldTextDisplayOpen
+	jp CloseTextDisplay
+	
+UseAnotherRepelText::
+	text_far _UseAnotherRepelText
 	text_end

@@ -1,27 +1,26 @@
 Route11WildMons:
 	def_grass_wildmons 15 ; encounter rate
-IF DEF(_RED)
-	db 14, EKANS
-	db 15, SPEAROW
-	db 12, EKANS
-	db  9, DROWZEE
-	db 13, SPEAROW
-	db 13, DROWZEE
-	db 15, EKANS
-ENDC
-IF DEF(_BLUE)
-	db 14, SANDSHREW
-	db 15, SPEAROW
-	db 12, SANDSHREW
-	db  9, DROWZEE
-	db 13, SPEAROW
-	db 13, DROWZEE
-	db 15, SANDSHREW
-ENDC
-	db 17, SPEAROW
-	db 11, DROWZEE
-	db 15, DROWZEE
+	db 20, DROWZEE
+	db 20, POLIWAG
+	db 20, SLOWPOKE
+	db 21, DROWZEE
+	db 20, PARAS
+	db 21, VENONAT
+	db 21, POLIWAG
+	db 21, SLOWPOKE
+	db 20, FARFETCHD
+	db 21, FARFETCHD
 	end_grass_wildmons
 
-	def_water_wildmons 0 ; encounter rate
+	def_water_wildmons 5 ; encounter rate
+	db 43, PSYDUCK
+	db 43, POLIWAG
+	db 44, GOLDUCK
+	db 43, PSYDUCK
+	db 44, POLIWHIRL
+	db 43, GOLDEEN
+	db 44, SEAKING
+	db 43, SEADRA
+	db 44, GYARADOS
+	db 44, GYARADOS
 	end_water_wildmons

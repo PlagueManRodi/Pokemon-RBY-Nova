@@ -64,6 +64,11 @@ _FluteExplanationText::
 
 	para "It works on all"
 	line "sleeping #MON."
+	prompt
+
+_ReceivedPERFORMText::
+	text "PERFORM added"
+	line "to SELECT menu!"
 	done
 
 _FluteNoRoomText::

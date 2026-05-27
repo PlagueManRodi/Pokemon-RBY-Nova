@@ -12,7 +12,7 @@ MapHeaderPointers::
 	dw CinnabarIsland_h
 	dw IndigoPlateau_h
 	dw SaffronCity_h
-	dw SaffronCity_h ; UNUSED_MAP_0B
+	dw VermilionBeach_h ; UNUSED_MAP_0B
 	dw Route1_h
 	dw Route2_h
 	dw Route3_h
@@ -106,13 +106,13 @@ MapHeaderPointers::
 	dw SSAnne1FRooms_h
 	dw SSAnne2FRooms_h
 	dw SSAnneB1FRooms_h
-	dw LancesRoom_h ; UNUSED_MAP_69
+	dw CeladonNovaHouse_h ; NEW MAP
 	dw LancesRoom_h ; UNUSED_MAP_6A
 	dw LancesRoom_h ; UNUSED_MAP_6B
 	dw VictoryRoad1F_h
-	dw LancesRoom_h ; UNUSED_MAP_6D
-	dw LancesRoom_h ; UNUSED_MAP_6E
-	dw LancesRoom_h ; UNUSED_MAP_6F
+	dw MtMoonB3F_h ; NEW MAP
+	dw MtMoonB4F_h ; NEW MAP
+	dw MtMoonB5F_h ; NEW MAP
 	dw LancesRoom_h ; UNUSED_MAP_70
 	dw LancesRoom_h
 	dw LancesRoom_h ; UNUSED_MAP_72

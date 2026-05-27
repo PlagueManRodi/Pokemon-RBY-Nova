@@ -50,7 +50,7 @@ _ErikaPostBattleAdviceText::
 _ErikaRainbowBadgeInfoText::
 	text "The RAINBOWBADGE"
 	line "will make #MON"
-	cont "up to L50 obey."
+	cont "up to L60 obey."
 
 	para "It also allows"
 	line "#MON to use"
@@ -218,3 +218,55 @@ _CeladonGymAfterBattleText8::
 	para "Wait 'til next"
 	line "time!"
 	done
+
+_CeladonGymRematchPreBattleText::
+	text "Oh, if it isn't the"
+	line "one who's been"
+	cont "trying to fill"
+	cont "the #DEX."
+	
+	para "...I see. You"
+	line "certainly have"
+	cont "been busy."
+
+	para "I'm not fond of"
+	line "those kinds of"
+	cont "public things..."
+	
+	para "However, battles"
+	line "are different."
+
+	para "That's what you"
+	line "came for isn't"
+	cont "it?"
+	done
+
+_CeladonGymRematchAcceptedText::
+	text "But of course."
+	
+	para "Let's battle!"
+	done
+
+_CeladonGymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_CeladonGymRematchDefeatedText::
+	text "Oh! It"
+	line "appears it is my"
+	cont "loss... ... ..."
+	prompt
+
+_CeladonGymRematchPostBattleText::
+	text "Simply marvelous."
+	
+	para "That was an effort"
+	line "worthy at least"
+	cont "10 RAINBOWBADGEs."
+	done
+
+_ReceivedProRainbowBadgeText::
+	text "<PLAYER> received"
+	line "PRO RAINBOWBADGE!@"
+	text_end

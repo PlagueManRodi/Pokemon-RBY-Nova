@@ -14,5 +14,7 @@ MtMoonPokecenter_Object:
 	object_event 10,  6, SPRITE_MIDDLE_AGED_MAN, WALK, LEFT_RIGHT, 4 ; person
 	object_event  7,  2, SPRITE_CLIPBOARD, STAY, NONE, 5 ; person
 	object_event 11,  2, SPRITE_LINK_RECEPTIONIST, STAY, DOWN, 6 ; person
+	object_event  8,  3, SPRITE_GAMEBOY_KID, STAY, DOWN, 7
+	object_event  9,  3, SPRITE_GAMEBOY_KID, STAY, DOWN, 8
 
 	def_warps_to MT_MOON_POKECENTER

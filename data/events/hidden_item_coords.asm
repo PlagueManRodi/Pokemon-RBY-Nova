@@ -4,6 +4,15 @@ ENDM
 
 HiddenItemCoords:
 	; map id, x, y
+	hidden_item VIRIDIAN_FOREST,               25,  43
+	hidden_item VIRIDIAN_FOREST,                6,  36
+	hidden_item VIRIDIAN_FOREST,               17,  35
+	hidden_item VIRIDIAN_FOREST,               28,  32
+	hidden_item VIRIDIAN_FOREST,               11,  25
+	hidden_item VIRIDIAN_FOREST,               14,  16
+	hidden_item VIRIDIAN_FOREST,               30,   8
+	hidden_item VIRIDIAN_FOREST,                9,   3
+	;
 	hidden_item VIRIDIAN_FOREST,                1,  18
 	hidden_item VIRIDIAN_FOREST,               16,  42
 	hidden_item MT_MOON_B2F,                   18,  12
@@ -38,7 +47,7 @@ HiddenItemCoords:
 	hidden_item ROUTE_23,                       8,  90
 	hidden_item VICTORY_ROAD_2F,                5,   2
 	hidden_item VICTORY_ROAD_2F,               26,   7
-	hidden_item UNUSED_MAP_6F,                 14,  11
+	hidden_item UNUSED_MAP_70,                 14,  11
 	hidden_item VIRIDIAN_CITY,                 14,   4
 	hidden_item ROUTE_11,                      48,   5
 	hidden_item ROUTE_12,                       2,  63
@@ -58,4 +67,8 @@ HiddenItemCoords:
 	hidden_item VERMILION_CITY,                14,  11
 	hidden_item CERULEAN_CITY,                 15,   8
 	hidden_item ROUTE_4,                       40,   3
+	hidden_item VERMILION_BEACH,			   27,  13
+	hidden_item VERMILION_BEACH,               31,  22
+	hidden_item VERMILION_BEACH,                7,  17
+	hidden_item VERMILION_BEACH,               21,  26
 	db -1 ; end

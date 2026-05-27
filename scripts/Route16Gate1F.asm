@@ -39,9 +39,11 @@ Route16GateScript0:
 	ld [wRoute16Gate1FCurScript], a
 	ret
 .asm_4970e
-	ld a, $2
-	ld [wRoute16Gate1FCurScript], a
-	ret
+; from ShinPokered - credits to jojobear13
+;	ld a, $2
+;	ld [wRoute16Gate1FCurScript], a
+;	ret
+	jr Route16GateScript2
 
 CoordsData_49714:
 	dbmapcoord  4,  7
@@ -56,6 +58,7 @@ Route16GateScript1:
 	ret nz
 	ld a, $f0
 	ld [wJoyIgnore], a
+	call UpdateSprites
 
 Route16GateScript2:
 	ld a, $1
@@ -83,8 +86,8 @@ Route16GateScript3:
 	ret
 
 Route16GateScript_49755:
-	ld b, BICYCLE
-	jp IsItemInBag
+	CheckEvent EVENT_GOT_BICYCLE
+	ret
 
 Route16Gate1F_TextPointers:
 	dw Route16GateText1

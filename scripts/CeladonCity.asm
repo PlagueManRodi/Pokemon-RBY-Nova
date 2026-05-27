@@ -2,6 +2,52 @@ CeladonCity_Script:
 	call EnableAutoTextBoxDrawing
 	ResetEvents EVENT_1B8, EVENT_1BF
 	ResetEvent EVENT_67F
+	ld hl, CeladonCity_ScriptPointers
+	ld a, [wCeladonCityCurScript]
+	jp CallFunctionInTable
+	ret
+
+CeladonCity_ScriptPointers:
+	dw CeladonCityNovaHouseDoorScript
+	dw CeladonCityScript1
+
+CeladonCityNovaHouseDoorScript:
+	CheckEvent EVENT_BECAME_CHAMPION
+	ret nz
+	IF DEF(_DEBUG)
+	call DebugPressedOrHeldB
+	ret nz
+ENDC
+	ld a, [wYCoord]
+	cp 20
+	ret nz
+	ld a, [wXCoord]
+	cp 39
+	ret nz
+	ld a, 19
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_LEFT
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, 1
+	ld [wCeladonCityCurScript], a
+	ret
+	
+CeladonCityScript1:
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	call Delay3
+	xor a
+	ld [wCeladonCityCurScript], a
 	ret
 
 CeladonCity_TextPointers:
@@ -23,6 +69,7 @@ CeladonCity_TextPointers:
 	dw CeladonCityText16
 	dw CeladonCityText17
 	dw CeladonCityText18
+	dw CeladonCityText19
 
 CeladonCityText1:
 	text_far _CeladonCityText1
@@ -56,6 +103,10 @@ CeladonCityText5:
 	ld hl, ReceivedTM41Text
 	call PrintText
 	SetEvent EVENT_GOT_TM41
+	CheckEvent EVENT_RECEIVED_CONV_ITEMS
+	jr nz, .Done 
+	ld hl, ReceivedHEALText
+	call PrintText
 	jr .Done
 .asm_7053f
 	ld hl, TM41ExplanationText
@@ -70,6 +121,11 @@ TM41PreText:
 ReceivedTM41Text:
 	text_far _ReceivedTM41Text
 	sound_get_item_1
+	text_end
+
+ReceivedHEALText:
+	text_far _ReceivedHEALText
+	sound_get_key_item
 	text_end
 
 TM41ExplanationText:
@@ -129,4 +185,8 @@ CeladonCityText17:
 
 CeladonCityText18:
 	text_far _CeladonCityText18
+	text_end
+
+CeladonCityText19:
+	text_far _CeladonCityText19
 	text_end

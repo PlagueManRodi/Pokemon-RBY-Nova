@@ -11,5 +11,7 @@ PokemonTower7F_Object:
 	object_event 12,  9, SPRITE_ROCKET, STAY, LEFT, 2, OPP_ROCKET, 20
 	object_event  9,  7, SPRITE_ROCKET, STAY, RIGHT, 3, OPP_ROCKET, 21
 	object_event 10,  3, SPRITE_MR_FUJI, STAY, DOWN, 4 ; person
+	object_event 11,  3, SPRITE_AGATHA, STAY, DOWN, 5, OPP_AGATHA, 2
+	object_event  9,  5, SPRITE_POKE_BALL, STAY, NONE, 6, CAPTURE_CHARM
 
 	def_warps_to POKEMON_TOWER_7F

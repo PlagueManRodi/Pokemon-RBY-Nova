@@ -40,17 +40,22 @@ SetPal_Battle:
 	ld c, a
 	ld hl, wPalPacket + 1
 	ld a, [wPlayerHPBarColor]
-	add PAL_GREENBAR
+	add PAL_POKEBALL
 	ld [hli], a
 	inc hl
 	ld a, [wEnemyHPBarColor]
-	add PAL_GREENBAR
+	add PAL_POKEBALL
 	ld [hli], a
 	inc hl
 	ld a, b
 	ld [hli], a
 	inc hl
 	ld a, c
+	;
+;	ld [hli], a
+;	inc hl	
+;	ld a, PAL_CYANBAR
+	;
 	ld [hl], a
 	ld hl, wPalPacket
 	ld de, BlkPacket_Battle
@@ -143,6 +148,8 @@ SetPal_Overworld:
 	cp CEMETERY
 	jr z, .PokemonTowerOrAgatha
 	cp CAVERN
+	jr z, .caveOrBruno
+	cp CAVERN_2
 	jr z, .caveOrBruno
 	ld a, [wCurMap]
 	cp FIRST_INDOOR_MAP

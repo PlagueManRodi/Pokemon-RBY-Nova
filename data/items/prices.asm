@@ -9,7 +9,7 @@ ItemPrices::
 	bcd3 0     ; SURFBOARD
 	bcd3 1000  ; SAFARI_BALL
 	bcd3 0     ; POKEDEX
-	bcd3 0     ; MOON_STONE
+	bcd3 2100  ; MOON_STONE
 	bcd3 100   ; ANTIDOTE
 	bcd3 250   ; BURN_HEAL
 	bcd3 250   ; ICE_HEAL
@@ -43,7 +43,7 @@ ItemPrices::
 	bcd3 0     ; DOME_FOSSIL
 	bcd3 0     ; HELIX_FOSSIL
 	bcd3 0     ; SECRET_KEY
-	bcd3 0     ; XXX
+	bcd3 40000 ; BIG_NUGGET
 	bcd3 0     ; BIKE_VOUCHER
 	bcd3 950   ; X_ACCURACY
 	bcd3 2100  ; LEAF_STONE
@@ -78,11 +78,42 @@ ItemPrices::
 	bcd3 0     ; OLD_ROD
 	bcd3 0     ; GOOD_ROD
 	bcd3 0     ; SUPER_ROD
-	bcd3 0     ; PP_UP
-	bcd3 0     ; ETHER
-	bcd3 0     ; MAX_ETHER
-	bcd3 0     ; ELIXER
-	bcd3 0     ; MAX_ELIXER
+	bcd3 9800  ; PP_UP
+	bcd3 1200  ; ETHER
+	bcd3 2000  ; MAX_ETHER
+	bcd3 3000  ; ELIXER
+	bcd3 4500  ; MAX_ELIXER
+	bcd3 2100  ; SUN_STONE
+	bcd3 2100  ; DAWN_STONE
+	bcd3 2100  ; DUSK_STONE
+	bcd3 2100  ; SHINY_STONE
+	bcd3 2100  ; ICE_STONE
+	bcd3 2100  ; ROCK_STONE
+	bcd3 2100  ; STEEL_STONE
+	bcd3 3000  ; STARDUST
+	bcd3 0     ; TEA
+	bcd3 0     ; RECOVERY_KIT
+	bcd3 0     ; REPELLING_KIT
+	bcd3 0     ; TRAINING_KIT
+	bcd3 0     ; GOLD_TICKET
+	bcd3 1000  ; DUSK_BALL
+	bcd3 1000  ; NET_BALL
+	bcd3 0     ; MOVEDEX
+	bcd3 0     ; CAPTURECHARM
+	bcd3 500   ; TINY_MUSHROOM
+	bcd3 5000  ; BIG_MUSHROOM
+	bcd3 0     ; BIKE
+	bcd3 0     ; DOWSE
+	bcd3 0     ; READ_MAP
+	bcd3 0     ; HEAL
+	bcd3 0     ; WARD
+	bcd3 0     ; TRAIN
+	bcd3 0     ; FISH_S_ROD
+	bcd3 0     ; FISH_G_ROD
+	bcd3 0     ; FISH_O_ROD
+	bcd3 0     ; ESCAPE
+	bcd3 0     ; WARP
+	bcd3 0     ; PERFORM
 	assert_table_length NUM_ITEMS
 	bcd3 0     ; FLOOR_B2F
 	bcd3 0     ; FLOOR_B1F

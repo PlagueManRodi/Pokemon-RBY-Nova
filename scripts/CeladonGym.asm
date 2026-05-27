@@ -41,7 +41,32 @@ CeladonGymErikaPostBattle:
 	jp z, CeladonGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, CeladonGymReceiveTM21	
+	ld a, 12
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 3
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, CeladonGymResetScripts
+	lb bc, FLAG_SET, 3
+	predef FlagActionPredef
+	ld a, 13
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, CeladonGymResetScripts
+	ld a, 14
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp CeladonGymResetScripts
+	;
 CeladonGymReceiveTM21:
 	ld a, $9
 	ldh [hSpriteIndexOrTextID], a
@@ -64,6 +89,20 @@ CeladonGymReceiveTM21:
 	set BIT_RAINBOWBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_RAINBOWBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 38
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
@@ -82,6 +121,9 @@ CeladonGym_TextPointers:
 	dw ErikaRainbowBadgeInfoText
 	dw ReceivedTM21Text
 	dw TM21NoRoomText
+	dw CeladonGymRematchPostBattleText ; NEW
+	dw ReceivedProRainbowBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 CeladonGymTrainerHeaders:
 	def_trainers 2
@@ -109,12 +151,22 @@ ErikaText:
 	jr nz, .afterBeat
 	call z, CeladonGymReceiveTM21
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp .done
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .ErikaRematch
+	;
 	ld hl, ErikaPostBattleAdviceText
 	call PrintText
-	jr .done
+	jp .done
 .beforeBeat
+	ld d, 4
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, ErikaPreBattleText
 	call PrintText
 	ld hl, wd72d
@@ -129,6 +181,36 @@ ErikaText:
 	call InitBattleEnemyParameters
 	ld a, $4
 	ld [wGymLeaderNo], a
+	;
+	jr .endBattle
+.ErikaRematch
+	predef HealParty
+	ld hl, ErikaPreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, ErikaPreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, CeladonGymRematchDefeatedText
+	ld de, CeladonGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_ERIKA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, ErikaPreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	;
 	ld a, $3
 	ld [wCeladonGymCurScript], a
 	ld [wCurMapScript], a
@@ -141,6 +223,8 @@ ErikaPreBattleText:
 
 ReceivedRainbowBadgeText:
 	text_far _ReceivedRainbowBadgeText
+	sound_get_item_1
+	text_promptbutton
 	text_end
 
 ErikaPostBattleAdviceText:
@@ -285,4 +369,31 @@ CeladonGymEndBattleText8:
 
 CeladonGymAfterBattleText8:
 	text_far _CeladonGymAfterBattleText8
+	text_end
+
+;;;
+
+ErikaPreBattleRematchText:
+	text_far _CeladonGymRematchPreBattleText
+	text_end
+	
+ErikaPreBattleRematchAcceptedText:
+	text_far _CeladonGymRematchAcceptedText
+	text_end
+	
+ErikaPreBattleRematchRefusedText:
+	text_far _CeladonGymRematchRefusedText
+	text_end
+
+CeladonGymRematchDefeatedText:
+	text_far _CeladonGymRematchDefeatedText
+	text_end
+
+CeladonGymRematchPostBattleText:
+	text_far _CeladonGymRematchPostBattleText
+	text_end
+
+ReceivedProRainbowBadgeText:
+	text_far _ReceivedProRainbowBadgeText
+	sound_get_item_1
 	text_end

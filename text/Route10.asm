@@ -99,11 +99,11 @@ _Route10AfterBattleText6::
 	cont "floral pattern!"
 	done
 
-_Route10Text9::
-_Route10Text7::
+_Route10Text10::
+_Route10Text8::
 	text "ROCK TUNNEL"
 	done
 
-_Route10Text10::
+_Route10Text11::
 	text "POWER PLANT"
 	done

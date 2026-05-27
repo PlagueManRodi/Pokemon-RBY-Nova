@@ -46,6 +46,7 @@ Cemetery_Coll::
 Interior_Coll::
 	coll_tiles $04, $0f, $15, $1f, $3b, $45, $47, $55, $56
 
+Cavern_2_Coll::
 Cavern_Coll::
 	coll_tiles $05, $15, $18, $1a, $20, $21, $22, $2a, $2d, $30
 

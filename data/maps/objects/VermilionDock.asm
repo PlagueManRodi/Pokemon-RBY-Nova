@@ -8,5 +8,6 @@ VermilionDock_Object:
 	def_bg_events
 
 	def_object_events
+	object_event 22,  0, SPRITE_POKE_BALL, STAY, NONE, 1 ; Person
 
 	def_warps_to VERMILION_DOCK

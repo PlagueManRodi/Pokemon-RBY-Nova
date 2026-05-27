@@ -37,3 +37,11 @@ _Mansion4Text7::
 	line "curb its vicious"
 	cont "tendencies..."
 	done
+
+_Mansion4BattleText3::
+	text "..."
+	done
+
+_Mansion4EndBattleText3::
+	text "..."
+	prompt

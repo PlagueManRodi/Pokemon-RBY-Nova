@@ -1,25 +1,32 @@
 	db DEX_MR_MIME ; pokedex id
 
-	db  40,  45,  65,  90, 100
+	db  50,  65,  65, 100,  90
 	;   hp  atk  def  spd  spc
 
-	db PSYCHIC_TYPE, PSYCHIC_TYPE ; type
+	db ICE, PSYCHIC_TYPE ; type
 	db 45 ; catch rate
-	db 136 ; base exp
+	db 161 ; base exp
 
 	INCBIN "gfx/pokemon/front/mr.mime.pic", 0, 1 ; sprite dimensions
 	dw MrMimePicFront, MrMimePicBack
 
-	db CONFUSION, BARRIER, NO_MOVE, NO_MOVE ; level 1 learnset
+	db CONFUSION, POUND, BARRIER, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
-	     RAGE,         SOLARBEAM,    THUNDERBOLT,  THUNDER,      PSYCHIC_M,    \
-	     TELEPORT,     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     METRONOME,    SKULL_BASH,   REST,         THUNDER_WAVE, PSYWAVE,      \
-	     SUBSTITUTE,   FLASH
+IF DEF(_MODERN)
+	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    ICE_BEAM,     \
+	     BLIZZARD,     HYPER_BEAM,   SOLARBEAM,    THUNDERBOLT,  THUNDER,      \
+	     PSYCHIC_M,    MIMIC,        DOUBLE_TEAM,  REFLECT,      METRONOME,    \
+	     DREAM_EATER,  REST,         THUNDER_WAVE, SUBSTITUTE,   SHADOW_BALL,  \
+		 DAZZLE_GLEAM, FLASH
+ELSE
+	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    ICE_BEAM,     \
+	     BLIZZARD,     HYPER_BEAM,   SOLARBEAM,    THUNDERBOLT,  THUNDER,      \
+	     PSYCHIC_M,    MIMIC,        DOUBLE_TEAM,  REFLECT,      METRONOME,    \
+	     DREAM_EATER,  REST,         THUNDER_WAVE, SUBSTITUTE,   FLASH
+ENDC
 	; end
 
-	db 0 ; padding
+	db BANK(MrMimePicFront)
+	assert BANK(MrMimePicFront) == BANK(MrMimePicBack)

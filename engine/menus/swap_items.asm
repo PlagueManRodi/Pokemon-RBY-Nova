@@ -147,3 +147,15 @@ HandleItemListSwapping::
 	pop de
 	pop hl
 	jp DisplayListMenuIDLoop
+
+;; SORT ITEM CODE ;;
+SortItems::
+	push hl
+	push bc
+	farcall _SortItems
+	xor a ; Zeroes a
+	ld [wCurrentMenuItem], a
+	pop bc
+	pop hl
+	ret
+;;

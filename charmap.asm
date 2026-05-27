@@ -157,6 +157,39 @@
 	charmap "'t",        $be
 	charmap "'v",        $bf
 
+; New
+	
+	charmap "<A:>",		 $c4
+	charmap "<I>",		 $c5
+	charmap "<NF>",		 $c6
+	charmap "<O>",		 $c7
+	charmap "<No>",		 $c8
+	charmap "<nO>",	  	 $c9
+	charmap "<Yes>",	 $ca
+	charmap "<yES>",	 $cb
+	charmap "<Alt>",	 $cc
+	charmap "<aLT>",	 $cd
+	charmap "<Og>",		 $ce
+	charmap "<oG>",		 $cf
+	charmap "<UA>",		 $d0
+	charmap "<S>",	 	 $d1
+	charmap "<XP>",	 	 $d2
+	charmap "<ST2>",	 $d3
+	charmap "<AT>",		 $d4
+	charmap "<D>",		 $d5
+	charmap "<V>",		 $d6
+	charmap "<FR>",		 $d7
+	charmap "<ON>",	 	 $d8
+	charmap "<T>",	 	 $d9
+	charmap "<BA>",		 $da
+	charmap "<CK>",		 $db
+	charmap "<ST>",      $dc
+	charmap "<ART>",     $dd
+	charmap "<SEL>",     $de
+	charmap "<ECT>",     $df
+
+; New end
+
 	charmap "'",         $e0
 	charmap "<PK>",      $e1
 	charmap "<MN>",      $e2

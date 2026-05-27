@@ -60,7 +60,32 @@ VermilionGymLTSurgePostBattle:
 	jp z, VermilionGymResetScripts
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
-
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, VermilionGymReceiveTM24	
+	ld a, 9
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 2
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, VermilionGymResetScripts
+	lb bc, FLAG_SET, 2
+	predef FlagActionPredef
+	ld a, 10
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, VermilionGymResetScripts
+	ld a, 11
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp VermilionGymResetScripts
+	;
 VermilionGymReceiveTM24:
 	ld a, $6
 	ldh [hSpriteIndexOrTextID], a
@@ -83,6 +108,20 @@ VermilionGymReceiveTM24:
 	set BIT_THUNDERBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_THUNDERBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 33
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
@@ -98,7 +137,10 @@ VermilionGym_TextPointers:
 	dw LTSurgeThunderBadgeInfoText
 	dw ReceivedTM24Text
 	dw TM24NoRoomText
-
+	dw VermilionGymRematchPostBattleText ; NEW
+	dw ReceivedProThunderBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
+	
 VermilionGymTrainerHeaders:
 	def_trainers 2
 VermilionGymTrainerHeader0:
@@ -117,12 +159,22 @@ LTSurgeText:
 	jr nz, .afterBeat
 	call z, VermilionGymReceiveTM24
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp .done
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .LTSurgeRematch
+	;
 	ld hl, LTSurgePostBattleAdviceText
 	call PrintText
-	jr .done
+	jp .done
 .beforeBeat
+	ld d, 3
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, LTSurgePreBattleText
 	call PrintText
 	ld hl, wd72d
@@ -139,6 +191,36 @@ LTSurgeText:
 	ld [wGymLeaderNo], a
 	xor a
 	ldh [hJoyHeld], a
+	;
+	jr .endBattle
+.LTSurgeRematch
+	predef HealParty
+	ld hl, LTSurgePreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, LTSurgePreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, VermilionGymRematchDefeatedText
+	ld de, VermilionGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_LT_SURGE
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, LTSurgePreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	;
 	ld a, $3 ; set script index to LT Surge post-battle script
 	ld [wVermilionGymCurScript], a
 	ld [wCurMapScript], a
@@ -169,6 +251,8 @@ TM24NoRoomText:
 
 ReceivedThunderBadgeText:
 	text_far _ReceivedThunderBadgeText
+	sound_get_item_1
+	text_promptbutton
 	text_end
 
 VermilionGymTrainerText1:
@@ -245,4 +329,31 @@ VermilionGymGuidePreBattleText:
 
 VermilionGymGuidePostBattleText:
 	text_far _VermilionGymGuidePostBattleText
+	text_end
+
+;;;
+
+LTSurgePreBattleRematchText:
+	text_far _VermilionGymRematchPreBattleText
+	text_end
+	
+LTSurgePreBattleRematchAcceptedText:
+	text_far _VermilionGymRematchAcceptedText
+	text_end
+	
+LTSurgePreBattleRematchRefusedText:
+	text_far _VermilionGymRematchRefusedText
+	text_end
+
+VermilionGymRematchDefeatedText:
+	text_far _VermilionGymRematchDefeatedText
+	text_end
+
+VermilionGymRematchPostBattleText:
+	text_far _VermilionGymRematchPostBattleText
+	text_end
+
+ReceivedProThunderBadgeText:
+	text_far _ReceivedProThunderBadgeText
+	sound_get_item_1
 	text_end

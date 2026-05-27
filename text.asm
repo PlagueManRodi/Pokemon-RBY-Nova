@@ -266,6 +266,9 @@ INCLUDE "data/text/text_6.asm"
 SECTION "Text 11", ROMX
 
 INCLUDE "data/text/text_7.asm"
+INCLUDE "text/CeladonNovaHouse.asm"
+INCLUDE "text/VermilionBeach.asm"
+INCLUDE "text/MtMoonB5F.asm"
 
 
 SECTION "Pokédex Text", ROMX
@@ -273,6 +276,22 @@ SECTION "Pokédex Text", ROMX
 INCLUDE "data/pokemon/dex_text.asm"
 
 
+SECTION "Pokédex Text 2", ROMX
+
+INCLUDE "data/pokemon/dex_text_2.asm"
+
+
 SECTION "Move Names", ROMX
 
 INCLUDE "data/moves/names.asm"
+
+
+SECTION "Text 12", ROMX
+
+INCLUDE "text/move_deleter.asm"
+INCLUDE "text/move_relearner.asm"
+
+
+SECTION "Movedex Text", ROMX
+
+INCLUDE "data/moves/movedex_text.asm"

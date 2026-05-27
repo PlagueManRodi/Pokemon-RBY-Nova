@@ -31,10 +31,16 @@ PrintBeginningBattleText:
 .pokemonTower
 	ld b, SILPH_SCOPE
 	call IsItemInBag
+	; new
+	ld a, [wCurMap]
+	cp POKEMON_TOWER_3F
+	;
 	ld a, [wEnemyMonSpecies2]
 	ld [wcf91], a
+	jr nz, .notInTower3F ; new
 	cp RESTLESS_SOUL
 	jr z, .isMarowak
+.notInTower3F ; new
 	ld a, b
 	and a
 	jr z, .noSilphScope
@@ -184,6 +190,7 @@ PlayerMon2Text:
 	ld b, [hl]
 	ld a, [de]
 	sbc b
+	jr c, .gainedHP ; if we underflow, print default text
 	ldh [hMultiplicand + 1], a
 	ld a, 25
 	ldh [hMultiplier], a
@@ -217,6 +224,11 @@ PlayerMon2Text:
 	cp 70
 	ret c
 	ld hl, GoodText ; HP went down 70% or more
+	ret
+.gainedHP
+	pop bc
+	pop de
+	ld hl, EnoughText ; default text, a custom message can be used here for this
 	ret
 
 EnoughText:

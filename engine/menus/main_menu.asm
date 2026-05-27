@@ -3,6 +3,7 @@ MainMenu:
 	call InitOptions
 	xor a
 	ld [wOptionsInitialized], a
+;	ld [wShownPokeShuffleInfo], a
 	inc a
 	ld [wSaveFileStatus], a
 	call CheckForPlayerNameInSRAM
@@ -27,6 +28,9 @@ MainMenu:
 	call RunDefaultPaletteCommand
 	call LoadTextBoxTilePatterns
 	call LoadFontTilePatterns
+	ld a, VERSION_BOX
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
 	ld hl, wd730
 	set 6, [hl]
 	ld a, [wSaveFileStatus]
@@ -34,7 +38,7 @@ MainMenu:
 	jr z, .noSaveFile
 ; there's a save file
 	hlcoord 0, 0
-	ld b, 6
+	ld b, 8
 	ld c, 13
 	call TextBoxBorder
 	hlcoord 2, 2
@@ -43,13 +47,21 @@ MainMenu:
 	jr .next2
 .noSaveFile
 	hlcoord 0, 0
-	ld b, 4
+	ld b, 6
 	ld c, 13
 	call TextBoxBorder
 	hlcoord 2, 2
 	ld de, NewGameText
 	call PlaceString
 .next2
+	ld hl, wNewFlags
+	bit 7, [hl]
+	jr nz, .tsStuffAlreadyDone
+	callfar MoveTSDataToBuffer
+	callfar ClearTSData
+	ld hl, wNewFlags
+	set 7, [hl]
+.tsStuffAlreadyDone
 	ld hl, wd730
 	res 6, [hl]
 	call UpdateSprites
@@ -64,6 +76,7 @@ MainMenu:
 	ld a, A_BUTTON | B_BUTTON | START
 	ld [wMenuWatchedKeys], a
 	ld a, [wSaveFileStatus]
+	inc a
 	ld [wMaxMenuItem], a
 	call HandleMenuInput
 	bit BIT_B_BUTTON, a
@@ -84,9 +97,14 @@ MainMenu:
 	jr z, .choseContinue
 	cp 1
 	jp z, StartNewGame
+	cp 2
+	jr nz, .typeShuffle
 	call DisplayOptionMenu
 	ld a, 1
 	ld [wOptionsInitialized], a
+	jp .mainMenuLoop
+.typeShuffle
+	callfar DisplayTypeShuffleMenu
 	jp .mainMenuLoop
 .choseContinue
 	call DisplayContinueGameInfo
@@ -105,6 +123,9 @@ MainMenu:
 	jp nz, .mainMenuLoop ; pressed B
 	jr .inputLoop
 .pressedA
+	callfar MoveBufferToTSData
+	ld hl, wNewFlags
+	res 7, [hl]
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	ld a, PLAYER_DIR_DOWN
@@ -125,10 +146,16 @@ MainMenu:
 	jp SpecialEnterMap
 
 InitOptions:
+	;
+	ld hl, wOptions
+	;
 	ld a, TEXT_DELAY_FAST
 	ld [wLetterPrintingDelayFlags], a
-	ld a, TEXT_DELAY_MEDIUM
-	ld [wOptions], a
+;	ld a, TEXT_DELAY_MEDIUM
+	;
+	ld [hl], a
+	set 6, [hl]
+	;
 	ret
 
 LinkMenu:
@@ -339,7 +366,8 @@ ContinueText:
 
 NewGameText:
 	db   "NEW GAME"
-	next "OPTION@"
+	next "OPTION"
+	next "TYPE SHUFFLE@"
 
 CableClubOptionsText:
 	db   "TRADE CENTER"
@@ -393,7 +421,8 @@ PrintSaveScreenText:
 	call PrintPlayTime
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	ld c, 30
+;	ld c, 30
+	ld c, 10 ; shorter time while displaying stats
 	jp DelayFrames
 
 PrintNumBadges:
@@ -433,6 +462,9 @@ SaveScreenInfoText:
 	next "TIME@"
 
 DisplayOptionMenu:
+	;
+	call ClearScreen
+	;
 	hlcoord 0, 0
 	ld b, 3
 	ld c, 18
@@ -586,7 +618,7 @@ DisplayOptionMenu:
 
 TextSpeedOptionText:
 	db   "TEXT SPEED"
-	next " FAST  MEDIUM SLOW@"
+	next " FAST  MEDIUM INST@"
 
 BattleAnimationOptionText:
 	db   "BATTLE ANIMATION"
@@ -715,3 +747,4 @@ CheckForPlayerNameInSRAM:
 	ld [MBC1SRamBankingMode], a
 	scf
 	ret
+	

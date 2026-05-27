@@ -4,6 +4,10 @@ InitBattleVariables:
 	xor a
 	ld [wActionResultOrTookBattleTurn], a
 	ld [wBattleResult], a
+	ld [wCounterDamageEnemy], a
+	ld [wCounterDamageEnemy+1], a
+	ld [wCounterDamagePlayer], a
+	ld [wCounterDamagePlayer+1], a
 	ld hl, wPartyAndBillsPCSavedMenuItem
 	ld [hli], a
 	ld [hli], a
@@ -16,6 +20,11 @@ InitBattleVariables:
 	ld [wPlayerMonNumber], a
 	ld [wEscapedFromBattle], a
 	ld [wMapPalOffset], a
+	;
+	ld [wBattleMonTurnsOut], a
+	ld [wSwitchTarget], a
+	ld [wEnemyAIAlreadySelectedAMove], a
+	;
 	ld hl, wPlayerHPBarColor
 	ld [hli], a ; wPlayerHPBarColor
 	ld [hl], a ; wEnemyHPBarColor

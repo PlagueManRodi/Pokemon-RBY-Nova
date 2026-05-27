@@ -99,23 +99,19 @@ _Route9AfterBattleText6::
 	done
 
 _Route9BattleText7::
-	text "I got up early"
-	line "every day to"
-	cont "raise my #MON"
-	cont "from cocoons!"
+	text "I always go with"
+	line "bird #MON!"
 	done
 
 _Route9EndBattleText7::
-	text "WHAT?"
-
-	para "What a total"
-	line "waste of time!"
+	text "Out"
+	line "of power!"
 	prompt
 
 _Route9AfterBattleText7::
-	text "I have to collect"
-	line "more than bugs to"
-	cont "get stronger..."
+	text "I wish I could"
+	line "fly like PIDGEY"
+	cont "and PIDGEOTTO..."
 	done
 
 _Route9BattleText8::
@@ -135,23 +131,31 @@ _Route9AfterBattleText8::
 	done
 
 _Route9BattleText9::
-	text "Go, my super bug"
-	line "#MON!"
+	text "TMs are on sale"
+	line "in CELADON!"
+	cont "But, only a few"
+	cont "people have HMs!"
 	done
 
 _Route9EndBattleText9::
-	text "My"
-	line "bugs..."
+	text "Aww,"
+	line "bummer!"
 	prompt
 
 _Route9AfterBattleText9::
-	text "If you don't like"
-	line "bug #MON, you"
-	cont "bug me!"
+	text "Teach #MON"
+	line "moves of the same"
+	cont "element type for"
+	cont "more power."
 	done
-
+	
 _Route9Text11::
 	text "ROUTE 9"
 	line "CERULEAN CITY-"
 	cont "ROCK TUNNEL"
+	done
+
+_ReceivedWARPText::
+	text "WARP added"
+	line "to SELECT menu!"
 	done

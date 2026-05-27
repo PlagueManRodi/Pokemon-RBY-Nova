@@ -1,21 +1,26 @@
 CeruleanCaveB1FWildMons:
 	def_grass_wildmons 25 ; encounter rate
-	db 55, RHYDON
-	db 55, MAROWAK
-	db 55, ELECTRODE
-	db 64, CHANSEY
-	db 64, PARASECT
-	db 64, RAICHU
-IF DEF(_RED)
-	db 57, ARBOK
-ENDC
-IF DEF(_BLUE)
-	db 57, SANDSLASH
-ENDC
-	db 65, DITTO
-	db 63, DITTO
-	db 67, DITTO
+	db 60, TANGROWTH
+	db 60, LICKILICKY
+	db 60, ELECTIVIRE
+	db 60, RHYPERIOR
+	db 60, MAGNEZONE
+	db 60, CLEFABLE
+	db 60, MAGMORTAR
+	db 60, STEELIX
+	db 60, AERODACTYL
+	db 5, SQUIRTLE
 	end_grass_wildmons
 
-	def_water_wildmons 0 ; encounter rate
+	def_water_wildmons 5 ; encounter rate
+	db 60, KINGDRA
+	db 60, GYARADOS
+	db 60, KINGDRA
+	db 60, KINGDRA
+	db 60, GYARADOS
+	db 60, STARMIE
+	db 60, STARMIE
+	db 60, CLOYSTER
+	db 60, MAGNEZONE
+	db 60, MAGNEZONE
 	end_water_wildmons

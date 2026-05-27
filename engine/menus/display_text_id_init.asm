@@ -7,23 +7,53 @@ DisplayTextIDInit::
 	jr nz, .skipDrawingTextBoxBorder
 	ldh a, [hSpriteIndexOrTextID] ; text ID (or sprite ID)
 	and a
-	jr nz, .notStartMenu
+	jr z, .skipDrawingTextBoxBorder
+;	jr nz, .notStartMenu
 ; if text ID is 0 (i.e. the start menu)
 ; Note that the start menu text border is also drawn in the function directly
 ; below this, so this seems unnecessary.
-	CheckEvent EVENT_GOT_POKEDEX
+;	CheckEvent EVENT_GOT_POKEDEX
 ; start menu with pokedex
-	hlcoord 10, 0
-	ld b, $0e
-	ld c, $08
-	jr nz, .drawTextBoxBorder
+;	hlcoord 10, 0
+;	ld b, 16
+;	ld c, 8
+;	jr nz, .drawTextBoxBorder
 ; start menu without pokedex
-	hlcoord 10, 0
-	ld b, $0c
-	ld c, $08
-	jr .drawTextBoxBorder
+;	hlcoord 10, 0
+;	ld b, 12
+;	ld c, 8
+;	jr .drawTextBoxBorder
 ; if text ID is not 0 (i.e. not the start menu) then do a standard dialogue text box
-.notStartMenu
+;.notStartMenu
+	cp TEXT_SELECT_MENU
+	jr z, .skipDrawingTextBoxBorder
+;	jr nz, .notSelectMenu
+;	hlcoord 10, 0
+;	ld b, 1
+;	ld c, 8
+;	CheckEvent EVENT_GOT_HM01
+;	jr z, .noCut
+;	inc b
+;.noCut
+;	CheckEvent EVENT_GOT_HM02
+;	jr z, .noFly
+;	inc b
+;.noFly
+;	CheckEvent EVENT_GOT_HM03
+;	jr z, .noSurf
+;	inc b
+;.noSurf
+;	CheckEvent EVENT_GOT_HM04
+;	jr z, .noStrength
+;	inc b
+;.noStrength
+;	CheckEvent EVENT_GOT_HM05
+;	jr z, .noFlash
+;	inc b
+;.noFlash
+;	sla b
+;	jr .drawTextBoxBorder
+;.notSelectMenu
 	hlcoord 0, 12
 	ld b, $04
 	ld c, $12

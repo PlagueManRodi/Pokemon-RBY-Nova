@@ -36,8 +36,26 @@ AgathasRoom_ScriptPointers:
 	dw AgathaScript2
 	dw AgathaScript3
 	dw AgathaScript4
+	dw AgathaScript5
 
 AgathaScript4:
+	ret
+
+AgathaScript5:
+	ld a, [wIsInBattle]
+	cp $ff
+	jr z, .done
+	ld hl, wCurrentMapScriptFlags
+	set 5, [hl]
+	SetEvent EVENT_BEAT_AGATHAS_ROOM_TRAINER_0
+	ld a, 2
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+.done
+	xor a
+	ld [wJoyIgnore], a
+	ld [wAgathasRoomCurScript], a
+	ld [wCurMapScript], a
 	ret
 
 AgathaScriptWalkIntoRoom:
@@ -73,7 +91,7 @@ AgathaScript0:
 	CheckAndSetEvent EVENT_AUTOWALKED_INTO_AGATHAS_ROOM
 	jr z, AgathaScriptWalkIntoRoom
 .stopPlayerFromLeaving
-	ld a, $2
+	ld a, $3
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID  ; "Don't run away!"
 	ld a, D_UP
@@ -118,6 +136,7 @@ AgathaScript2:
 
 AgathasRoom_TextPointers:
 	dw AgathaText1
+	dw KarenText
 	dw AgathaDontRunAwayText
 
 AgathasRoomTrainerHeaders:
@@ -128,8 +147,40 @@ AgathasRoomTrainerHeader0:
 
 AgathaText1:
 	text_asm
+	CheckEvent EVENT_BEAT_AGATHAS_ROOM_TRAINER_0
+	jr nz, .noHealing
+	predef HealParty
+.noHealing
 	ld hl, AgathasRoomTrainerHeader0
 	call TalkToTrainer
+	jp TextScriptEnd
+	
+KarenText:
+	text_asm
+	CheckEvent EVENT_BEAT_AGATHAS_ROOM_TRAINER_0
+	jr z, .beforeBattle
+	ld hl, KarenAfterBattleText
+	call PrintText
+	jr .done
+.beforeBattle
+	predef HealParty
+	ld hl, KarenBeforeBattleText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, KarenEndBattleText
+	ld de, KarenEndBattleText
+	call SaveEndBattleTextPointers
+	ld a, OPP_KAREN
+	ld [wCurOpponent], a
+	ld a, 1
+	ld [wTrainerNo], a
+	ld a, 5
+	ld [wAgathasRoomCurScript], a
+	ld [wCurMapScript], a
+.done
 	jp TextScriptEnd
 
 AgathaBeforeBattleText:
@@ -146,4 +197,16 @@ AgathaAfterBattleText:
 
 AgathaDontRunAwayText:
 	text_far _AgathaDontRunAwayText
+	text_end
+
+KarenBeforeBattleText:
+	text_far _KarenBeforeBattleText
+	text_end
+
+KarenEndBattleText:
+	text_far _KarenEndBattleText
+	text_end
+
+KarenAfterBattleText:
+	text_far _KarenAfterBattleText
 	text_end

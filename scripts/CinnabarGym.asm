@@ -141,7 +141,32 @@ CinnabarGymBlainePostBattle:
 	jp z, CinnabarGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-; fallthrough
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, CinnabarGymReceiveTM38	
+	ld a, 13
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 6
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, CinnabarGymResetScripts
+	lb bc, FLAG_SET, 6
+	predef FlagActionPredef
+	ld a, 14
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, CinnabarGymResetScripts
+	ld a, 15
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp CinnabarGymResetScripts
+	;
 CinnabarGymReceiveTM38:
 	ld a, $a
 	ldh [hSpriteIndexOrTextID], a
@@ -164,6 +189,20 @@ CinnabarGymReceiveTM38:
 	set BIT_VOLCANOBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_VOLCANOBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 54
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
@@ -186,6 +225,9 @@ CinnabarGym_TextPointers:
 	dw BlaineVolcanoBadgeInfoText
 	dw ReceivedTM38Text
 	dw TM38NoRoomText
+	dw CinnabarGymRematchPostBattleText ; NEW
+	dw ReceivedProVolcanoBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 CinnabarGymScript_758b7:
 	ldh a, [hSpriteIndexOrTextID]
@@ -217,10 +259,20 @@ BlaineText:
 	call DisableWaitingAfterTextDisplay
 	jp TextScriptEnd
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .BlaineRematch
+	;
 	ld hl, BlainePostBattleAdviceText
 	call PrintText
 	jp TextScriptEnd
 .beforeBeat
+	ld d, 4
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jp nz, TextScriptEnd
+	predef HealParty
 	ld hl, BlainePreBattleText
 	call PrintText
 	ld hl, ReceivedVolcanoBadgeText
@@ -229,6 +281,38 @@ BlaineText:
 	ld a, $7
 	ld [wGymLeaderNo], a
 	jp CinnabarGymScript_758b7
+.BlaineRematch
+	predef HealParty
+	ld hl, BlainePreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, BlainePreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, CinnabarGymRematchDefeatedText
+	ld de, CinnabarGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_BLAINE
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, BlainePreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	ld a, $3
+	ld [wCinnabarGymCurScript], a
+	ld [wCurMapScript], a
+.done
+	jp TextScriptEnd
 
 BlainePreBattleText:
 	text_far _BlainePreBattleText
@@ -236,8 +320,8 @@ BlainePreBattleText:
 
 ReceivedVolcanoBadgeText:
 	text_far _ReceivedVolcanoBadgeText
-	sound_get_key_item ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
-	text_waitbutton
+	sound_get_item_1 ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
+	text_promptbutton
 	text_end
 
 BlainePostBattleAdviceText:
@@ -472,4 +556,31 @@ CinnabarGymGuidePreBattleText:
 
 CinnabarGymGuidePostBattleText:
 	text_far _CinnabarGymGuidePostBattleText
+	text_end
+
+;;;
+
+BlainePreBattleRematchText:
+	text_far _CinnabarGymRematchPreBattleText
+	text_end
+	
+BlainePreBattleRematchAcceptedText:
+	text_far _CinnabarGymRematchAcceptedText
+	text_end
+	
+BlainePreBattleRematchRefusedText:
+	text_far _CinnabarGymRematchRefusedText
+	text_end
+
+CinnabarGymRematchDefeatedText:
+	text_far _CinnabarGymRematchDefeatedText
+	text_end
+
+CinnabarGymRematchPostBattleText:
+	text_far _CinnabarGymRematchPostBattleText
+	text_end
+
+ReceivedProVolcanoBadgeText:
+	text_far _ReceivedProVolcanoBadgeText
+	sound_get_item_1
 	text_end

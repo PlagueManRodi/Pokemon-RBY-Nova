@@ -10,12 +10,12 @@ ViridianForest_Object:
 	warp_event 18, 47, VIRIDIAN_FOREST_SOUTH_GATE, 2
 
 	def_bg_events
-	bg_event 24, 40,  9 ; ViridianForestText9
-	bg_event 16, 32, 10 ; ViridianForestText10
-	bg_event 26, 17, 11 ; ViridianForestText11
-	bg_event  4, 24, 12 ; ViridianForestText12
-	bg_event 18, 45, 13 ; ViridianForestText13
-	bg_event  2,  1, 14 ; ViridianForestText14
+	bg_event 24, 40, 10 ; ViridianForestText9
+	bg_event 16, 32, 11 ; ViridianForestText10
+	bg_event 26, 17, 12 ; ViridianForestText11
+	bg_event  4, 24, 13 ; ViridianForestText12
+	bg_event 18, 45, 14 ; ViridianForestText13
+	bg_event  2,  1, 15 ; ViridianForestText14
 
 	def_object_events
 	object_event 16, 43, SPRITE_YOUNGSTER, STAY, NONE, 1 ; person
@@ -26,5 +26,6 @@ ViridianForest_Object:
 	object_event 12, 29, SPRITE_POKE_BALL, STAY, NONE, 6, POTION
 	object_event  1, 31, SPRITE_POKE_BALL, STAY, NONE, 7, POKE_BALL
 	object_event 27, 40, SPRITE_YOUNGSTER, STAY, NONE, 8 ; person
+	object_event 24,  1, SPRITE_YOUNGSTER, STAY, DOWN, 9, OPP_BUG_CATCHER, 15
 
 	def_warps_to VIRIDIAN_FOREST

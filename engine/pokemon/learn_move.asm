@@ -49,6 +49,8 @@ DontAbandonLearning:
 	ld de, wBuffer
 	ld a, BANK(Moves)
 	call FarCopyData
+	ld de, wBuffer
+	callfar AcidTypeMoveCheck
 	ld a, [wBuffer + 5] ; a = move's max PP
 	pop de
 	pop hl
@@ -120,21 +122,26 @@ TryingToLearn:
 	push hl
 	ld hl, WhichMoveToForgetText
 	call PrintText
-	hlcoord 4, 7
+	hlcoord 4, 8 ; used to be 4, 7
 	ld b, 4
 	ld c, 14
 	call TextBoxBorder
-	hlcoord 6, 8
+	call UpdateSprites
+	hlcoord 6, 9 ; used to be 6, 8
 	ld de, wMovesString
 	ldh a, [hUILayoutFlags]
 	set 2, a
 	ldh [hUILayoutFlags], a
 	call PlaceString
+	;;
+	callfar DisplayMoveInfoTextBoxes
+	call UpdateSprites
+	;;
 	ldh a, [hUILayoutFlags]
 	res 2, a
 	ldh [hUILayoutFlags], a
 	ld hl, wTopMenuItemY
-	ld a, 8
+	ld a, 9 ; used to be 8
 	ld [hli], a ; wTopMenuItemY
 	ld a, 5
 	ld [hli], a ; wTopMenuItemX
@@ -143,14 +150,44 @@ TryingToLearn:
 	inc hl
 	ld a, [wNumMovesMinusOne]
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, A_BUTTON | B_BUTTON | D_DOWN | D_UP | SELECT | START
 	ld [hli], a ; wMenuWatchedKeys
 	ld [hl], 0 ; wLastMenuItem
+	;;
+	; print info for old move
+	callfar PrintInfoOldMove
+	call UpdateSprites
+.inputLoop ; added
 	ld hl, hUILayoutFlags
 	set 1, [hl]
 	call HandleMenuInput
 	ld hl, hUILayoutFlags
 	res 1, [hl]
+	;;
+	; checking which button has been pressed
+	bit BIT_A_BUTTON, a
+	jr nz, .doTheThings
+	bit BIT_B_BUTTON, a
+	jr nz, .doTheThings
+; not A or B, so is UP or DOWN
+	bit BIT_SELECT, a
+	jr nz, ShowDetailedInfoOldMove ; testing
+	bit BIT_START, a
+	jr nz, ShowDetailedInfoNewMove ; testing
+; not A or B or START, so is UP or DOWN
+	push af
+	bit BIT_D_DOWN, a
+	jr nz, .updateBox
+	bit BIT_D_UP, a
+	jr nz, .updateBox
+	pop af
+	jr .inputLoop
+.updateBox
+	callfar PrintInfoOldMove
+	pop af
+	jr .inputLoop
+.doTheThings
+	;;
 	push af
 	call LoadScreenTilesFromBuffer1
 	pop af
@@ -163,9 +200,12 @@ TryingToLearn:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
+	ld d, a
 	push af
 	push bc
-	call IsMoveHM
+	callfar IsMoveHM
+	push de
+	pop af
 	pop bc
 	pop de
 	ld a, d
@@ -178,10 +218,151 @@ TryingToLearn:
 	ld hl, HMCantDeleteText
 	call PrintText
 	pop hl
-	jr .loop
+	jp .loop ; used to be jr
 .cancel
 	scf
 	ret
+
+ShowDetailedInfoOldMove:
+	ld a, [wMoveNum]
+	push af
+	
+	ld hl, wPartyMon1Moves
+	ld bc, wPartyMon2 - wPartyMon1
+	ld a, [wWhichPokemon]
+	call AddNTimes ; adds bc to hl a times ; hl points to the moves
+
+	ld a, [wCurrentMenuItem]
+	ld c, a
+	ld b, $0 ; which move in the menu is the cursor pointing to? (0-3)
+	add hl, bc ; points to the move in memory
+	ld a, [hl] ; a should be holding the move ID
+	
+	ld [wd11e], a
+	jr ShowDetailedInfoMove
+	
+ShowDetailedInfoNewMove: ; new
+	ld a, [wMoveNum]
+	ld [wd11e], a
+	push af
+	; fallthrough
+	
+ShowDetailedInfoMove:
+; check if we're learning the move after an evo
+	ld hl, wNewFlags
+	bit 1, [hl]
+	jp nz, .evoLvUp
+; check if we're learning the move in battle or in the party menu
+	ld a, [wIsInBattle]
+	and a
+	jp nz, .inBattle
+; in the party menu
+	bit 0, [hl]
+	jr z, .moveRelearner
+	;
+	call SaveScreenTilesToSSpriteBuffer
+	call ClearSprites
+	;
+	callfar ShowAttackdexData
+	;
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	;
+	call LoadHpBarAndStatusTilePatterns
+	callfar DrawHPBars
+	call LoadScreenTilesFromSSpriteBuffer
+	;
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	call Delay3
+	;
+	callfar DrawPartySprites
+	;
+	pop af
+	ld [wd11e], a
+	ld [wMoveNum], a
+	;
+	call GetMoveName
+	ld bc, NAME_BUFFER_LENGTH
+	ld de, wStringBuffer
+	ld hl, wcd6d
+	call CopyData
+	;
+	jp TryingToLearn.inputLoop
+.moveRelearner
+	call SaveScreenTilesToBuffer2
+	xor a
+	ld [wUpdateSpritesEnabled], a
+	callfar ShowAttackdexData
+	call GBPalWhiteOut
+	call LoadScreenTilesFromBuffer2
+	call RestoreScreenTilesAndReloadTilePatterns
+	;
+	pop af
+	ld [wd11e], a
+	ld [wMoveNum], a
+	;
+	call GetMoveName
+	ld bc, NAME_BUFFER_LENGTH
+	ld de, wStringBuffer
+	ld hl, wcd6d
+	call CopyData
+	;
+	call LoadGBPal
+	;
+	jp TryingToLearn.inputLoop
+.inBattle
+	call SaveScreenTilesToBuffer2
+	callfar ShowAttackdexData
+	ld a, [wBattleMonSpecies]
+	ld [wd0b5], a
+	call GetMonHeader
+	predef LoadMonBackPic
+	call LoadScreenTilesFromBuffer2
+	callfar LoadHudAndHpBarAndStatusTilePatterns
+	;
+	pop af
+	ld [wd11e], a
+	ld [wMoveNum], a
+	;
+	call GetMoveName
+	ld bc, NAME_BUFFER_LENGTH
+	ld de, wStringBuffer
+	ld hl, wcd6d
+	call CopyData
+	;
+	jp TryingToLearn.inputLoop
+.evoLvUp
+	;
+	call SaveScreenTilesToSSpriteBuffer
+	call ClearSprites
+	;
+	callfar ShowAttackdexData
+	;
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	;
+;	call LoadHpBarAndStatusTilePatterns
+;	callfar DrawHPBars
+	call LoadScreenTilesFromSSpriteBuffer
+	;
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+;	call Delay3
+	;
+;	callfar DrawPartySprites
+	;
+	pop af
+	ld [wd11e], a
+	ld [wMoveNum], a
+	;
+	call GetMoveName
+	ld bc, NAME_BUFFER_LENGTH
+	ld de, wStringBuffer
+	ld hl, wcd6d
+	call CopyData
+	;
+	jp TryingToLearn.inputLoop
 
 LearnedMove1Text:
 	text_far _LearnedMove1Text
@@ -209,8 +390,31 @@ OneTwoAndText:
 	text_far _OneTwoAndText
 	text_pause
 	text_asm
+	push af
+	push bc
+	push de
+	push hl
+	ld a, $1
+	ld [wMuteAudioAndPauseMusic], a
+	call DelayFrame
+	ld a, [wAudioROMBank]
+	push af
+	ld a, BANK(SFX_Swap_1)
+	ld [wAudioROMBank], a
+	ld [wAudioSavedROMBank], a
+	call WaitForSoundToFinish
 	ld a, SFX_SWAP
-	call PlaySoundWaitForCurrent
+	call PlaySound
+	call WaitForSoundToFinish
+	pop af
+	ld [wAudioROMBank], a
+	ld [wAudioSavedROMBank], a
+	xor a
+	ld [wMuteAudioAndPauseMusic], a
+	pop hl
+	pop de
+	pop bc
+	pop af
 	ld hl, PoofText
 	ret
 
@@ -224,3 +428,39 @@ ForgotAndText:
 HMCantDeleteText:
 	text_far _HMCantDeleteText
 	text_end
+
+SaveScreenTilesToSSpriteBuffer:
+    ld a, SRAM_ENABLE
+    ld [MBC1SRamEnable], a
+    xor a
+    ld [MBC1SRamBank], a
+    inc a
+    ld [MBC1SRamBankingMode], a
+    hlcoord 0, 0
+    ld de, sSpriteBuffer0
+    ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+    call CopyData
+    xor a
+    ld [MBC1SRamBankingMode], a
+    ld [MBC1SRamEnable], a
+    ret
+
+LoadScreenTilesFromSSpriteBuffer::
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	ld a, SRAM_ENABLE
+    ld [MBC1SRamEnable], a
+    xor a
+    ld [MBC1SRamBank], a
+    inc a
+    ld [MBC1SRamBankingMode], a
+	ld hl, sSpriteBuffer0
+	decoord 0, 0
+	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	call CopyData
+	xor a
+    ld [MBC1SRamBankingMode], a
+    ld [MBC1SRamEnable], a
+	inc a
+	ldh [hAutoBGTransferEnabled], a
+	ret

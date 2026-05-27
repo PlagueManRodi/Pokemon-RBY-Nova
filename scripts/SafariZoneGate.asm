@@ -16,7 +16,12 @@ SafariZoneGate_ScriptPointers:
 .SafariZoneEntranceScript0
 	ld hl, .CoordsData_75221
 	call ArePlayerCoordsInArray
-	ret nc
+	jr c, .playerInfrontOfClerk
+	ld hl, .exitCoords
+	call ArePlayerCoordsInArray
+	jr c, .SafariZoneEntranceScript5
+	ret
+.playerInfrontOfClerk
 	ld a, $3
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -45,6 +50,11 @@ SafariZoneGate_ScriptPointers:
 .CoordsData_75221:
 	dbmapcoord  3,  2
 	dbmapcoord  4,  2
+	db -1 ; end
+
+.exitCoords
+	dbmapcoord  3,  0
+	dbmapcoord  4,  0
 	db -1 ; end
 
 .SafariZoneEntranceScript1
@@ -145,39 +155,40 @@ SafariZoneGate_TextPointers:
 .SafariZoneEntranceText4
 	text_far SafariZoneEntranceText_9e6e4
 	text_asm
-	ld a, MONEY_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
+;	ld a, MONEY_BOX
+;	ld [wTextBoxID], a
+;	call DisplayTextBoxID
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jp nz, .PleaseComeAgain
-	xor a
-	ldh [hMoney], a
-	ld a, $05
-	ldh [hMoney + 1], a
-	ld a, $00
-	ldh [hMoney + 2], a
-	call HasEnoughMoney
-	jr nc, .success
+;	xor a
+;	ldh [hMoney], a
+;	ld a, $05
+;	ldh [hMoney + 1], a
+;	ld a, $00
+;	ldh [hMoney + 2], a
+;	call HasEnoughMoney
+;	jr nc, .success
+	jr .success
 	ld hl, .NotEnoughMoneyText
 	call PrintText
 	jr .CantPayWalkDown
 
 .success
-	xor a
-	ld [wPriceTemp], a
-	ld a, $05
-	ld [wPriceTemp + 1], a
-	ld a, $00
-	ld [wPriceTemp + 2], a
-	ld hl, wPriceTemp + 2
-	ld de, wPlayerMoney + 2
-	ld c, 3
-	predef SubBCDPredef
-	ld a, MONEY_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
+;	xor a
+;	ld [wPriceTemp], a
+;	ld a, $05
+;	ld [wPriceTemp + 1], a
+;	ld a, $00
+;	ld [wPriceTemp + 2], a
+;	ld hl, wPriceTemp + 2
+;	ld de, wPlayerMoney + 2
+;	ld c, 3
+;	predef SubBCDPredef
+;	ld a, MONEY_BOX
+;	ld [wTextBoxID], a
+;	call DisplayTextBoxID
 	ld hl, .MakePaymentText
 	call PrintText
 	ld a, 30

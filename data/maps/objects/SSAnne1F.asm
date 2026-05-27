@@ -18,6 +18,7 @@ SSAnne1F_Object:
 
 	def_object_events
 	object_event 12,  6, SPRITE_WAITER, WALK, LEFT_RIGHT, 1 ; person
-	object_event 27,  5, SPRITE_SAILOR, STAY, NONE, 2 ; person
+	object_event 27,  4, SPRITE_SAILOR, STAY, NONE, 2 ; person
+	object_event 29,  6, SPRITE_COOLTRAINER_F, STAY, DOWN, 3 ; nurse
 
 	def_warps_to SS_ANNE_1F

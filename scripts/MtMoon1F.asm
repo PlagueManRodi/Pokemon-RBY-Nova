@@ -33,9 +33,9 @@ MtMoon1TrainerHeaders:
 MtMoon1TrainerHeader0:
 	trainer EVENT_BEAT_MT_MOON_1_TRAINER_0, 2, MtMoon1BattleText2, MtMoon1EndBattleText2, MtMoon1AfterBattleText2
 MtMoon1TrainerHeader1:
-	trainer EVENT_BEAT_MT_MOON_1_TRAINER_1, 3, MtMoon1BattleText3, MtMoon1EndBattleText3, MtMoon1AfterBattleText3
+	trainer EVENT_BEAT_MT_MOON_1_TRAINER_1, 4, MtMoon1BattleText3, MtMoon1EndBattleText3, MtMoon1AfterBattleText3
 MtMoon1TrainerHeader2:
-	trainer EVENT_BEAT_MT_MOON_1_TRAINER_2, 3, MtMoon1BattleText4, MtMoon1EndBattleText4, MtMoon1AfterBattleText4
+	trainer EVENT_BEAT_MT_MOON_1_TRAINER_2, 4, MtMoon1BattleText4, MtMoon1EndBattleText4, MtMoon1AfterBattleText4
 MtMoon1TrainerHeader3:
 	trainer EVENT_BEAT_MT_MOON_1_TRAINER_3, 3, MtMoon1BattleText5, MtMoon1EndBattleText5, MtMoon1AfterBattleText5
 MtMoon1TrainerHeader4:

@@ -20,6 +20,16 @@ _CanMoveBouldersText::
 	line "move boulders."
 	prompt
 
+_UsedShoveText::
+	text "<PLAYER> used"
+	line "SHOVE."
+	prompt
+
+_CanMoveBouldersText2::
+	text "<PLAYER> can"
+	line "move boulders."
+	prompt
+
 _CurrentTooFastText::
 	text "The current is"
 	line "much too fast!"
@@ -50,6 +60,11 @@ _CannotFlyHereText::
 	text_ram wcd6d
 	text " can't"
 	line "FLY here."
+	prompt
+
+_CannotTravelHereText::
+	text "<PLAYER> can't"
+	line "TRAVEL here."
 	prompt
 
 _NotHealthyEnoughText::

@@ -1,4 +1,8 @@
 PalletTown_Script:
+	ld hl, wCurrentMapScriptFlags
+	bit 6, [hl]
+	res 6, [hl]
+	call nz, PostGameOak
 	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
 	jr z, .next
 	SetEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
@@ -16,6 +20,11 @@ PalletTown_ScriptPointers:
 	dw PalletTownScript4
 	dw PalletTownScript5
 	dw PalletTownScript6
+	dw PalletTownScript7
+	dw PalletTownScript8
+	dw PalletTownScript9
+	dw PalletTownScript10
+	dw PalletTownScript11
 
 PalletTownScript0:
 	CheckEvent EVENT_FOLLOWED_OAK_INTO_LAB
@@ -124,6 +133,22 @@ PalletTownScript4:
 	and a ; is the movement script over?
 	ret nz
 
+	; Check and see if we didn't make it to Oak's Lab
+	CheckEvent EVENT_FOLLOWED_OAK_INTO_LAB
+	jr nz, .followed_oak
+	; move player one tile left
+	ld hl, wd736
+	set 1, [hl]
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_LEFT
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1ImageIndex], a
+	jp StartSimulatingJoypadStates
+
+.followed_oak
+
 	; trigger the next script
 	ld a, 5
 	ld [wPalletTownCurScript], a
@@ -148,6 +173,147 @@ PalletTownScript5:
 PalletTownScript6:
 	ret
 
+PostGameOak:
+	CheckEvent EVENT_BECAME_CHAMPION
+	ret z
+	CheckEvent EVENT_POST_GAME_START
+	ret nz
+	ld a, [wXCoord]
+	cp 5
+	ret nz
+	ld a, [wYCoord]
+	cp 6
+	ret nz
+	xor a
+	ldh [hJoyHeld], a
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
+	ld a, SFX_STOP_ALL_MUSIC
+	call PlaySound
+	ld a, BANK(Music_MeetProfOak)
+	ld c, a
+	ld a, MUSIC_MEET_PROF_OAK ; "oak appears" music
+	call PlayMusic
+	ld a, $FC
+	ld [wJoyIgnore], a
+	SetEvent EVENT_POST_GAME_START
+	ld a, 7
+	ld [wPalletTownCurScript], a
+	ret
+
+PalletTownScript7:
+	ld a, 2
+	ldh [hSpriteIndex], a	
+	call SetSpriteMovementBytesToFF
+	ld a, 8
+	ld [wPalletTownCurScript], a
+	ret
+	
+PalletTownScript8:
+	xor a
+	ld [wcf0d], a
+;	ld a, 1
+;	ldh [hSpriteIndexOrTextID], a
+;	call DisplayTextID
+	xor a
+	ld [wEmotionBubbleSpriteIndex], a ; player's sprite
+	ld [wWhichEmotionBubble], a ; EXCLAMATION_BUBBLE
+	predef EmotionBubble
+	
+	ld a, $FF
+	ld [wJoyIgnore], a
+	ld a, HS_POST_GAME_PALLET_TOWN_OAK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	ld a, 9
+	ld [wPalletTownCurScript], a
+	ret
+
+PalletTownScript9:
+	ld a, 4
+	ldh [hSpriteIndex], a
+	ld a, SPRITE_FACING_UP
+	ldh [hSpriteFacingDirection], a
+	call SetSpriteFacingDirectionAndDelay
+	call Delay3
+	ld a, $FF
+	ld [wJoyIgnore], a
+	ld de, PostGameProfOakEnterMovement
+	ld a, 4 ; oak
+	ldh [hSpriteIndex], a
+	call MoveSprite
+
+	; trigger the next script
+	ld a, 10
+	ld [wPalletTownCurScript], a
+	ret
+	
+PalletTownScript10:
+	ld a, [wd730]
+	bit 0, a
+	ret nz
+	xor a ; ld a, SPRITE_FACING_DOWN
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld a, 1
+	ld [wcf0d], a
+	ld a, $FC
+	ld [wJoyIgnore], a
+	ld a, 8
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+; set up movement script that causes the player to follow Oak to his lab
+	ld a, $FF
+	ld [wJoyIgnore], a
+	ld de, PostGameProfOakExitMovement
+	ld a, 4 ; oak
+	ldh [hSpriteIndex], a
+	call MoveSprite
+
+	; trigger the next script
+	ld a, 11
+	ld [wPalletTownCurScript], a
+	ret
+
+PalletTownScript11:
+	ld a, [wd730]
+	bit 0, a
+	ret nz
+	ld a, HS_POST_GAME_PALLET_TOWN_OAK
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call PlayDefaultMusic
+	ld a, 2
+	ldh [hSpriteIndex], a
+	call GetSpriteMovementByte1Pointer
+	ld [hl], WALK
+	call GetSpriteMovementByte2Pointer
+	ld [hl], ANY_DIR
+	xor a
+	ld [wJoyIgnore], a
+	
+	; trigger the next script
+	ld a, 0
+	ld [wPalletTownCurScript], a
+	ret
+
+PostGameProfOakEnterMovement:
+	db NPC_MOVEMENT_UP
+	db NPC_MOVEMENT_UP
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_UP
+	db -1 ; end
+
+PostGameProfOakExitMovement:
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db -1 ; end
+
 PalletTown_TextPointers:
 	dw PalletTownText1
 	dw PalletTownText2
@@ -156,6 +322,7 @@ PalletTown_TextPointers:
 	dw PalletTownText5
 	dw PalletTownText6
 	dw PalletTownText7
+	dw PalletTownText8
 
 PalletTownText1:
 	text_asm
@@ -211,4 +378,8 @@ PalletTownText6: ; sign by Red's house
 
 PalletTownText7: ; sign by Blue's house
 	text_far _PalletTownText7
+	text_end
+
+PalletTownText8:
+	text_far _PalletTownText8
 	text_end

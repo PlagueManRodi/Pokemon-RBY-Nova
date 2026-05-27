@@ -1,10 +1,30 @@
 StartMenu_Pokedex::
+; new, for the Attackdex
+	ld hl, PokedexOrAttackdex
+	call PrintText
+	call PokedexAttackdexChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .pokedex
+	cp 1
+	jr z, .attackdex
+	jr .afterDexUsage
+.attackdex
+	callfar ShowMovedexMenu
+	jr .afterDexUsage
+.pokedex
+; back to vanilla
 	predef ShowPokedexMenu
+.afterDexUsage ; new label
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call Delay3
 	call LoadGBPal
 	call UpdateSprites
 	jp RedisplayStartMenu
+
+PokedexOrAttackdex:
+	text_far _PokedexOrAttackdex
+	text_end
 
 StartMenu_Pokemon::
 	ld a, [wPartyCount]
@@ -97,8 +117,9 @@ StartMenu_Pokemon::
 	call ClearSprites
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	predef StatusScreen
-	predef StatusScreen2
+;	predef StatusScreen
+;	predef StatusScreen2
+	callfar DisplayStatusScreens
 	call ReloadMapData
 	jp StartMenu_Pokemon
 .choseOutOfBattleMove
@@ -122,7 +143,7 @@ StartMenu_Pokemon::
 .outOfBattleMovePointers
 	dw .cut
 	dw .fly
-	dw .surf
+;	dw .surf
 	dw .surf
 	dw .strength
 	dw .flash
@@ -130,7 +151,7 @@ StartMenu_Pokemon::
 	dw .teleport
 	dw .softboiled
 .fly
-	bit BIT_THUNDERBADGE, a
+	bit BIT_CASCADEBADGE, a
 	jp z, .newBadgeRequired
 	call CheckIfInOutsideMap
 	jr z, .canFly
@@ -150,7 +171,7 @@ StartMenu_Pokemon::
 	set 1, [hl]
 	jp StartMenu_Pokemon
 .cut
-	bit BIT_CASCADEBADGE, a
+	bit BIT_THUNDERBADGE, a
 	jp z, .newBadgeRequired
 	predef UsedCut
 	ld a, [wActionResultOrTookBattleTurn]
@@ -158,7 +179,7 @@ StartMenu_Pokemon::
 	jp z, .loop
 	jp CloseTextDisplay
 .surf
-	bit BIT_SOULBADGE, a
+	bit BIT_MARSHBADGE, a
 	jp z, .newBadgeRequired
 	farcall IsSurfingAllowed
 	ld hl, wd728
@@ -307,7 +328,22 @@ StartMenu_Item::
 	call PrintText
 	jr .exitMenu
 .notInCableClubRoom
+	CheckEvent EVENT_ON_SELECT_MENU
+	jp nz, SelectMenu_Action
+	;;
+	ld hl,wFlags_0xcd60
+	set 2,[hl]
+	res 4,[hl]
+	;;
+	;;
+	ld a, START_SORT_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	;;
 	ld bc, wNumBagItems
+;	ld hl, SelectMenuOtherList
+;	call LoadItemList
+;	ld bc, wItemList
 	ld hl, wListPointer
 	ld a, c
 	ld [hli], a
@@ -319,10 +355,17 @@ StartMenu_Item::
 	ld a, [wBagSavedMenuItem]
 	ld [wCurrentMenuItem], a
 	call DisplayListMenuID
+	jp nz, .sortItems ;; added
 	ld a, [wCurrentMenuItem]
 	ld [wBagSavedMenuItem], a
 	jr nc, .choseItem
 .exitMenu
+	;;
+	ld hl,wFlags_0xcd60
+	res 2,[hl]
+	res 4,[hl]
+	;;
+.exitMenu2
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call LoadTextBoxTilePatterns
 	call UpdateSprites
@@ -338,6 +381,30 @@ StartMenu_Item::
 	xor a
 	ld [wMenuItemToSwap], a
 	ld a, [wcf91]
+	cp BIKE
+	jp z, .useOrTossItem
+	cp DOWSE
+	jp z, UseAction
+	cp READ_MAP
+	jp z, UseAction
+	cp HEAL
+	jp z, UseAction
+	cp WARD
+	jp z, UseAction
+	cp TRAIN
+	jp z, UseAction
+	cp FISH_S_ROD
+	jp z, UseAction
+	cp FISH_G_ROD
+	jp z, UseAction
+	cp FISH_O_ROD
+	jp z, UseAction
+	cp ESCAPE
+	jp z, UseAction
+	cp WARP
+	jp z, UseAction
+	cp PERFORM
+	jp z, UseAction
 	cp BICYCLE
 	jp z, .useOrTossItem
 .notBicycle1
@@ -369,8 +436,11 @@ StartMenu_Item::
 	call GetItemName
 	call CopyToStringBuffer
 	ld a, [wcf91]
+	cp BIKE
+	jr z, .yesBike
 	cp BICYCLE
 	jr nz, .notBicycle2
+.yesBike
 	ld a, [wd732]
 	bit 5, a
 	jr z, .useItem_closeMenu
@@ -382,6 +452,7 @@ StartMenu_Item::
 	and a
 	jr nz, .tossItem
 ; use item
+.useItem
 	ld [wPseudoItemID], a ; a must be 0 due to above conditional jump
 	ld a, [wcf91]
 	cp HM01
@@ -437,6 +508,39 @@ StartMenu_Item::
 	call TossItem
 .tossZeroItems
 	jp ItemMenuLoop
+	;
+.sortItems
+	callfar SortItems
+	jp ItemMenuLoop
+	;
+
+UseAction:
+	ld b, a
+	ld a, [wCurMap]
+	cp VERMILION_BEACH
+	ld a, b
+	jr nz, .skip
+	cp HEAL
+	jr z, .vermilionBeach
+	cp TRAIN
+	jr z, .vermilionBeach
+	cp PERFORM
+	jr z, .vermilionBeach
+.skip
+	ld a, [wcf91]
+	ld [wd11e], a
+	call GetItemName
+	call CopyToStringBuffer
+	xor a
+	jp StartMenu_Item.useItem
+.vermilionBeach
+	ld hl, CannotUseActionHereText
+	call PrintText
+	jp StartMenu_Item.exitMenu
+
+CannotUseActionHereText:
+	text_far _CannotUseActionHereText
+	text_end	
 
 CannotUseItemsHereText:
 	text_far _CannotUseItemsHereText
@@ -462,6 +566,9 @@ StartMenu_TrainerInfo::
 	predef DrawBadges ; draw badges
 	ld b, SET_PAL_TRAINER_CARD
 	call RunPaletteCommand
+	ld a, [wOnSGB]
+	and a
+	call z, Delay3
 	call GBPalNormal
 	call WaitForTextScrollButtonPress ; wait for button press
 	call GBPalWhiteOut
@@ -469,6 +576,9 @@ StartMenu_TrainerInfo::
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call RunDefaultPaletteCommand
 	call ReloadMapData
+	ld a, [wOnSGB]
+	and a
+	call z, Delay3
 	call LoadGBPal
 	pop af
 	ldh [hTileAnimations], a
@@ -644,7 +754,7 @@ StartMenu_SaveReset::
 	jp nz, Init
 	predef SaveSAV ; save the game
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
-	jp HoldTextDisplayOpen
+	jp CloseStartMenu
 
 StartMenu_Option::
 	xor a
@@ -663,7 +773,8 @@ SwitchPartyMon::
 	call SwitchPartyMon_ClearGfx
 	ld a, [wCurrentMenuItem]
 	call SwitchPartyMon_ClearGfx
-	jp RedrawPartyMenu_
+;	jp RedrawPartyMenu_
+	jp RedrawPartyMenu_ReloadSprites
 
 SwitchPartyMon_ClearGfx:
 	push af
@@ -805,4 +916,293 @@ SwitchPartyMon_InitVarOrSwapData:
 	ld [wPartyMenuTypeOrMessageID], a
 	pop de
 	pop hl
+	ret
+
+StartMenu_PortablePC:: ; new
+; next piece is to preserve the map text pointers
+	ld hl, wMapTextPtr
+;	ld a, [hli]
+;	ld [wUnusedD71B], a
+;	ld a, [hl]
+;	ld [wUnusedD71F], a
+	call SetMapTextPointer
+; normal stuff
+	ld a, [wCurMap] ; we don't want to cheese the Elite4, do we?
+	cp LORELEIS_ROOM
+	jr z, .cantUseItHere
+	cp BRUNOS_ROOM
+	jr z, .cantUseItHere
+	cp AGATHAS_ROOM
+	jr z, .cantUseItHere
+	cp LANCES_ROOM
+	jr z, .cantUseItHere
+	cp CHAMPIONS_ROOM
+	jr z, .cantUseItHere
+	cp HALL_OF_FAME
+	jr z, .cantUseItHere
+	cp TRADE_CENTER
+	jr z, .cantUseItHere
+	cp COLOSSEUM
+	jr z, .cantUseItHere
+	cp VERMILION_BEACH
+	jr z, .cantUseItHere
+; if none of the above cp is met, let's open the pc and do the things
+	callfar ActivatePC ; main part
+	jr .done
+.cantUseItHere ; no cheese!
+	ld hl, CantUsePCHere
+	call PrintText
+.done
+; next piece is to preserve the map text pointers
+;	ld hl, wMapTextPtr
+;	ld a, [wUnusedD71B]
+;	ld [wMapTextPtr], a
+;	ld a, [wUnusedD71F]
+;	ld [wMapTextPtr+1], a
+	call RestoreMapTextPointer
+; normal stuff
+	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadTextBoxTilePatterns
+	call UpdateSprites
+	jp RedisplayStartMenu
+
+CantUsePCHere:
+	text_far _CantUsePCHere
+	text_end
+
+; displays pokedex/attackdex choice
+PokedexAttackdexChoice:
+	call SaveScreenTilesToBuffer1
+	ld a, MENU_POKEMON_ATTACKS_EXIT
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	ld hl, wTopMenuItemY
+	ld a, 7
+	ld [hli], a ; top menu item Y
+	ld a, 11 ; AAA
+	ld [hli], a ; top menu item X
+	xor a
+	ld [hli], a ; current menu item ID
+	inc hl
+	ld a, $2
+	ld [hli], a ; wMaxMenuItem
+	ld a, B_BUTTON | A_BUTTON
+	ld [hli], a ; wMenuWatchedKeys
+	xor a
+	ld [hl], a ; wLastMenuItem
+	call HandleMenuInput
+	bit BIT_B_BUTTON, a
+	jr nz, .defaultOption ; if B was pressed, assign enby
+; A was pressed
+	call PlaceUnfilledArrowMenuCursor
+	ld a, [wCurrentMenuItem]
+	jp LoadScreenTilesFromBuffer1
+.defaultOption
+	ld a, $02
+	ld [wCurrentMenuItem], a
+	jp LoadScreenTilesFromBuffer1
+
+UseHMMove::
+	ld b, 0
+	ld c, a
+	ld hl, .outOfBattleMovePointers
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [wObtainedBadges] ; badges obtained
+	jp hl
+.outOfBattleMovePointers
+	dw .cut
+	dw .fly
+	dw .surf
+	dw .strength
+	dw .flash
+.fly
+	bit BIT_CASCADEBADGE, a
+	jp z, .newBadgeRequired
+	call CheckIfInOutsideMap
+	jr z, .canFly
+;	ld a, [wWhichPokemon]
+;	ld hl, wPartyMonNicks
+;	call GetPartyMonName
+	ld hl, .cannotTravelHereText
+	call PrintText
+	jp .backToStartMenu
+.canFly
+	call ChooseFlyDestination
+	call ExitFlyMap
+	ld a, [wd732]
+	bit 3, a ; did the player decide to fly?
+	jp nz, CloseStartMenu
+	call LoadFontTilePatterns
+	ld hl, wd72e
+	set 1, [hl]
+	call GBPalWhiteOutWithDelay3
+	jp CloseStartMenu
+;	jp .backToStartMenu
+.cut
+	bit BIT_THUNDERBADGE, a
+	jp z, .newBadgeRequired
+	predef UsedCut
+	ld a, [wActionResultOrTookBattleTurn]
+	and a
+	jp z, .backToStartMenu
+	jp CloseTextDisplay
+.surf
+	bit BIT_MARSHBADGE, a
+	jp z, .newBadgeRequired
+	farcall IsSurfingAllowed
+	ld hl, wd728
+	bit 1, [hl]
+	res 1, [hl]
+	jp z, .backToStartMenu
+	ld a, SURFBOARD
+	ld [wcf91], a
+	ld [wPseudoItemID], a
+	call UseItem
+	ld a, [wActionResultOrTookBattleTurn]
+	and a
+	jp z, .backToStartMenu
+	call Delay3
+	jp CloseStartMenu
+.strength
+	bit BIT_RAINBOWBADGE, a
+	jp z, .newBadgeRequired
+	call PrintShoveText
+	call Delay3
+	jp CloseStartMenu
+.flash
+	bit BIT_BOULDERBADGE, a
+	jp z, .newBadgeRequired
+	xor a
+	ld [wMapPalOffset], a
+	ld hl, .flashLightsAreaText
+	call PrintText
+	call GBPalWhiteOutWithDelay3
+	jp CloseStartMenu
+.flashLightsAreaText
+	text_far _FlashLightsAreaText
+	text_end
+.newBadgeRequired
+	ld hl, .newBadgeRequiredText
+	call PrintText
+	jr .backToStartMenu
+.newBadgeRequiredText
+	text_far _NewBadgeRequiredText
+	text_end
+.cannotTravelHereText
+	text_far _CannotTravelHereText
+	text_end
+.backToStartMenu
+	call LoadScreenTilesFromBuffer1
+	jp RedisplayStartMenu
+
+ExitFlyMap:
+; clear town map graphics data and load usual graphics data
+	xor a
+	ld [wTownMapSpriteBlinkingEnabled], a
+	call GBPalWhiteOut
+	call ClearScreen
+	call ClearSprites
+	call LoadPlayerSpriteGraphics
+	call LoadFontTilePatterns
+	call UpdateSprites
+	jp RunDefaultPaletteCommand
+
+PrintShoveText:
+	ld hl, wd728
+	set 0, [hl]
+	ld hl, UsedShoveText
+	call PrintText
+	ld hl, CanMoveBouldersText2
+	jp PrintText
+
+UsedShoveText:
+	text_far _UsedShoveText
+	text_end
+
+CanMoveBouldersText2:
+	text_far _CanMoveBouldersText2
+	text_end
+
+SelectMenu_Action:
+	call LoadOtherList
+	ld bc, wItemList
+	ld hl, wListPointer
+	ld a, c
+	ld [hli], a
+	ld [hl], b ; store item bag pointer in wListPointer (for DisplayListMenuID)
+	xor a
+	ld [wPrintItemPrices], a
+	ld a, SPECIALLISTMENU
+	ld [wListMenuID], a
+	ld a, [wOtherSavedMenuItem]
+	ld [wCurrentMenuItem], a
+	ld a, [wListScrollOffset]
+	ld [wSavedListScrollOffset], a
+	ld a, [wOtherSavedListScrollOffset]
+	ld [wListScrollOffset], a
+	call DisplayListMenuID
+	ld a, [wListScrollOffset]
+	ld [wOtherSavedListScrollOffset], a
+	ld a, [wSavedListScrollOffset]
+	ld [wListScrollOffset], a
+	ld a, [wCurrentMenuItem]
+	ld [wOtherSavedMenuItem], a
+	jp nc, StartMenu_Item.choseItem
+	jp StartMenu_Item.exitMenu2
+
+LoadOtherList:
+	ld b, 0
+	ld de, wItemList+1
+	CheckEvent EVENT_GOT_BICYCLE
+	ld a, BIKE
+	call nz, CountAction
+	CheckEvent EVENT_GOT_ITEMFINDER
+	ld a, DOWSE
+	call nz, CountAction
+	CheckEvent EVENT_GOT_TOWN_MAP
+	ld a, READ_MAP
+	call nz, CountAction
+	CheckEitherEventSet EVENT_GOT_TM41, EVENT_RECEIVED_CONV_ITEMS
+	ld a, HEAL
+	call nz, CountAction
+	CheckEvent EVENT_RECEIVED_CONV_ITEMS
+	ld a, WARD
+	call nz, CountAction
+	CheckEvent EVENT_RECEIVED_CONV_ITEMS
+	ld a, TRAIN
+	call nz, CountAction
+	ld a, [wd728]
+	bit 5, a
+	ld a, FISH_S_ROD
+	call nz, CountAction
+	ld a, [wd728]
+	bit 4, a
+	ld a, FISH_G_ROD
+	call nz, CountAction
+	ld a, [wd728]
+	bit 3, a
+	ld a, FISH_O_ROD
+	call nz, CountAction
+	CheckEvent EVENT_GOT_TM28
+	ld a, ESCAPE
+	call nz, CountAction
+	CheckEvent EVENT_GOT_TM30
+	ld a, WARP
+	call nz, CountAction
+	CheckEvent EVENT_GOT_POKE_FLUTE
+	ld a, PERFORM
+	call nz, CountAction
+	ld a, -1
+	ld [de], a
+	ld a, b
+	ld [wItemList], a
+	ret
+
+CountAction:
+	inc b
+	ld [de], a
+	inc de
 	ret

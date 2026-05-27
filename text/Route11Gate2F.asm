@@ -38,3 +38,8 @@ _Route11GateUpstairsText_494d5::
 	cont "is by way of the"
 	cont "ROCK TUNNEL."
 	done
+
+_ReceivedDOWSEText::
+	text "DOWSE added"
+	line "to SELECT menu!"
+	done

@@ -76,7 +76,37 @@ StatusScreen:
 	ld de, wLoadedMonStats
 	ld b, $1
 	call CalcStats ; Recalculate stats
+	ld hl, wLoadedMonHP
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	push de
+	ld hl, wLoadedMonMaxHP
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	pop hl
+	; first byte comparison
+	ld a, d
+	cp h
+	jr c, .makeCurHPMaxHP
+	; second byte comparison
+	ld a, e
+	cp l
+	jr nc, .DontRecalculate
+.makeCurHPMaxHP
+	ld a, d
+	ld [wLoadedMonHP], a
+	ld a, e
+	ld [wLoadedMonHP+1], a
 .DontRecalculate
+	;
+	ld hl, wNewFlags
+	bit 3, [hl]
+	jr nz, .skip
+	;
 	ld hl, wd72c
 	set 1, [hl]
 	ld a, $33
@@ -101,6 +131,16 @@ StatusScreen:
 	ld hl, vChars2 tile $72
 	lb bc, BANK(PTile), 1
 	call CopyVideoDataDouble ; bold P (for PP)
+	;
+	jr .ignore
+.skip
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	hlcoord 9, 2
+	lb bc, 16, 11
+	call ClearScreenArea ; Clear under name
+.ignore
+	;
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -121,6 +161,7 @@ StatusScreen:
 	call PlaceString ; "TYPE1/"
 	hlcoord 11, 3
 	predef DrawHP
+	callfar DrawHPDV
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
 	ld b, SET_PAL_STATUS_SCREEN
@@ -164,17 +205,46 @@ StatusScreen:
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
+	;
+	callfar PrintStatDVSting
+	ld hl, wNewFlags
+	bit 4, [hl]
+	res 4, [hl]
+	jp nz, PrintDVBox
+	bit 5, [hl]
+	res 5, [hl]
+	jp nz, PrintSTXPBox
+	;
 	ld d, $0
 	call PrintStatsBox
+	;
+.next
+	ld hl, wNewFlags
+	bit 3, [hl]
+	res 3, [hl]
+	jr nz, .skip2
+	;
 	call Delay3
 	call GBPalNormal
 	hlcoord 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
 	ld a, [wcf91]
 	call PlayCry ; play Pokémon cry
-	call WaitForTextScrollButtonPress ; wait for button
+	;
+	jr .inputLoop
+.skip2
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+.inputLoop
+	call JoypadLowSensitivity
+	ldh a, [hJoy5]
+	ld d, a
+	and B_BUTTON | D_UP | D_DOWN | D_RIGHT | D_LEFT
+	jr z, .inputLoop
+	;
 	pop af
-	ldh [hTileAnimations], a
+;	ldh [hTileAnimations], a
+	ld e, a
 	ret
 
 .GetStringPointer
@@ -281,6 +351,15 @@ PrintStatsBox:
 	call PrintStat
 	ld de, wLoadedMonSpecial
 	jp PrintNumber
+
+PrintDVBox:
+	farcall _PrintDVBox
+	jp StatusScreen.next
+
+PrintSTXPBox:
+	farcall _PrintSTXPBox
+	jp StatusScreen.next
+
 PrintStat:
 	push hl
 	call PrintNumber
@@ -396,6 +475,27 @@ StatusScreen2:
 	push af
 	cp MAX_LEVEL
 	jr z, .Level100
+	;;
+	jr nc, .Level100
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	pop af
+	cp [hl]
+	pop hl
+	jr z, .Level100
+	jr nc, .Level100
+	push hl
+	push af
+.notPlayingWithLevelCaps
+	pop af
+	pop hl
+	;;
 	inc a
 	ld [wLoadedMonLevel], a ; Increase temporarily if not 100
 .Level100
@@ -427,20 +527,44 @@ StatusScreen2:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
-	call WaitForTextScrollButtonPress ; wait for button
+	;
+.inputLoop
+	call JoypadLowSensitivity
+	ldh a, [hJoy5]
+	ld d, a
+	and B_BUTTON | D_UP | D_DOWN | D_RIGHT | D_LEFT
+	jr z, .inputLoop
+	;
 	pop af
-	ldh [hTileAnimations], a
-	ld hl, wd72c
-	res 1, [hl]
-	ld a, $77
-	ldh [rNR50], a
-	call GBPalWhiteOut
-	jp ClearScreen
+;	ldh [hTileAnimations], a
+	ld e, a
+	ret
 
 CalcExpToLevelUp:
 	ld a, [wLoadedMonLevel]
 	cp MAX_LEVEL
 	jr z, .atMaxLevel
+	;;
+	jr nc, .atMaxLevel
+	push hl
+	push af
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .NotPlayingWithLevelCaps
+	ld a, [wLevelCap]
+	cp 0
+	jr z, .NotPlayingWithLevelCaps
+	ld hl, wLevelCap
+	pop af
+	cp [hl]
+	pop hl
+	jr z, .atMaxLevel
+	jr nc, .atMaxLevel
+	push hl
+	push af
+.NotPlayingWithLevelCaps
+	pop af
+	pop hl
+	;;
 	inc a
 	ld d, a
 	callfar CalcExperience

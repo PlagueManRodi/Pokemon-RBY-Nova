@@ -14,10 +14,20 @@
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
+IF DEF(_MODERN)
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    PAY_DAY,      RAGE,         THUNDERBOLT,  THUNDER,      \
-	     MIMIC,        DOUBLE_TEAM,  BIDE,         SWIFT,        SKULL_BASH,   \
-	     REST,         SUBSTITUTE
+		 WATER_GUN,    PAY_DAY,      RAGE,         THUNDERBOLT,  THUNDER,      \
+		 DIG,          MIMIC,        DOUBLE_TEAM,  BIDE,         SWIFT,        \
+		 SKULL_BASH,   DREAM_EATER,  REST,         SUBSTITUTE,   SHADOW_BALL,  \
+		 CUT,          FLASH
+ELSE
+	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+		 WATER_GUN,    PAY_DAY,      RAGE,         THUNDERBOLT,  THUNDER,      \
+		 DIG,          MIMIC,        DOUBLE_TEAM,  BIDE,         SWIFT,        \
+		 SKULL_BASH,   DREAM_EATER,  REST,         SUBSTITUTE,   CUT,          \
+		 FLASH
+ENDC         
 	; end
 
-	db 0 ; padding
+	db BANK(MeowthPicFront)
+	assert BANK(MeowthPicFront) == BANK(MeowthPicBack)

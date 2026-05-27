@@ -41,7 +41,32 @@ SaffronGymSabrinaPostBattle:
 	jp z, SaffronGymResetScripts
 	ld a, $f0
 	ld [wJoyIgnore], a
-
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr z, SaffronGymReceiveTM46	
+	ld a, 13
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	lb bc, FLAG_TEST, 5
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, SaffronGymResetScripts
+	lb bc, FLAG_SET, 5
+	predef FlagActionPredef
+	ld a, 14
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld hl, wProBadgeFlags
+	ld a, -1
+	cp [hl]
+	jp nz, SaffronGymResetScripts
+	ld a, 15
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	jp SaffronGymResetScripts
+	;
 SaffronGymReceiveTM46:
 	ld a, $a
 	ldh [hSpriteIndexOrTextID], a
@@ -64,6 +89,20 @@ SaffronGymReceiveTM46:
 	set BIT_MARSHBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_MARSHBADGE, [hl]
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 51
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
@@ -83,6 +122,9 @@ SaffronGym_TextPointers:
 	dw KogaMarshBadgeInfoText
 	dw ReceivedTM46Text
 	dw TM46NoRoomText
+	dw SaffronGymRematchPostBattleText ; NEW
+	dw ReceivedProMarshBadgeText ; NEW
+	dw ProLeagueAvailableText ; NEW
 
 SaffronGymTrainerHeaders:
 	def_trainers 2
@@ -110,12 +152,22 @@ SabrinaText:
 	jr nz, .afterBeat
 	call z, SaffronGymReceiveTM46
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	jp .done
 .afterBeat
+	;
+	CheckEvent EVENT_BECAME_CHAMPION
+	jr nz, .SabrinaRematch
+	;
 	ld hl, SabrinaPostBattleAdviceText
 	call PrintText
-	jr .done
+	jp .done
 .beforeBeat
+	ld d, 4
+	callfar CheckPartyCaps
+	ld a, d
+	and a
+	jr nz, .done
+	predef HealParty
 	ld hl, SabrinaPreBattleText
 	call PrintText
 	ld hl, wd72d
@@ -130,6 +182,36 @@ SabrinaText:
 	call InitBattleEnemyParameters
 	ld a, $6
 	ld [wGymLeaderNo], a
+	;
+	jr .endBattle
+.SabrinaRematch
+	predef HealParty
+	ld hl, SabrinaPreBattleRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .refused
+	ld hl, SabrinaPreBattleRematchAcceptedText
+	call PrintText
+	call Delay3
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, SaffronGymRematchDefeatedText
+	ld de, SaffronGymRematchDefeatedText
+	call SaveEndBattleTextPointers
+	ld a, OPP_SABRINA
+	ld [wCurOpponent], a
+	ld a, 2
+	ld [wTrainerNo], a
+	jr .endBattle
+.refused
+	ld hl, SabrinaPreBattleRematchRefusedText
+	call PrintText
+	jr .done
+.endBattle
+	;
 	ld a, $3
 	ld [wSaffronGymCurScript], a
 .done
@@ -141,7 +223,7 @@ SabrinaPreBattleText:
 
 ReceivedMarshBadgeText:
 	text_far _ReceivedMarshBadgeText
-	sound_get_key_item ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
+	sound_get_item_1 ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
 	text_promptbutton
 	text_end
 
@@ -308,4 +390,31 @@ SaffronGymEndBattleText7:
 
 SaffronGymAfterBattleText7:
 	text_far _SaffronGymAfterBattleText7
+	text_end
+
+;;;
+
+SabrinaPreBattleRematchText:
+	text_far _SaffronGymRematchPreBattleText
+	text_end
+	
+SabrinaPreBattleRematchAcceptedText:
+	text_far _SaffronGymRematchAcceptedText
+	text_end
+	
+SabrinaPreBattleRematchRefusedText:
+	text_far _SaffronGymRematchRefusedText
+	text_end
+
+SaffronGymRematchDefeatedText:
+	text_far _SaffronGymRematchDefeatedText
+	text_end
+
+SaffronGymRematchPostBattleText:
+	text_far _SaffronGymRematchPostBattleText
+	text_end
+
+ReceivedProMarshBadgeText:
+	text_far _ReceivedProMarshBadgeText
+	sound_get_item_1
 	text_end

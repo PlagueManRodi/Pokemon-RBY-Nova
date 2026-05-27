@@ -10,7 +10,11 @@
 	INCBIN "gfx/pokemon/front/poliwrath.pic", 0, 1 ; sprite dimensions
 	dw PoliwrathPicFront, PoliwrathPicBack
 
-	db HYPNOSIS, WATER_GUN, DOUBLESLAP, BODY_SLAM ; level 1 learnset
+IF DEF(_MODERN)
+	db HYPNOSIS, BUBBLEBEAM, LOW_SWEEP, DRAIN_PUNCH ; level 1 learnset modern
+ELSE
+	db HYPNOSIS, DOUBLESLAP, BUBBLEBEAM, SUBMISSION ; level 1 learnset
+ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
@@ -22,4 +26,5 @@
 	     SUBSTITUTE,   SURF,         STRENGTH
 	; end
 
-	db 0 ; padding
+	db BANK(PoliwrathPicFront)
+	assert BANK(PoliwrathPicFront) == BANK(PoliwrathPicBack)

@@ -32,3 +32,10 @@ _DayCareNotEnoughMoneyText::
 	text "Hey, you don't"
 	line "have enough ¥!"
 	done
+
+_DayCareCantAcceptOverleveledMonText::
+	text "I can't accept a"
+	line "#MON that's"
+	cont "over the LEVEL"
+	cont "CAP."
+	done

@@ -8,15 +8,24 @@ DisplayPokemartDialogue_::
 	xor a
 	ld [wListScrollOffset], a
 	ld [wCurrentMenuItem], a
+	ld [wSavedMenuItem], a
 	ld [wPlayerMonNumber], a
 	inc a
 	ld [wPrintItemPrices], a
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
+	
+;	ld a, [wCurrentMenuItem]
+;	push af
+	
 	ld a, BUY_SELL_QUIT_MENU
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
+	
+;	pop bc
+;	ld a, b
+;	ld [wCurrentMenuItem], a
 
 ; This code is useless. It copies the address of the pokemart's inventory to hl,
 ; but the address is never used.
@@ -43,7 +52,7 @@ DisplayPokemartDialogue_::
 	ld a, INIT_BAG_ITEM_LIST
 	ld [wInitListType], a
 	callfar InitList
-
+	
 	ld a, [wNumBagItems]
 	and a
 	jp z, .bagEmpty
@@ -62,11 +71,18 @@ DisplayPokemartDialogue_::
 	ld [wListPointer + 1], a
 	xor a
 	ld [wPrintItemPrices], a
+	ld a, [wSavedMenuItem]
 	ld [wCurrentMenuItem], a
 	ld a, ITEMLISTMENU
 	ld [wListMenuID], a
 	call DisplayListMenuID
+	
+;	ld a, 1
 	jp c, .returnToMainPokemartMenu ; if the player closed the menu
+	
+	ld a, [wCurrentMenuItem]
+	ld [wSavedMenuItem], a
+	
 .confirmItemSale ; if the player is trying to sell a specific item
 	call IsKeyItem
 	ld a, [wIsKeyItem]
@@ -78,6 +94,7 @@ DisplayPokemartDialogue_::
 	ld a, PRICEDITEMLISTMENU
 	ld [wListMenuID], a
 	ldh [hHalveItemPrices], a ; halve prices when selling
+	call DisplayTMHMName
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .sellMenuLoop ; if the player closed the choose quantity menu with the B button
@@ -107,17 +124,28 @@ DisplayPokemartDialogue_::
 	ld [wBoughtOrSoldItemInMart], a
 .skipSettingFlag1
 	call AddAmountSoldToMoney
+	
+	; update menu info
+	xor a
+;	ld [wListScrollOffset], a
+;	ld [wCurrentMenuItem], a
+;	ld [wSavedMenuItem], a
+	ld [wBagSavedMenuItem], a
+	ld [wSavedListScrollOffset], a
+	
 	ld hl, wNumBagItems
 	call RemoveItemFromInventory
 	jp .sellMenuLoop
 .unsellableItem
 	ld hl, PokemartUnsellableItemText
 	call PrintText
-	jp .returnToMainPokemartMenu
+	jp .sellMenuLoop ; edited
 .bagEmpty
 	ld hl, PokemartItemBagEmptyText
 	call PrintText
 	call SaveScreenTilesToBuffer1
+	
+;	ld a, 1
 	jp .returnToMainPokemartMenu
 .buyMenu
 
@@ -127,7 +155,7 @@ DisplayPokemartDialogue_::
 	ld a, INIT_OTHER_ITEM_LIST
 	ld [wInitListType], a
 	callfar InitList
-
+	
 	ld hl, PokemartBuyingGreetingText
 	call PrintText
 	call SaveScreenTilesToBuffer1
@@ -141,18 +169,25 @@ DisplayPokemartDialogue_::
 	ld [wListPointer], a
 	ld a, h
 	ld [wListPointer + 1], a
-	xor a
+	ld a, [wSavedMenuItem]
 	ld [wCurrentMenuItem], a
-	inc a
+	ld a, 1
 	ld [wPrintItemPrices], a
 	inc a ; a = 2 (PRICEDITEMLISTMENU)
 	ld [wListMenuID], a
 	call DisplayListMenuID
+	
+;	ld a, 0
 	jr c, .returnToMainPokemartMenu ; if the player closed the menu
+	
+	ld a, [wCurrentMenuItem]
+	ld [wSavedMenuItem], a
+	
 	ld a, 99
 	ld [wMaxItemQuantity], a
 	xor a
 	ldh [hHalveItemPrices], a ; don't halve item prices when buying
+	call DisplayTMHMName
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .buyMenuLoop ; if the player closed the choose quantity menu with the B button
@@ -197,12 +232,16 @@ DisplayPokemartDialogue_::
 	call PrintText
 	jp .buyMenuLoop
 .returnToMainPokemartMenu
+;	push af
 	call LoadScreenTilesFromBuffer1
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, PokemartAnythingElseText
 	call PrintText
+;	pop bc
+;	ld a, b
+;	ld [wCurrentMenuItem], a
 	jp .loop
 .isThereEnoughMoney
 	ld de, wPlayerMoney
@@ -212,10 +251,12 @@ DisplayPokemartDialogue_::
 .notEnoughMoney
 	ld hl, PokemartNotEnoughMoneyText
 	call PrintText
-	jr .returnToMainPokemartMenu
+	jp .buyMenuLoop ; edited
 .bagFull
 	ld hl, PokemartItemBagFullText
 	call PrintText
+	
+;	ld a, 0
 	jr .returnToMainPokemartMenu
 .done
 	ld hl, PokemartThankYouText
@@ -225,6 +266,32 @@ DisplayPokemartDialogue_::
 	call UpdateSprites
 	ld a, [wSavedListScrollOffset]
 	ld [wListScrollOffset], a
+	ret
+	
+DisplayTMHMName:
+	ld a, [wcf91]
+	cp HM01
+	jr c, .notTMHM
+	sub TM01 ; underflows below 0 for HM items (before TM items)
+	jr nc, .skipAdding2
+	add NUM_TMS + NUM_HMS ; adjust HM IDs to come after TM IDs
+.skipAdding2
+	inc a
+	ld [wd11e], a
+	predef TMToMove ; get move ID from TM/HM ID
+	ld a, [wd11e]
+	ld [wMoveNum], a
+	call GetMoveName
+	call CopyToStringBuffer
+	ld a, TMHM_NAME_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	hlcoord 6, 12
+	ld de, wStringBuffer
+	call PlaceString
+	ld a, ITEM_NAME
+    ld [wNameListType], a
+.notTMHM
 	ret
 
 PokemartBuyingGreetingText:

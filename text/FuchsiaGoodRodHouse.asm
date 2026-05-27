@@ -23,6 +23,11 @@ _FuchsiaHouse3Text_561c2::
 	text "!@"
 	text_end
 
+_ReceivedFISHGRODText::
+	text "FISH (G.ROD) added"
+	line "to SELECT menu!"
+	done
+
 _FuchsiaHouse3Text_56212::
 	text "Oh... That's so"
 	line "disappointing..."

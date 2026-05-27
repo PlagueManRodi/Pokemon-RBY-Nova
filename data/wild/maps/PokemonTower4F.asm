@@ -1,15 +1,15 @@
 PokemonTower4FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-	db 20, GASTLY
-	db 21, GASTLY
-	db 22, GASTLY
-	db 23, GASTLY
-	db 19, GASTLY
-	db 18, GASTLY
-	db 25, HAUNTER
-	db 20, CUBONE
-	db 22, CUBONE
-	db 24, GASTLY
+	db 33, GOLBAT
+	db 33, GASTLY
+	db 34, GOLBAT
+	db 33, GOLBAT
+	db 34, HAUNTER
+	db 33, CUBONE
+	db 34, MAROWAK
+	db 33, MANKEY
+	db 34, PRIMEAPE
+	db 34, PRIMEAPE
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

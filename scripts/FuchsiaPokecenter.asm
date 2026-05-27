@@ -7,6 +7,8 @@ FuchsiaPokecenter_TextPointers:
 	dw FuchsiaPokecenterText2
 	dw FuchsiaPokecenterText3
 	dw FuchsiaTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 FuchsiaHealNurseText:
 	script_pokecenter_nurse

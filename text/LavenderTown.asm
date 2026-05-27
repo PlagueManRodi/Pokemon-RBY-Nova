@@ -38,12 +38,21 @@ _LavenderTownText3::
 	done
 
 _LavenderTownText4::
+	text "We had reports of"
+	line "ROCKET activity"
+	cont "in this town."
+	
+	para "I cannot let you"
+	line "pass."
+	done
+
+_LavenderTownText5::
 	text "LAVENDER TOWN"
 	line "The Noble Purple"
 	cont "Town"
 	done
 
-_LavenderTownText5::
+_LavenderTownText6::
 	text "New SILPH SCOPE!"
 
 	para "Make the Invisible"
@@ -52,12 +61,12 @@ _LavenderTownText5::
 	para "SILPH CO."
 	done
 
-_LavenderTownText8::
+_LavenderTownText9::
 	text "LAVENDER VOLUNTEER"
 	line "#MON HOUSE"
 	done
 
-_LavenderTownText9::
+_LavenderTownText10::
 	text "May the Souls of"
 	line "#MON Rest Easy"
 	cont "#MON TOWER"

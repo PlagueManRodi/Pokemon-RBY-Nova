@@ -165,6 +165,82 @@ MoveSoundTable:
 	db SFX_BATTLE_26,          $f0, $ff ; SUPER_FANG
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; SLASH
 	db SFX_BATTLE_2C,          $d8, $04 ; SUBSTITUTE
+IF DEF(_MODERN)
+	db SFX_HORN_DRILL,         $00, $a0 ; MEGAHORN
+	db SFX_BATTLE_1C,          $01, $ff ; POLLEN_PUFF
+	db SFX_NOT_VERY_EFFECTIVE, $00, $a0 ; X_SCISSOR
+	db SFX_BATTLE_28,          $40, $80 ; SIGNAL_BEAM
+	db SFX_BATTLE_1E,          $00, $ff ; CRUNCH
+	db SFX_PSYCHIC_M,          $ff, $ff ; DARK_PULSE
+	db SFX_BATTLE_25,          $ff, $80 ; FEINT_ATTACK
+	db SFX_BATTLE_36,          $ff, $00 ; OUTRAGE
+	db SFX_BATTLE_26,          $00, $20 ; DRAGONHAMMER
+	db SFX_BATTLE_36,          $80, $80 ; DRAGON_PULSE
+	db SFX_BATTLE_0F,          $80, $10 ; DRAGONBREATH
+	db SFX_BATTLE_13,          $00, $ff ; TWISTER
+	db SFX_BATTLE_23,          $00, $80 ; DUAL_CHOP
+	db SFX_BATTLE_26,          $00, $00 ; DISCHARGE
+	db SFX_BATTLE_1E,          $00, $80 ; THUNDER_FANG
+	db SFX_BATTLE_26,          $00, $00 ; SPARK
+	db SFX_BATTLE_27,          $ff, $40 ; MOONLIGHT
+	db SFX_BATTLE_27,          $ff, $40 ; MOONBLAST
+	db SFX_BATTLE_27,          $ff, $40 ; DAZZLE_GLEAM
+	db SFX_NOT_VERY_EFFECTIVE, $09, $80 ; DISARM_VOICE
+	db SFX_NOT_VERY_EFFECTIVE, $07, $c0 ; FAIRY_WIND
+	db SFX_NOT_VERY_EFFECTIVE, $07, $c0 ; METEORASSAIL
+	db SFX_NOT_VERY_EFFECTIVE, $07, $c0 ; FOCUS BLAST
+	db SFX_NOT_VERY_EFFECTIVE, $07, $c0 ; DRAIN PUNCH
+	db SFX_BATTLE_23,          $00, $ff ; LOW_KICK
+	db SFX_BATTLE_23,          $00, $ff ; STORM_THROW
+	db SFX_BATTLE_23,          $00, $ff ; VACUUM_WAVE
+	db SFX_BATTLE_23,          $00, $ff ; FIRE_FANG
+	db SFX_BATTLE_23,          $00, $ff ; FLAME_WHEEL
+	db SFX_BATTLE_23,          $00, $ff ; ROOST
+	db SFX_BATTLE_23,          $00, $ff ; BRAVE_BIRD
+	db SFX_BATTLE_23,          $00, $ff ; HURRICANE
+	db SFX_BATTLE_23,          $00, $ff ; AIR_SLASH
+	db SFX_BATTLE_23,          $00, $ff ; AERIAL_ACE
+	db SFX_BATTLE_23,          $00, $ff ; SHADOW_BONE
+	db SFX_BATTLE_23,          $00, $ff ; SHADOW_BALL
+	db SFX_BATTLE_23,          $00, $ff ; SHADOW_PUNCH
+	db SFX_BATTLE_23,          $00, $ff ; SHADOW_SNEAK
+	db SFX_BATTLE_23,          $00, $ff ; SYNTHESIS
+	db SFX_BATTLE_23,          $00, $ff ; GRASSWHISTLE
+	db SFX_BATTLE_23,          $00, $ff ; POWER_WHIP
+	db SFX_BATTLE_23,          $00, $ff ; GIGA_DRAIN
+	db SFX_BATTLE_23,          $00, $ff ; SCORCH_SANDS
+	db SFX_BATTLE_23,          $00, $ff ; MUD_SHOT
+	db SFX_BATTLE_23,          $00, $ff ; SHEER_COLD
+	db SFX_BATTLE_23,          $00, $ff ; ICICLE_CRASH
+	db SFX_BATTLE_23,          $00, $ff ; ICE_FANG
+	db SFX_BATTLE_23,          $00, $ff ; ICY_WIND
+	db SFX_BATTLE_23,          $00, $ff ; SLACK_OFF
+	db SFX_BATTLE_23,          $00, $ff ; MORNING_SUN
+	db SFX_BATTLE_23,          $00, $ff ; ROCK_CLIMB
+	db SFX_BATTLE_23,          $00, $ff ; GUNK_SHOT
+	db SFX_BATTLE_2A,          $80, $ff ; SLUDGE_BOMB
+	db SFX_BATTLE_2A,          $80, $ff ; ROCK_POLISH
+	db SFX_BATTLE_2A,          $80, $ff ; ROCK_WRECKER
+	db SFX_BATTLE_2A,          $80, $ff ; ROCK_TOMB
+	db SFX_BATTLE_2A,          $80, $ff ; IRON_DEFENSE
+	db SFX_BATTLE_2A,          $80, $ff ; IRON_TAIL
+	db SFX_BATTLE_2A,          $80, $ff ; IRON_HEAD
+	db SFX_BATTLE_2A,          $80, $ff ; FLASH_CANNON
+	db SFX_BATTLE_2A,          $80, $ff ; METAL_CLAW
+	db SFX_BATTLE_2A,          $80, $ff ; WATER_PULSE
+	db SFX_BATTLE_2A,          $80, $ff ; AQUA_JET
+	db SFX_BATTLE_2A,          $80, $ff ; STONE_EDGE
+	db SFX_BATTLE_2A,          $80, $ff ; LEAF_BLADE
+	db SFX_BATTLE_2A,          $80, $ff ; NIGHT_SLASH
+	db SFX_BATTLE_2A,          $80, $ff ; CROSS_CHOP
+	db SFX_BATTLE_2A,          $80, $ff ; ROCK_SMASH
+	db SFX_BATTLE_2A,          $80, $ff ; POISON_TAIL
+	db SFX_BATTLE_2A,          $80, $ff ; REFLECT_TYPE
+	db SFX_BATTLE_2A,          $80, $ff ; POWER_GEM
+	db SFX_BATTLE_2A,          $80, $ff ; BANE_TOUCH
+	db SFX_BATTLE_2A,          $80, $ff ; ACID_STREAM
+	db SFX_BATTLE_2A,          $80, $ff ; CAUSTIC_BOMB
+ENDC
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

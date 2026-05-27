@@ -49,6 +49,10 @@ SleepEffect:
 	ld a, b
 	and a
 	jr nz, .didntAffect ; can't affect a mon that is already statused
+	;
+	call SleepClauseCheck
+	jr nz, .sleepClause ; trigger Sleep Clause
+	;
 	push de
 	call MoveHitTest ; apply accuracy tests
 	pop de
@@ -66,6 +70,38 @@ SleepEffect:
 	jp PrintText
 .didntAffect
 	jp PrintDidntAffectText
+	;
+.sleepClause
+	jp PrintSleepClauseText
+
+SleepClauseCheck:
+	ld a, [wIsInBattle]
+	dec a
+	ret z
+	ld a, [wEnemyPartyCount]
+	ld c, a
+	ld hl, wEnemyMon1Status
+	ldh a, [hWhoseTurn]
+	and a
+	jp z, .loop
+	ld a, [wPartyCount]
+	ld c, a
+	ld hl, wPartyMon1Status
+.loop
+	ld a, [hl]
+	and SLP_MASK
+	jr nz, .triggerSleepClause
+	push bc
+	ld bc, wEnemyMon2 - wEnemyMon1
+	add hl, bc
+	pop bc
+	dec c
+	jr nz, .loop
+	xor a
+.triggerSleepClause
+	and a
+	ret
+;
 
 FellAsleepText:
 	text_far _FellAsleepText
@@ -93,8 +129,12 @@ PoisonEffect:
 	ld a, [hli]
 	cp POISON ; can't poison a poison-type target
 	jr z, .noEffect
+	cp STEEL ; or a steel-type
+	jr z, .noEffect
 	ld a, [hld]
 	cp POISON ; can't poison a poison-type target
+	jr z, .noEffect
+	cp STEEL ; or a steel-type
 	jr z, .noEffect
 	ld a, [de]
 	cp POISON_SIDE_EFFECT1
@@ -147,7 +187,8 @@ PoisonEffect:
 	cp POISON_EFFECT
 	jr z, .regularPoisonEffect
 	ld a, b
-	call PlayBattleAnimation2
+;	call PlayBattleAnimation2
+	call PlayAlternativeAnimation2
 	jp PrintText
 .regularPoisonEffect
 	call PlayCurrentMoveAnimation2
@@ -233,22 +274,28 @@ FreezeBurnParalyzeEffect:
 	ld [wEnemyMonStatus], a
 	call QuarterSpeedDueToParalysis ; quarter speed of affected mon
 	ld a, ENEMY_HUD_SHAKE_ANIM
-	call PlayBattleAnimation
+;	call PlayBattleAnimation
+	call PlayAlternativeAnimation
 	jp PrintMayNotAttackText ; print paralysis text
 .burn1
 	ld a, 1 << BRN
 	ld [wEnemyMonStatus], a
 	call HalveAttackDueToBurn ; halve attack of affected mon
 	ld a, ENEMY_HUD_SHAKE_ANIM
-	call PlayBattleAnimation
+;	call PlayBattleAnimation
+	call PlayAlternativeAnimation
 	ld hl, BurnedText
 	jp PrintText
 .freeze1
+	call FreezeClauseCheck
+	ld hl, FreezeClauseText
+	jp nz, PrintText
 	call ClearHyperBeam ; resets hyper beam (recharge) condition from target
 	ld a, 1 << FRZ
 	ld [wEnemyMonStatus], a
 	ld a, ENEMY_HUD_SHAKE_ANIM
-	call PlayBattleAnimation
+;	call PlayBattleAnimation
+	call PlayAlternativeAnimation
 	ld hl, FrozenText
 	jp PrintText
 .opponentAttacker
@@ -293,11 +340,44 @@ FreezeBurnParalyzeEffect:
 	ld hl, BurnedText
 	jp PrintText
 .freeze2
-; hyper beam bits aren't reseted for opponent's side
+	call FreezeClauseCheck
+	ld hl, FreezeClauseText
+	jp nz, PrintText
+	call ClearHyperBeam
 	ld a, 1 << FRZ
 	ld [wBattleMonStatus], a
 	ld hl, FrozenText
 	jp PrintText
+
+;
+FreezeClauseCheck:
+	ld a, [wIsInBattle]
+	dec a
+	ret z
+	ld a, [wEnemyPartyCount]
+	ld c, a
+	ld hl, wEnemyMon1Status
+	ldh a, [hWhoseTurn]
+	and a
+	jp z, .loop
+	ld a, [wPartyCount]
+	ld c, a
+	ld hl, wPartyMon1Status
+.loop
+	ld a, [hl]
+	bit FRZ, a
+	jr nz, .triggerFreezeClause
+	push bc
+	ld bc, wEnemyMon2 - wEnemyMon1
+	add hl, bc
+	pop bc
+	dec c
+	jr nz, .loop
+	xor a
+.triggerFreezeClause
+	and a
+	ret
+;
 
 BurnedText:
 	text_far _BurnedText
@@ -466,6 +546,10 @@ UpdateStatDone:
 	ld de, wEnemyMoveNum
 	ld bc, wEnemyMonMinimized
 .playerTurn
+; check if we used an X-stat up item
+	ld a, [wAltAnimationID]
+    and a
+    jr nz, .notMinimize
 	ld a, [de]
 	cp MINIMIZE
 	jr nz, .notMinimize
@@ -494,14 +578,74 @@ UpdateStatDone:
 .applyBadgeBoostsAndStatusPenalties
 	ldh a, [hWhoseTurn]
 	and a
-	call z, ApplyBadgeStatBoosts ; whenever the player uses a stat-up move, badge boosts get reapplied again to every stat,
+;	call z, ApplyBadgeStatBoosts ; whenever the player uses a stat-up move, badge boosts get reapplied again to every stat,
 	                             ; even to those not affected by the stat-up move (will be boosted further)
 	ld hl, MonsStatsRoseText
 	call PrintText
 
 ; these shouldn't be here
-	call QuarterSpeedDueToParalysis ; apply speed penalty to the player whose turn is not, if it's paralyzed
-	jp HalveAttackDueToBurn ; apply attack penalty to the player whose turn is not, if it's burned
+;	call QuarterSpeedDueToParalysis ; apply speed penalty to the player whose turn is not, if it's paralyzed
+;	jp HalveAttackDueToBurn ; apply attack penalty to the player whose turn is not, if it's burned
+
+; GLITCH FIX
+
+; if a speed up effect is used, the affected pokémon speed should be quartered due to paralysis afterwards. Same for atack up and burn
+
+	ldh a, [hWhoseTurn]
+	and a
+	jr nz, .foeTurn
+	ld a, [wPlayerMoveEffect]
+	cp SPEED_UP1_EFFECT
+	jr z, ApplyParalysisPenaltiesToPlayer
+	cp SPEED_UP2_EFFECT
+	jr z, ApplyParalysisPenaltiesToPlayer
+	cp ATTACK_UP1_EFFECT
+	jr z, ApplyBurnPenaltiesToPlayer
+	cp ATTACK_UP2_EFFECT
+	jr z, ApplyBurnPenaltiesToPlayer
+	ret
+.foeTurn
+	ld a, [wEnemyMoveEffect]
+	cp SPEED_UP1_EFFECT
+	jr z, ApplyParalysisPenaltiesToEnemy
+	cp SPEED_UP2_EFFECT
+	jr z, ApplyParalysisPenaltiesToEnemy
+	cp ATTACK_UP1_EFFECT
+	jr z, ApplyBurnPenaltiesToEnemy
+	cp ATTACK_UP2_EFFECT
+	jr z, ApplyBurnPenaltiesToEnemy
+	ret
+	
+ApplyParalysisPenaltiesToPlayer:
+	ld a, $1
+	jr ApplyParalysisPenalties
+
+ApplyParalysisPenaltiesToEnemy:
+	xor a
+
+ApplyParalysisPenalties:
+	ldh [hWhoseTurn], a
+	call QuarterSpeedDueToParalysis
+	jr ReverseTurnChange
+	
+ApplyBurnPenaltiesToPlayer:
+	ld a, $1
+	jr ApplyBurnPenalties
+
+ApplyBurnPenaltiesToEnemy:
+	xor a
+
+ApplyBurnPenalties:
+	ldh [hWhoseTurn], a
+	call HalveAttackDueToBurn
+	
+ReverseTurnChange:
+	ldh a, [hWhoseTurn]
+	xor 1
+	ldh [hWhoseTurn], a
+	ret
+
+; GLITCH FIX END
 
 RestoreOriginalStatModifier:
 	pop hl
@@ -544,12 +688,6 @@ StatModifierDownEffect:
 	ld hl, wPlayerMonStatMods
 	ld de, wEnemyMoveEffect
 	ld bc, wPlayerBattleStatus1
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .statModifierDownEffect
-	call BattleRandom
-	cp 25 percent + 1 ; chance to miss by in regular battle
-	jp c, MoveMissed
 .statModifierDownEffect
 	call CheckTargetSubstitute ; can't hit through substitute
 	jp nz, MoveMissed
@@ -684,7 +822,7 @@ UpdateLoweredStatDone:
 .ApplyBadgeBoostsAndStatusPenalties
 	ldh a, [hWhoseTurn]
 	and a
-	call nz, ApplyBadgeStatBoosts ; whenever the player uses a stat-down move, badge boosts get reapplied again to every stat,
+;	call nz, ApplyBadgeStatBoosts ; whenever the player uses a stat-down move, badge boosts get reapplied again to every stat,
 	                              ; even to those not affected by the stat-up move (will be boosted further)
 	ld hl, MonsStatsFellText
 	call PrintText
@@ -692,8 +830,52 @@ UpdateLoweredStatDone:
 ; These where probably added given that a stat-down move affecting speed or attack will override
 ; the stat penalties from paralysis and burn respectively.
 ; But they are always called regardless of the stat affected by the stat-down move.
+;	call QuarterSpeedDueToParalysis
+;	jp HalveAttackDueToBurn
+	
+; GLITCH FIX
+
+; if a speed down effect is used, the affected pokémon speed should be quartered due to paralysis afterwards. Same for atack down and burn
+
+	ldh a, [hWhoseTurn]
+	and a
+	jr nz, .oppTurn
+	ld a, [wPlayerMoveEffect]
+	cp SPEED_DOWN1_EFFECT
+	jr z, .quarterSpeed
+	cp SPEED_DOWN2_EFFECT
+	jr z, .quarterSpeed
+	cp SPEED_DOWN_SIDE_EFFECT
+	jr z, .quarterSpeed
+	cp ATTACK_DOWN1_EFFECT
+	jr z, .halveAttack
+	cp ATTACK_DOWN2_EFFECT
+	jr z, .halveAttack
+	cp ATTACK_DOWN_SIDE_EFFECT
+	jr z, .halveAttack
+	ret
+.oppTurn
+	ld a, [wEnemyMoveEffect]
+	cp SPEED_DOWN1_EFFECT
+	jr z, .quarterSpeed
+	cp SPEED_DOWN2_EFFECT
+	jr z, .quarterSpeed
+	cp SPEED_DOWN_SIDE_EFFECT
+	jr z, .quarterSpeed
+	cp ATTACK_DOWN1_EFFECT
+	jr z, .halveAttack
+	cp ATTACK_DOWN2_EFFECT
+	jr z, .halveAttack
+	cp ATTACK_DOWN_SIDE_EFFECT
+	jr z, .halveAttack
+	ret
+.quarterSpeed
 	call QuarterSpeedDueToParalysis
+	ret
+.halveAttack
 	jp HalveAttackDueToBurn
+	
+; GLITCH FIX END
 
 CantLowerAnymore_Pop:
 	pop de
@@ -784,7 +966,8 @@ BideEffect:
 	ld [bc], a ; set Bide counter to 2 or 3 at random
 	ldh a, [hWhoseTurn]
 	add XSTATITEM_ANIM
-	jp PlayBattleAnimation2
+;	jp PlayBattleAnimation2
+	jp PlayAlternativeAnimation2
 
 ThrashPetalDanceEffect:
 	ld hl, wPlayerBattleStatus1
@@ -803,7 +986,8 @@ ThrashPetalDanceEffect:
 	ld [de], a ; set thrash/petal dance counter to 2 or 3 at random
 	ldh a, [hWhoseTurn]
 	add SHRINKING_SQUARE_ANIM
-	jp PlayBattleAnimation2
+;	jp PlayBattleAnimation2
+	jp PlayAlternativeAnimation2
 
 SwitchAndTeleportEffect:
 	ldh a, [hWhoseTurn]
@@ -1011,6 +1195,13 @@ ChargeEffect:
 	jr nz, .notFly
 	set INVULNERABLE, [hl] ; mon is now invulnerable to typical attacks (fly/dig)
 	ld b, TELEPORT ; load Teleport's animation
+;;; teleport is the only battle move animation so we handle it separately
+	xor a
+	ld [wAnimationType], a
+	ld a, b
+	call PlayBattleAnimation
+	jr .doneWithAnimations
+;;;
 .notFly
 	ld a, [de]
 	cp DIG
@@ -1021,7 +1212,9 @@ ChargeEffect:
 	xor a
 	ld [wAnimationType], a
 	ld a, b
-	call PlayBattleAnimation
+;	call PlayBattleAnimation
+	call PlayAlternativeAnimation
+.doneWithAnimations
 	ld a, [de]
 	ld [wChargeMoveNum], a
 	ld hl, ChargeMoveEffectText
@@ -1242,6 +1435,9 @@ MimicEffect:
 	ld a, [wEnemyBattleStatus1]
 	bit INVULNERABLE, a
 	jr nz, .mimicMissed
+	
+	call SaveScreenTilesToBuffer1	;joenote - need to save the tiles in case the opponent switched before mimic
+	
 	ld a, [wCurrentMenuItem]
 	push af
 	ld a, $1
@@ -1414,9 +1610,21 @@ ButItFailedText:
 PrintDidntAffectText:
 	ld hl, DidntAffectText
 	jp PrintText
+	
+PrintSleepClauseText:
+	ld hl, SleepClauseText
+	jp PrintText
 
 DidntAffectText:
 	text_far _DidntAffectText
+	text_end
+	
+SleepClauseText:
+	text_far _SleepClauseText
+	text_end
+
+FreezeClauseText:
+	text_far _FreezeClauseText
 	text_end
 
 IsUnaffectedText:
@@ -1458,6 +1666,10 @@ PlayCurrentMoveAnimation2:
 PlayBattleAnimation2:
 ; play animation ID at a and animation type 6 or 3
 	ld [wAnimationID], a
+	; zero out the alternative animation
+	xor a 
+	ld [wAltAnimationID], a
+GotAnimationID:
 	ldh a, [hWhoseTurn]
 	and a
 	ld a, $6
@@ -1466,12 +1678,20 @@ PlayBattleAnimation2:
 .storeAnimationType
 	ld [wAnimationType], a
 	jp PlayBattleAnimationGotID
+	
+PlayAlternativeAnimation2:
+	ld [wAltAnimationID], a
+	jr GotAnimationID
 
 PlayCurrentMoveAnimation:
 ; animation at MOVENUM will be played unless MOVENUM is 0
 ; resets wAnimationType
 	xor a
 	ld [wAnimationType], a
+;;; check for which type of animation to play
+    ld a, [wAltAnimationID]
+    and a
+    jr nz, PlayAlternativeAnimation
 	ldh a, [hWhoseTurn]
 	and a
 	ld a, [wPlayerMoveNum]
@@ -1480,10 +1700,14 @@ PlayCurrentMoveAnimation:
 .notEnemyTurn
 	and a
 	ret z
+;;; fallthrough
 
 PlayBattleAnimation:
 ; play animation ID at a and predefined animation type
 	ld [wAnimationID], a
+;;; zero out the alternative animation
+	xor a 
+	ld [wAltAnimationID], a
 
 PlayBattleAnimationGotID:
 ; play animation at wAnimationID
@@ -1495,3 +1719,7 @@ PlayBattleAnimationGotID:
 	pop de
 	pop hl
 	ret
+
+PlayAlternativeAnimation:
+	ld [wAltAnimationID], a
+	jr PlayBattleAnimationGotID

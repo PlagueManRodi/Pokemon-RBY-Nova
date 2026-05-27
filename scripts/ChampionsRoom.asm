@@ -22,9 +22,63 @@ ChampionsRoom_ScriptPointers:
 	dw GaryScript8
 	dw GaryScript9
 	dw GaryScript10
+	dw GaryScript11
+	dw MoveToCorrectSpot
+	dw SetCorrectFacing
 
 GaryScript0:
+	ld hl, wVermilionBeachFlags
+	lb bc, FLAG_TEST, 2
+	predef FlagActionPredef
+	ld a, c
+	and a
+	ret nz
+	ld hl, CoordsData_CoordsChampionsRoom
+	call ArePlayerCoordsInArray
+	jr nc, .checkForOtherExit
+	ld a, $6
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_UP
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, $b
+	ld [wChampionsRoomCurScript], a
 	ret
+.checkForOtherExit
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ret nz
+	ld a, [wYCoord]
+	cp 1
+	ret nz
+	ld a, 7
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	call StartSimulatingJoypadStates
+	ld a, D_DOWN
+	ld [wSimulatedJoypadStatesEnd], a
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, $b
+	ld [wChampionsRoomCurScript], a
+	ret
+
+CoordsData_CoordsChampionsRoom:
+	dbmapcoord 3, 6
+	dbmapcoord 4, 6
+	db -1 ; end
 
 GaryScript1:
 	ld a, $ff
@@ -35,28 +89,24 @@ GaryScript1:
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	call StartSimulatingJoypadStates
-	ld a, $2
+	ld a, $b
 	ld [wChampionsRoomCurScript], a
 	ret
 
 GaryEntrance_RLEMovement:
 	db D_UP, 1
 	db D_RIGHT, 1
-	db D_UP, 3
+	db D_UP, 1
 	db -1 ; end
 
 GaryScript2:
-	ld a, [wSimulatedJoypadStatesIndex]
-	and a
-	ret nz
-	call Delay3
 	xor a
 	ld [wJoyIgnore], a
 	ld hl, wOptions
 	res 7, [hl]  ; Turn on battle animations to make the battle feel more epic.
-	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+;	ld a, 1
+;	ldh [hSpriteIndexOrTextID], a
+;	call DisplayTextID
 	call Delay3
 	ld hl, wd72d
 	set 6, [hl]
@@ -64,6 +114,7 @@ GaryScript2:
 	ld hl, GaryDefeatedText
 	ld de, GaryVictoryText
 	call SaveEndBattleTextPointers
+	predef HealParty
 	ld a, OPP_RIVAL3
 	ld [wCurOpponent], a
 
@@ -206,18 +257,18 @@ GaryScript8:
 GaryScript9:
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld hl, wSimulatedJoypadStatesEnd
-	ld de, WalkToHallOfFame_RLEMovment
-	call DecodeRLEList
-	dec a
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+;	ld hl, wSimulatedJoypadStatesEnd
+;	ld de, WalkToHallOfFame_RLEMovment
+;	call DecodeRLEList
+;	dec a
+;	ld [wSimulatedJoypadStatesIndex], a
+;	call StartSimulatingJoypadStates
 	ld a, $a
 	ld [wChampionsRoomCurScript], a
 	ret
 
 WalkToHallOfFame_RLEMovment:
-	db D_UP, 4
+	db D_UP, 2
 	db D_LEFT, 1
 	db -1 ; end
 
@@ -231,6 +282,16 @@ GaryScript10:
 	ld [wChampionsRoomCurScript], a
 	ret
 
+GaryScript11:
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	call Delay3
+	ld a, $0
+	ld [wChampionsRoomCurScript], a
+	ld [wCurMapScript], a
+	ret
+
 GaryScript_760c8:
 	ld a, $f0
 	ld [wJoyIgnore], a
@@ -239,21 +300,77 @@ GaryScript_760c8:
 	ld [wJoyIgnore], a
 	ret
 
+MoveToCorrectSpot:
+	ld a, 2
+	ld [wChampionsRoomCurScript], a
+	ld [wCurMapScript], a
+	ld a, [wYCoord]
+	cp 3
+	ret z
+	ld a, 13
+	ld [wChampionsRoomCurScript], a
+	ld [wCurMapScript], a
+	ld hl, wSimulatedJoypadStatesEnd
+	ld a, [wXCoord]
+	cp 3
+	ld de, LeftSide_RLEMovment
+	jr z, .next
+	ld de, RightSide_RLEMovment	
+.next
+	call DecodeRLEList
+	dec a
+	ld [wSimulatedJoypadStatesIndex], a
+	jp StartSimulatingJoypadStates
+	
+SetCorrectFacing:
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	call Delay3
+	ld a, 1 ; RIVAL
+	ldh [hSpriteIndex], a
+	xor a ; SPRITE_FACING_DOWN
+	ldh [hSpriteFacingDirection], a
+	call SetSpriteFacingDirectionAndDelay
+	ld a, PLAYER_DIR_UP
+	ld [wPlayerMovingDirection], a
+	ld a, 2
+	ld [wChampionsRoomCurScript], a
+	ld [wCurMapScript], a
+	ret
+
+RightSide_RLEMovment:
+	db D_LEFT, 1
+	db D_DOWN, 1
+	db -1 ; end
+
+LeftSide_RLEMovment:
+	db D_RIGHT, 1
+	db D_DOWN, 1
+	db -1 ; end
+
 ChampionsRoom_TextPointers:
 	dw GaryText1
 	dw GaryText2
 	dw GaryText3
 	dw GaryText4
 	dw GaryText5
+	dw GaryText6
+	dw GaryText7
 
 GaryText1:
 	text_asm
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
-	ld hl, GaryChampionIntroText
-	jr z, .printText
+	jr z, .preBattle
 	ld hl, GaryText_76103
-.printText
 	call PrintText
+	jp TextScriptEnd
+.preBattle
+	ld hl, GaryChampionIntroText
+	call PrintText
+	ld a, 12
+	ld [wChampionsRoomCurScript], a
+	ld [wCurMapScript], a
 	jp TextScriptEnd
 
 GaryChampionIntroText:
@@ -295,4 +412,22 @@ GaryText4:
 
 GaryText5:
 	text_far _GaryText_7612a
+	text_end
+
+GaryText6:
+	text_asm
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ld hl, GaryText7
+	jr z, .printText
+	ld hl, GaryText6a
+.printText
+	call PrintText
+	jp TextScriptEnd
+
+GaryText6a:
+	text_far _GaryText6
+	text_end
+
+GaryText7:
+	text_far _GaryText7
 	text_end

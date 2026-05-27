@@ -93,7 +93,7 @@ TestBattle:
 
 	; Give the player a
 	; level 20 Rhydon.
-	ld a, RHYDON
+	ld a, RHYPERIOR
 	ld [wcf91], a
 	ld a, 20
 	ld [wCurEnemyLVL], a
@@ -104,7 +104,7 @@ TestBattle:
 
 	; Fight against a
 	; level 20 Rhydon.
-	ld a, RHYDON
+	ld a, RHYPERIOR
 	ld [wCurOpponent], a
 
 	predef InitOpponent

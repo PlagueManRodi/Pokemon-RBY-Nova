@@ -2,6 +2,10 @@
 ; screen unless the player presses the A/B button or the delay is turned off
 ; through the [wd730] or [wLetterPrintingDelayFlags] flags.
 PrintLetterDelay::
+	ld a, [wOptions]
+	and $f
+	cp TEXT_DELAY_SLOW
+	ret z
 	ld a, [wd730]
 	bit 6, a
 	ret nz
@@ -42,4 +46,8 @@ PrintLetterDelay::
 	pop bc
 	pop de
 	pop hl
+	ret
+
+HomePrintType::
+	homecall HomePrintType_
 	ret

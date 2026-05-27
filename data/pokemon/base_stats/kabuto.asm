@@ -15,9 +15,10 @@
 
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         MIMIC,        \
-	     DOUBLE_TEAM,  REFLECT,      BIDE,         REST,         SUBSTITUTE,   \
-	     SURF
+	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         MEGA_DRAIN,   \
+	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         REST,         \
+	     ROCK_SLIDE,   SUBSTITUTE,   SURF
 	; end
 
-	db 0 ; padding
+	db BANK(KabutoPicFront)
+	assert BANK(KabutoPicFront) == BANK(KabutoPicBack)

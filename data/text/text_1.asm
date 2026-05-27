@@ -74,18 +74,18 @@ _OaksAideHiText::
 	line "I'm PROF.OAK's"
 	cont "AIDE!"
 
-	para "If you caught @"
+	para "If you seen @"
 	text_decimal hOaksAideRequirement, 1, 3
 	text_start
 	line "kinds of #MON,"
 	cont "I'm supposed to"
-	cont "give you an"
+	cont "give you this"
 	cont "@"
 	text_ram wOaksAideRewardItemName
 	text "!"
 
 	para "So, <PLAYER>! Have"
-	line "you caught at"
+	line "you seen at"
 	cont "least @"
 	text_decimal hOaksAideRequirement, 1, 3
 	text " kinds of"
@@ -95,7 +95,7 @@ _OaksAideHiText::
 _OaksAideUhOhText::
 	text "Let's see..."
 	line "Uh-oh! You have"
-	cont "caught only @"
+	cont "seen only @"
 	text_decimal hOaksAideNumMonsOwned, 1, 3
 	text_start
 	cont "kinds of #MON!"
@@ -123,7 +123,7 @@ _OaksAideComeBackText::
 
 _OaksAideHereYouGoText::
 	text "Great! You have"
-	line "caught @"
+	line "seen @"
 	text_decimal hOaksAideNumMonsOwned, 1, 3
 	text " kinds "
 	cont "of #MON!"

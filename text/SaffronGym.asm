@@ -40,7 +40,7 @@ _SabrinaPostBattleAdviceText::
 _KogaMarshBadgeInfoText::
 	text "The MARSHBADGE"
 	line "makes #MON up"
-	cont "to L70 obey you!"
+	cont "to L80 obey you!"
 
 	para "Stronger #MON"
 	line "will become wild,"
@@ -50,6 +50,10 @@ _KogaMarshBadgeInfoText::
 	para "Just don't raise"
 	line "your #MON too"
 	cont "much!"
+	
+	para "It also lets you"
+	line "SURF outside of"
+	cont "battle!"
 
 	para "Wait, please take"
 	line "this TM with you!"
@@ -237,3 +241,77 @@ _SaffronGymAfterBattleText7::
 	line "used telepathy to"
 	cont "read your mind!"
 	done
+
+_SaffronGymRematchPreBattleText::
+	text "...It's true that"
+	line "psychic power is"
+	cont "a potent ability."
+	
+	para "However, there are"
+	line "things that"
+	cont "cannot be"
+	cont "overcome with"
+	cont "that power alone."
+
+	para "I won't be relying"
+	line "on just psychic"
+	cont "power this time."
+	
+	para "My true"
+	line "strength... my"
+	cont "true self..."
+	
+	para "Allow me to test"
+	line "them against you!"
+	done
+
+_SaffronGymRematchAcceptedText::
+	text "I foresaw that you"
+	line "would come here"
+	cont "by looking into"
+	cont "the future."
+	
+	para "But I"
+	line "intentionally"
+	cont "didn't look to see"
+	cont "who will win our"
+	cont "battle."
+	
+	para "Let's find out"
+	line "together!"
+	done
+
+_SaffronGymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_SaffronGymRematchDefeatedText::
+	text "I won't"
+	line "encounter a"
+	cont "TRAINER like you"
+	cont "for around"
+	cont "another three"
+	cont "years."
+	prompt
+
+_SaffronGymRematchPostBattleText::
+	text "There was once a"
+	line "time when I was"
+	cont "shocked that I"
+	cont "lost to you."
+		
+	para "That feeling is"
+	line "gone now."
+	
+	para "It's been replaced"
+	line "with a desire to"
+	cont "grow strong and"
+	cont "live freely, as"
+	cont "you do."
+	done
+
+_ReceivedProMarshBadgeText::
+	text "<PLAYER> received"
+	line "PRO SOULBADGE!@"
+	text_end

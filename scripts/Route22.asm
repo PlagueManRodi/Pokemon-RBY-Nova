@@ -80,6 +80,7 @@ Route22Script0:
 	db -1 ; end
 
 .firstRivalBattle
+	predef HealParty
 	ld a, $1
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
@@ -164,6 +165,12 @@ Route22Script2:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
+	ld a, HS_LYING_OLD_MAN
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_OLD_MAN
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -233,6 +240,7 @@ Route22Script3:
 	ret
 
 Route22Script_5104e:
+	predef HealParty
 	ld a, $2
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE

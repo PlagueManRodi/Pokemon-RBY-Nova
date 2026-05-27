@@ -15,6 +15,7 @@ ViridianCity_Object:
 	bg_event 30, 19, 11 ; MartSignText
 	bg_event 24, 25, 12 ; PokeCenterSignText
 	bg_event 27,  7, 13 ; ViridianCityText13
+	bg_event 17, 29, 14 ; ViridianCityText14
 
 	def_object_events
 	object_event 13, 20, SPRITE_YOUNGSTER, WALK, ANY_DIR, 1 ; person

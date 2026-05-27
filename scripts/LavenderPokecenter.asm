@@ -7,6 +7,8 @@ LavenderPokecenter_TextPointers:
 	dw LavenderPokecenterText2
 	dw LavenderPokecenterText3
 	dw LavenderTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 LavenderTradeNurseText:
 	script_cable_club_receptionist

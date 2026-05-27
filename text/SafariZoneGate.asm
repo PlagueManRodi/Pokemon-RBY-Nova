@@ -4,9 +4,9 @@ _SafariZoneEntranceText1::
 	done
 
 SafariZoneEntranceText_9e6e4::
-	text "For just ¥500,"
-	line "you can catch all"
-	cont "the #MON you"
+;	text "For just ¥500,"
+	text "You can catch all"
+	line "the #MON you"
 	cont "want in the park!"
 
 	para "Would you like to"
@@ -14,10 +14,10 @@ SafariZoneEntranceText_9e6e4::
 	text_end
 
 SafariZoneEntranceText_9e747::
-	text "That'll be ¥500"
-	line "please!"
+;	text "That'll be ¥500"
+;	line "please!"
 
-	para "We only use a"
+	text "We only use a"
 	line "special # BALL"
 	cont "here."
 

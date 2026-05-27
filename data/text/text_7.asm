@@ -26,6 +26,11 @@ _GotOffBicycleText2::
 	text "."
 	prompt
 
+_PokedexOrAttackdex:: ; new, testing
+	text "What DEX category"
+	line "to visualize?"
+	done
+
 _ThrewAwayItemText::
 	text "Threw away"
 	line "@"
@@ -138,12 +143,11 @@ _Thanks2Text::
 	done
 
 _AfterTrade2Text::
-	text "The @"
+	text "Hello there! Your"
+	line "old @"
 	text_ram wInGameTradeGiveMonName
-	text " you"
-	line "traded to me"
-
-	para "went and evolved!"
+	text " is"
+	cont "magnificent!"
 	done
 
 _WannaTrade3Text::
@@ -198,3 +202,196 @@ _UsedCutText::
 	text " hacked"
 	line "away with CUT!"
 	prompt
+
+_UsedHackText::
+	text "<PLAYER> hacked"
+	line "away!"
+	prompt
+
+_OptionalFeaturesIntroText::
+	text "Welcome!"
+	
+	para "Thank you for"
+	line "playing #MON"
+	cont "RBY NOVA."
+	
+	para "Please read these"
+	line "optional features"
+	cont "carefully so you"
+	cont "get the most out"
+	cont "of the game."
+	prompt
+
+;_LevelCapsExpQuestionText::
+;	text "Do you know what"
+;	line "LEVEL CAPs are?"
+;	done
+
+;_LevelCapsExpText::
+;	text "LEVEL CAPs will"
+;	line "prevent you from"
+;	cont "out-leveling GYM"
+;	cont "LEADERs and other"
+;	cont "important fights."
+;	prompt
+
+_LevelCapsText::
+	text "LEVEL CAPs don't"
+	line "let you out-level"
+	cont "LEADERs and other"
+	cont "boss fights."
+	
+	para "You'll still reach"
+	line "max post credits."
+		
+	para "Play with LEVEL"
+	line "CAPs?"
+	done
+
+;_StatExpExpQuestionText::
+;	text "Do you know what"
+;	line "STAT EXPERIENCE"
+;	cont "is?"
+;	done
+
+;_StatExpExpText::
+;	text "STAT EXPERIENCE"
+;	line "is the equivalent"
+;	cont "to EVs from later"
+;	cont "generations in"
+;	cont "this game."
+;	prompt
+
+_StatExpText::
+	text "STAT EXPERIENCE is"
+	line "equivalent to EVs"
+	cont "on later GENs."
+		
+	para "Regardless of your"
+	line "choice STAT EXP"
+	cont "will be counted"
+	cont "and can be added"
+	cont "post credits."
+	
+	para "Play with STAT"
+	line "EXPERIENCE?"
+	done
+
+;_ConvItemsExpQuestionText::
+;	text "Do you know what"
+;	line "the CONVINIENCE"
+;	cont "ITEMS are?"
+;	done
+
+;_ConvItemsExpText::
+;	text "These are a set"
+;	line "of quality of"
+;	cont "life items that"
+;	cont "are good for"
+;	cont "nuzlockes and"
+;	cont "other types of"
+;	cont "challenge runs."
+	
+;	para "These include:"
+	
+;	para "RECOVERY KIT"
+	
+;	para "Fully heals the"
+;	line "party."
+	
+;	para "REPEL KIT"
+	
+;	para "Infinite MAX"
+;	line "REPEL."
+	
+;	para "TRAINING KIT"
+	
+;	para "Infinite RARE"
+;	line "CANDY."
+;	prompt
+
+_ConvItemsText::
+	text "CONVENIENCE ITEMS"
+	line "adds party heal,"
+	cont "toggleable REPEL"
+	cont "and infinite RARE"
+	cont "CANDY items to"
+	cont "your PC and"
+	cont "SELECT MENU."
+	
+	para "If not you'll still"
+	line "get them post"
+	cont "credits."
+	
+	para "Get CONVENIENCE"
+	line "ITEMS?"
+	done
+
+_PartyCapsText::
+	text "PARTY CAPs don't"
+	line "let you fight GYM"
+	cont "LEADERs with more"
+	cont "#MON in your"
+	cont "party than them." 
+	
+	para "Play with PARTY"
+	line "CAPs?"
+	done
+
+_EnjoyGameText::
+	text "Hope you enjoy"
+	line "the game!"
+	prompt
+
+_SleepClauseText::
+	text "Cannot put foe to"
+	line "sleep due to"
+	cont "SLEEP CLAUSE!"
+	prompt
+
+_FreezeClauseText::
+	text "Cannot freeze foe"
+	line "due to FREEZE"
+	cont "CLAUSE!"
+	prompt
+
+_GiveUpText::
+	text "Give up?"
+	done
+
+_PartyCap3ExceedText::
+	text "Come back with"
+	line "less #MON. (3)"
+	done
+
+_PartyCap4ExceedText::
+	text "Come back with"
+	line "less #MON. (4)"
+	done
+	
+_PartyCap5ExceedText::
+	text "Come back with"
+	line "less #MON. (5)"
+	done
+
+_CannotUseActionHereText::
+	text "You can't perform"
+	line "that action here."
+	prompt
+
+_BoulderOnSwitchText::
+	text "The boulder is on"
+	line "a switch!"
+	done
+
+_UseAnotherRepelText::
+	text "Use another"
+	line "@"
+	text_ram wcd6d
+	text "?"
+	done
+
+_ProLeagueAvailableText::
+	text "PRO LEAGUE can be"
+	line "challenged now!@"
+	text_end

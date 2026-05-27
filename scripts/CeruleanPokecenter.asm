@@ -7,6 +7,8 @@ CeruleanPokecenter_TextPointers:
 	dw CeruleanPokecenterText2
 	dw CeruleanPokecenterText3
 	dw CeruleanTradeNurseText
+	dw MoveDeleterText1
+	dw MoveRelearnerText1
 
 CeruleanTradeNurseText:
 	script_cable_club_receptionist

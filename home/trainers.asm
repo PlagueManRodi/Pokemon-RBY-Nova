@@ -72,10 +72,6 @@ ReadTrainerHeaderInfo::
 	jr z, .readPointer ; read end battle text
 	cp $a
 	jr nz, .done
-	ld a, [hli]        ; read end battle text (2) but override the result afterwards (XXX why, bug?)
-	ld d, [hl]
-	ld e, a
-	jr .done
 .readPointer
 	ld a, [hli]
 	ld h, [hl]
@@ -108,7 +104,7 @@ TalkToTrainer::
 	call ReadTrainerHeaderInfo     ; print before battle text
 	call PrintText
 	ld a, $a
-	call ReadTrainerHeaderInfo     ; (?) does nothing apparently (maybe bug in ReadTrainerHeaderInfo)
+	call ReadTrainerHeaderInfo     ; read end battle text (2)
 	push de
 	ld a, $8
 	call ReadTrainerHeaderInfo     ; read end battle text
@@ -143,6 +139,9 @@ ENDC
 .trainerEngaging
 	ld hl, wFlags_D733
 	set 3, [hl]
+	ld hl, wd730
+	res 0, [hl] ; Clear NPC movement flag to avoid softlock if this trainer doesn't move
+	res 3, [hl] ; Clear Trainer encounter reset flag
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
@@ -158,6 +157,9 @@ ENDC
 
 ; display the before battle text after the enemy trainer has walked up to the player's sprite
 DisplayEnemyTrainerTextAndStartBattle::
+	ld a, [wd730]
+	and $8
+	jp nz, ResetButtonPressedAndMapScript ; Trainer Fly happened, abort this script
 	ld a, [wd730]
 	and $1
 	ret nz ; return if the enemy trainer hasn't finished walking to the player's sprite
@@ -220,7 +222,12 @@ ResetButtonPressedAndMapScript::
 	ldh [hJoyHeld], a
 	ldh [hJoyPressed], a
 	ldh [hJoyReleased], a
-	ld [wCurMapScript], a               ; reset battle status
+	ld [wCurMapScript], a        ; reset battle status
+	ld hl, wd730
+	res 0, [hl]                  ; Clear NPC movement flag to avoid potential softlocks
+	set 3, [hl]                  ; Set Trainer encounter reset flag to avoid Mew Glitch
+	ld hl, wFlags_0xcd60
+	res 0, [hl]                  ; player is no longer engaged by any trainer
 	ret
 
 ; calls TrainerWalkUpToPlayer

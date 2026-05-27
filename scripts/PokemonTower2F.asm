@@ -26,6 +26,7 @@ ENDC
 	ld hl, CoordsData_6055e
 	call ArePlayerCoordsInArray
 	ret nc
+	predef HealParty
 	ld a, SFX_STOP_ALL_MUSIC
 	ld [wNewSoundID], a
 	call PlaySound
@@ -60,7 +61,7 @@ ENDC
 CoordsData_6055e:
 	dbmapcoord 15,  5
 	dbmapcoord 14,  6
-	db $0F ; end? (should be $ff?)
+	db -1 ; end
 
 PokemonTower2Script1:
 	ld a, [wIsInBattle]
@@ -68,6 +69,9 @@ PokemonTower2Script1:
 	jp z, PokemonTower2Script_604fe
 	ld a, $f0
 	ld [wJoyIgnore], a
+	ld a, HS_LAVENDER_TOWN_GUARD
+	ld [wMissableObjectIndex], a
+	predef HideObject
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
@@ -84,6 +88,21 @@ PokemonTower2Script1:
 	ld [wNewSoundID], a
 	call PlaySound
 	farcall Music_RivalAlternateStart
+	
+	;; NEW LEVEL CAP
+	CheckEvent EVENT_PLAYING_WITH_LEVEL_CAPS
+	jr z, .notPlayingWithLevelCaps
+	ld hl, wLevelCap
+	ld a, 0
+	cp [hl]
+	jr z, .notPlayingWithLevelCaps
+	ld a, 36
+	cp [hl]
+	jr c, .notPlayingWithLevelCaps
+	ld [wLevelCap], a
+.notPlayingWithLevelCaps
+	;;
+	
 	ld a, $2
 	ld [wPokemonTower2FCurScript], a
 	ld [wCurMapScript], a

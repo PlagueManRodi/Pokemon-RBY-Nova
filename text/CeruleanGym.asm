@@ -28,18 +28,14 @@ _TM11ExplanationText::
 _MistyCascadeBadgeInfoText::
 	text "The CASCADEBADGE"
 	line "makes all #MON"
-	cont "up to L30 obey!"
+	cont "up to L40 obey!"
 
 	para "That includes"
 	line "even outsiders!"
 
 	para "There's more, you"
-	line "can now use CUT"
+	line "can now use FLY"
 	cont "any time!"
-
-	para "You can CUT down"
-	line "small bushes to"
-	cont "open new paths!"
 
 	para "You can also have"
 	line "my favorite TM!"
@@ -131,3 +127,65 @@ _CeruleanGymGuidePostBattleText::
 	line "we make a pretty"
 	cont "darn good team!"
 	done
+
+_CeruleanGymRematchPreBattleText::
+	text "Not only did you"
+	line "defeat those TEAM"
+	cont "ROCKET guys, but"
+	cont "you also became"
+	cont "the new CHAMPION!"
+
+	para "Argh! I just can't"
+	line "take it anymore!"
+
+	para "You've gotten so"
+	line "strong that I"
+	cont "just absolutely"
+	cont "have to battle"
+	cont "you again!"
+	
+	para "You got that?"
+	done
+
+_CeruleanGymRematchAcceptedText::
+	text "My adorable"
+	line "#MON are ready"
+	cont "to take you on!"
+	
+	para "The ultimate"
+	line "offense of WATER"
+	cont "TYPE #MON!"
+	
+	para "I hope you're"
+	line "ready!"
+	done
+
+_CeruleanGymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_CeruleanGymRematchDefeatedText::
+	text "Hmph!"
+	line "How annoying!"
+	prompt
+
+_CeruleanGymRematchPostBattleText::
+	text "I lost..."
+
+	para "I need to try"
+	line "swimming around"
+	cont "for a bit so"
+	cont "that I can clear"
+	cont "my head of these"
+	cont "feelings."
+
+	para "...I definitely"
+	line "won't lose next"
+	cont "time!"
+	done
+
+_ReceivedProCascadeBadgeText::
+	text "<PLAYER> received"
+	line "PRO CASCADEBADGE!@"
+	text_end

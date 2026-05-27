@@ -5,26 +5,17 @@ _MeetLaprasGuyText::
 	cont "Why, thank you!"
 
 	para "I want you to"
-	line "have this #MON"
-	cont "for saving us."
+	line "have this for"
+	cont "saving us."
 	prompt
 
 _HeresYourLaprasText::
-	text "It's LAPRAS. It's"
-	line "very intelligent."
+	text "It's a BIG"
+	line "NUGGET."
 
-	para "We kept it in our"
-	line "lab, but it will"
-	cont "be much better"
-	cont "off with you!"
-
-	para "I think you will"
-	line "be a good trainer"
-	cont "for LAPRAS!"
-
-	para "It's a good"
-	line "swimmer. It'll"
-	cont "give you a lift!"
+	para "You can sell it"
+	line "for a lot of"
+	cont "money."
 	done
 
 _LaprasGuyText::
@@ -34,9 +25,21 @@ _LaprasGuyText::
 	cont "PRESIDENT OK?"
 	done
 
+_LaprasGuyItemGiveText::
+	text "<PLAYER> received"
+	line "a @"
+	text_ram wStringBuffer
+	text "!@"
+	text_end
+
 _LaprasGuySavedText::
 	text "Saved at last!"
 	line "Thank you!"
+	done
+	
+_LaprasGuyBagFullText::
+	text "You don't have"
+	line "any room!"
 	done
 
 _SilphCo7Text_51e00::

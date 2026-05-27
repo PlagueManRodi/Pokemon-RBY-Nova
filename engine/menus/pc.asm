@@ -137,5 +137,13 @@ RemoveItemByID::
 	ld [wItemQuantity], a
 	ldh a, [hItemToRemoveIndex]
 	ld [wWhichPokemon], a
+	; update menu info
+	xor a
+	ld [wListScrollOffset], a
+	ld [wCurrentMenuItem], a
+	ld [wSavedMenuItem], a
+	ld [wBagSavedMenuItem], a
+	ld [wSavedListScrollOffset], a
+	;
 	ld hl, wNumBagItems
 	jp RemoveItemFromInventory

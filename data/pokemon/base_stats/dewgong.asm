@@ -10,7 +10,11 @@
 	INCBIN "gfx/pokemon/front/dewgong.pic", 0, 1 ; sprite dimensions
 	dw DewgongPicFront, DewgongPicBack
 
-	db HEADBUTT, GROWL, AURORA_BEAM, NO_MOVE ; level 1 learnset
+IF DEF(_MODERN)
+	db HEADBUTT, GROWL, ICY_WIND, NO_MOVE ; level 1 learnset modern
+ELSE
+	db HEADBUTT, GROWL, LICK, NO_MOVE ; level 1 learnset
+ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
@@ -20,4 +24,5 @@
 	     SKULL_BASH,   REST,         SUBSTITUTE,   SURF,         STRENGTH
 	; end
 
-	db 0 ; padding
+	db BANK(DewgongPicFront)
+	assert BANK(DewgongPicFront) == BANK(DewgongPicBack)

@@ -23,3 +23,13 @@ _IndigoPlateauLobbyText3::
 	cont "next trainer!"
 	cont "Good luck!"
 	done
+
+_ProLeagueText1::
+	text "Which LEAGUE would"
+	line "you like to"
+	cont "challenge?"
+	done
+
+_ProLeagueText2::
+	text "Proceed?"
+	done

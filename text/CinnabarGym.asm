@@ -33,11 +33,6 @@ _BlainePostBattleAdviceText::
 _BlaineVolcanoBadgeInfoText::
 	text "Hah!"
 
-	para "The VOLCANOBADGE"
-	line "heightens the"
-	cont "SPECIAL abilities"
-	cont "of your #MON!"
-
 	para "Here, you can"
 	line "have this too!"
 	done
@@ -58,8 +53,8 @@ _TM38ExplanationText::
 	para "Teach it to fire-"
 	line "type #MON!"
 
-	para "CHARMELEON or"
-	line "PONYTA would be"
+	para "CHARIZARD or"
+	line "ARCANINE would be"
 	cont "good bets!"
 	done
 
@@ -171,8 +166,8 @@ _CinnabarGymEndBattleText6::
 
 _CinnabarGymAfterBattleText6::
 	text "Us fire #MON"
-	line "fans like PONYTA"
-	cont "and NINETALES!"
+	line "fans like MAGMAR"
+	cont "and ARCANINE!"
 	done
 
 _CinnabarGymBattleText7::
@@ -210,3 +205,82 @@ _CinnabarGymGuidePostBattleText::
 	text "<PLAYER>! You beat"
 	line "that fire brand!"
 	done
+
+_CinnabarGymRematchPreBattleText::
+	text "Hah! Well done,"
+	line "returning here to"
+	cont "my GYM!"
+	
+	para "You're the one who"
+	line "retrieved the key"
+	cont "to this GYM from"
+	cont "the #MON"
+	cont "MANSION!"
+
+	para "Did you see"
+	line "anything"
+	cont "interesting while"
+	cont "you were in"
+	cont "there?"
+	
+	para "That place still"
+	line "holds the"
+	cont "remnants of my"
+	cont "old friend's"
+	cont "research!"
+	
+	para "More importantly,"
+	line "since you came"
+	cont "all this way, we"
+	cont "should have a"
+	cont "battle! Hah!"
+	done
+
+_CinnabarGymRematchAcceptedText::
+	text "The CINNABAR"
+	line "ISLAND volcano"
+	cont "seems quite"
+	cont "active today!"
+	
+	para "Which means that"
+	line "my FIRE-TYPE"
+	cont "#MON will be"
+	cont "in top shape"
+	cont "today, too!"
+	
+	para "Let's go! Hah!"
+	done
+
+_CinnabarGymRematchRefusedText::
+	text "Maybe some other"
+	line "time."
+	done
+
+_CinnabarGymRematchDefeatedText::
+	text "Hah! I'm"
+	line "all fired up!"
+	prompt
+
+_CinnabarGymRematchPostBattleText::
+	text "Recently, GYM"
+	line "challengers sure"
+	cont "have been"
+	cont "increasing!"
+		
+	para "That just means"
+	line "more fun for me,"
+	cont "so I don't mind at"
+	cont "all!"
+	
+	para "It's true that you"
+	line "already have a"
+	cont "VOLCANOBADGE, but"
+	cont "don't worry about"
+	cont "that-let's"
+	cont "battle!"
+	done
+
+_ReceivedProVolcanoBadgeText::
+	text "<PLAYER> received"
+	line "PRO VOLCANOBADGE!@"
+	text_end
