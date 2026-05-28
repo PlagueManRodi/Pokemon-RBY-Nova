@@ -212,7 +212,7 @@ IF DEF(_MODERN)
 	move AERIAL_ACE,   SWIFT_EFFECT,                60, FLYING,       100, 20
 	move SHADOW_BONE,  DEFENSE_DOWN_SIDE_EFFECT,    85, GHOST,        100, 10
 	move SHADOW_BALL,  SPECIAL_DOWN_SIDE_EFFECT,    80, GHOST,        100, 15
-	move SHADOW_PUNCH, SWIFT_EFFECT,                60, GHOST,        100, 20
+	move SHADOW_PUNCH, SWIFT_EFFECT,                80, GHOST,        100, 20
 	move SHADOW_SNEAK, NO_ADDITIONAL_EFFECT,        40, GHOST,        100, 30
 	move SYNTHESIS,    HEAL_EFFECT,                  0, GRASS,        100,  5
 	move GRASSWHISTLE, SLEEP_EFFECT,                 0, GRASS,         55, 15
