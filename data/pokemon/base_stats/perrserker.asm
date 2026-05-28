@@ -1,6 +1,6 @@
 	db DEX_PERRSERKER ; pokedex id
 
-	db  70, 110, 100,  50,  55
+	db  70, 110, 100,  50,  60
 	;   hp  atk  def  spd  spc
 
 	db STEEL, STEEL ; type
