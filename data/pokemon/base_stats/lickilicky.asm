@@ -1,6 +1,6 @@
 	db DEX_LICKILICKY ; pokedex id
 
-	db 110,  85,  95,  50,  80
+	db 110,  85,  95,  50,  95
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, NORMAL ; type
