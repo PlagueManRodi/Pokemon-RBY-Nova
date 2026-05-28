@@ -1,6 +1,6 @@
 	db DEX_SANDYSHOCK ; pokedex id
 
-	db  85,  81,  97, 101, 111
+	db  85,  81,  97, 101, 121
 	;   hp  atk  def  spd  spc
 
 	db ELECTRIC, GROUND ; type
