@@ -1,6 +1,6 @@
 	db DEX_BELLOSSOM ; pokedex id
 
-	db  75,  80,  95,  50,  90
+	db  75,  80,  95,  50, 100
 	;   hp  atk  def  spd  spc
 
 	db GRASS, GRASS ; type
