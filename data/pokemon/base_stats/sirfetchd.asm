@@ -1,6 +1,6 @@
 	db DEX_SIRFETCHD ; pokedex id
 
-	db  62, 135,  95,  65,  68
+	db  62, 135,  95,  65,  82
 	;   hp  atk  def  spd  spc
 
 	db FIGHTING, FIGHTING ; type
