@@ -7,9 +7,9 @@ Route22WildMons:
 	db  4, NIDORAN_F
 	db  3, MIME_JR
 	db  4, MIME_JR
-	db  4, MANKEY
-	db  4, MANKEY
-	db  4, MANKEY
+	db  5, MANKEY
+	db  5, MANKEY
+	db  5, MANKEY
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
