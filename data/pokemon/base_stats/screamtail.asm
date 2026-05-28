@@ -1,6 +1,6 @@
 	db DEX_SCREAMTAIL ; pokedex id
 
-	db 115,  65,  99, 111,  85
+	db 115,  65,  99, 111,  115
 	;   hp  atk  def  spd  spc
 
 	db FAIRY, PSYCHIC_TYPE ; type
