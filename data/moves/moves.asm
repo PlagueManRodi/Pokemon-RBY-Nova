@@ -76,8 +76,8 @@ Moves:
 	move HYPER_BEAM,   HYPER_BEAM_EFFECT,          150, NORMAL,        90,  5
 	move PECK,         NO_ADDITIONAL_EFFECT,        35, FLYING,       100, 35
 	move DRILL_PECK,   NO_ADDITIONAL_EFFECT,        80, FLYING,       100, 20
-	move SUBMISSION,   RECOIL_EFFECT,               80, FIGHTING,      80, 25
-	move LOW_KICK,     FLINCH_SIDE_EFFECT2,         50, FIGHTING,      90, 20
+	move SUBMISSION,   RECOIL_EFFECT,              100, FIGHTING,      95, 10
+	move LOW_KICK,     FLINCH_SIDE_EFFECT2,         60, FIGHTING,     100, 20
 	move COUNTER,      NO_ADDITIONAL_EFFECT,         1, FIGHTING,     100, 20
 	move SEISMIC_TOSS, SPECIAL_DAMAGE_EFFECT,        1, FIGHTING,     100, 20
 	move STRENGTH,     NO_ADDITIONAL_EFFECT,        80, NORMAL,       100, 15
@@ -131,13 +131,13 @@ Moves:
 	move METRONOME,    METRONOME_EFFECT,             0, NORMAL,       100, 10
 	move MIRROR_MOVE,  MIRROR_MOVE_EFFECT,           0, FLYING,       100, 20
 	move SELFDESTRUCT, EXPLODE_EFFECT,             130, NORMAL,       100,  5
-	move EGG_BOMB,     NO_ADDITIONAL_EFFECT,       100, NORMAL,        75, 10
+	move EGG_BOMB,     NO_ADDITIONAL_EFFECT,       100, GRASS,         90, 10
 	move LICK,         PARALYZE_SIDE_EFFECT2,       20, GHOST,        100, 30
 	move SMOG,         POISON_SIDE_EFFECT2,         20, POISON,        70, 20
 	move SLUDGE,       POISON_SIDE_EFFECT2,         65, POISON,       100, 20
 	move BONE_CLUB,    FLINCH_SIDE_EFFECT1,         65, GROUND,       100, 20
 	move FIRE_BLAST,   BURN_SIDE_EFFECT2,          120, FIRE,          85,  5
-	move WATERFALL,    NO_ADDITIONAL_EFFECT,        80, WATER,        100, 15
+	move WATERFALL,    NO_ADDITIONAL_EFFECT,        85, WATER,        100, 15
 	move CLAMP,        TRAPPING_EFFECT,             35, WATER,         75, 10
 	move SWIFT,        SWIFT_EFFECT,                60, NORMAL,       100, 20
 	move SKULL_BASH,   CHARGE_EFFECT,              100, NORMAL,       100, 15
@@ -146,7 +146,7 @@ Moves:
 	move AMNESIA,      SPECIAL_UP2_EFFECT,           0, PSYCHIC_TYPE, 100, 20
 	move KINESIS,      ACCURACY_DOWN1_EFFECT,        0, PSYCHIC_TYPE,  80, 15
 	move SOFTBOILED,   HEAL_EFFECT,                  0, NORMAL,       100, 10
-	move HI_JUMP_KICK, JUMP_KICK_EFFECT,           120, FIGHTING,      90, 20
+	move HI_JUMP_KICK, JUMP_KICK_EFFECT,           120, FIGHTING,      90, 10
 	move GLARE,        PARALYZE_EFFECT,              0, NORMAL,        75, 30
 	move DREAM_EATER,  DREAM_EATER_EFFECT,         100, PSYCHIC_TYPE, 100, 15
 	move POISON_GAS,   POISON_EFFECT,                0, POISON,        55, 40
